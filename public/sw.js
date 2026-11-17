@@ -1,10 +1,11 @@
-const CACHE_NAME = 'dirham20-offline-v6';
+const CACHE_NAME = 'dirham20-offline-v7';
 
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon.svg',
+  './icon-512.png',
   './apple-touch-icon.png',
   './pwa-192x192.png',
   './pwa-512x512.png',
