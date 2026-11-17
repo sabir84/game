@@ -1,0 +1,874 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  HelpCircle,
+  RotateCcw,
+  Sparkles,
+  Trophy,
+  Tv,
+  Volume2,
+  VolumeX,
+  WifiOff,
+} from 'lucide-react';
+import { ConfettiBurst } from './components/ConfettiBurst';
+import { DeskLedger } from './components/DeskLedger';
+import { EndScreen } from './components/EndScreen';
+import { PWAInstallButton } from './components/PWAInstallButton';
+import { ResourceHUD } from './components/ResourceHUD';
+import { ResultFeedbackCard } from './components/ResultFeedbackCard';
+import { RewardedAdModal } from './components/RewardedAdModal';
+import { RulesModal } from './components/RulesModal';
+import { StageUpModal } from './components/StageUpModal';
+import { SwipeCard } from './components/SwipeCard';
+import { TitleScreen } from './components/TitleScreen';
+import {
+  INITIAL_STATS,
+  VICTORY_MONEY_THRESHOLD,
+  getRankForMoney,
+  getStageCards,
+  getStageForMoney,
+} from './data/scenarios';
+import { TRANSLATIONS, formatCompactMoney } from './i18n/translations';
+import {
+  ChoiceImpact,
+  DecisionFeedback,
+  GameStatus,
+  HistoryEntry,
+  Language,
+  LossReason,
+  RankInfo,
+  ScenarioCard,
+  StageNumber,
+  Stats,
+  StoredRecord,
+} from './types/game';
+import { AdRewardType, showRewardedAd } from './utils/admob';
+import { soundEngine } from './utils/sound';
+
+const STORAGE_KEY = 'dirham20_record_v1';
+const LANG_STORAGE_KEY = 'dirham20_lang_v1';
+
+const LANG_OPTIONS: { code: Language; short: string; label: string }[] = [
+  { code: 'ar', short: 'AR', label: 'العربية (AR)' },
+  { code: 'fr', short: 'FR', label: 'Français (FR)' },
+  { code: 'en', short: 'EN', label: 'English (EN)' },
+];
+
+function loadLanguage(): Language {
+  try {
+    const saved = localStorage.getItem(LANG_STORAGE_KEY);
+    if (saved === 'ar' || saved === 'fr' || saved === 'en') {
+      return saved;
+    }
+  } catch {
+    // Ignore storage errors
+  }
+  return 'ar';
+}
+
+function loadRecord(): StoredRecord {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<StoredRecord>;
+      return {
+        highScoreMoney: Math.max(
+          INITIAL_STATS.money,
+          Number(parsed.highScoreMoney) || INITIAL_STATS.money
+        ),
+        bestDay: Math.max(1, Number(parsed.bestDay) || 1),
+        gamesPlayed: Number(parsed.gamesPlayed) || 0,
+        wins: Number(parsed.wins) || 0,
+      };
+    }
+  } catch {
+    // Ignore storage errors
+  }
+  return {
+    highScoreMoney: INITIAL_STATS.money,
+    bestDay: 1,
+    gamesPlayed: 0,
+    wins: 0,
+  };
+}
+
+function saveRecord(record: StoredRecord) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+function shuffleSlice(items: ScenarioCard[]): ScenarioCard[] {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+type StageDecks = Record<StageNumber, ScenarioCard[]>;
+type StageIndices = Record<StageNumber, number>;
+
+function buildStageDecks(): StageDecks {
+  return {
+    1: shuffleSlice(getStageCards(1)),
+    2: shuffleSlice(getStageCards(2)),
+    3: shuffleSlice(getStageCards(3)),
+    4: shuffleSlice(getStageCards(4)),
+  };
+}
+
+function getStageFallbackBonus(stage: StageNumber): number {
+  switch (stage) {
+    case 1:
+      return 50;
+    case 2:
+      return 2500;
+    case 3:
+      return 65000;
+    case 4:
+      return 45000000;
+  }
+}
+
+function clamp(val: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, val));
+}
+
+export default function App() {
+  const [lang, setLang] = useState<Language>(() => loadLanguage());
+  const [status, setStatus] = useState<GameStatus>('TITLE_MENU');
+  const [stats, setStats] = useState<Stats>(INITIAL_STATS);
+  const [day, setDay] = useState<number>(1);
+
+  const stageDecksRef = useRef<StageDecks>(buildStageDecks());
+  const stageIndicesRef = useRef<StageIndices>({ 1: 1, 2: 0, 3: 0, 4: 0 });
+  const [currentCard, setCurrentCard] = useState<ScenarioCard>(
+    () => stageDecksRef.current[1][0]
+  );
+
+  const [previewImpact, setPreviewImpact] = useState<ChoiceImpact | null>(null);
+  const [lastImpact, setLastImpact] = useState<ChoiceImpact | null>(null);
+  const [feedback, setFeedback] = useState<DecisionFeedback | null>(null);
+  const [lossReason, setLossReason] = useState<LossReason>(null);
+  const [stageModalRank, setStageModalRank] = useState<RankInfo | null>(null);
+
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [record, setRecord] = useState<StoredRecord>(() => loadRecord());
+  const [isNewRecord, setIsNewRecord] = useState<boolean>(false);
+  const [endlessMode, setEndlessMode] = useState<boolean>(false);
+
+  // Rewarded Ad states
+  const [doubleProfitDay, setDoubleProfitDay] = useState<number | null>(null);
+  const [adModalOpen, setAdModalOpen] = useState<boolean>(false);
+  const [pendingAdType, setPendingAdType] = useState<AdRewardType | null>(null);
+  const adResolverRef = useRef<((completed: boolean) => void) | null>(null);
+
+  const [celebrating, setCelebrating] = useState<boolean>(false);
+  const [muted, setMuted] = useState<boolean>(() => soundEngine.isMuted());
+  const [showRules, setShowRules] = useState<boolean>(false);
+  const [isOnline, setIsOnline] = useState<boolean>(
+    typeof navigator !== 'undefined' ? navigator.onLine : true
+  );
+
+  const t = TRANSLATIONS[lang];
+
+  // Sync HTML dir, lang, and title whenever language switches
+  useEffect(() => {
+    const dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = dir;
+    document.title = TRANSLATIONS[lang].pageTitle;
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
+    } catch {
+      // Ignore storage errors
+    }
+  }, [lang]);
+
+  useEffect(() => {
+    const onOnline = () => setIsOnline(true);
+    const onOffline = () => setIsOnline(false);
+    window.addEventListener('online', onOnline);
+    window.addEventListener('offline', onOffline);
+    return () => {
+      window.removeEventListener('online', onOnline);
+      window.removeEventListener('offline', onOffline);
+    };
+  }, []);
+
+  const currentRank = useMemo(() => getRankForMoney(stats.money), [stats.money]);
+  const isFifthDayBonus = day % 5 === 0;
+  const isDoubleProfitActiveToday = doubleProfitDay === day;
+
+  const triggerCelebration = useCallback(() => {
+    setCelebrating(true);
+    window.setTimeout(() => setCelebrating(false), 2100);
+  }, []);
+
+  const runSimulatedAdModal = useCallback((type: AdRewardType) => {
+    return new Promise<boolean>((resolve) => {
+      adResolverRef.current = resolve;
+      setPendingAdType(type);
+      setAdModalOpen(true);
+    });
+  }, []);
+
+  const handleSimulatedAdComplete = () => {
+    setAdModalOpen(false);
+    setPendingAdType(null);
+    adResolverRef.current?.(true);
+    adResolverRef.current = null;
+  };
+
+  const handleSimulatedAdCancel = () => {
+    setAdModalOpen(false);
+    setPendingAdType(null);
+    adResolverRef.current?.(false);
+    adResolverRef.current = null;
+  };
+
+  const dealNextCardForMoney = useCallback(
+    (targetMoney: number, excludeCardId?: number) => {
+      const targetStage = getStageForMoney(targetMoney);
+      const deck = stageDecksRef.current[targetStage];
+      const idx = stageIndicesRef.current[targetStage];
+
+      if (idx >= deck.length) {
+        const reshuffled = shuffleSlice(getStageCards(targetStage));
+        if (
+          excludeCardId !== undefined &&
+          reshuffled[0]?.id === excludeCardId &&
+          reshuffled.length > 1
+        ) {
+          [reshuffled[0], reshuffled[1]] = [reshuffled[1], reshuffled[0]];
+        }
+        stageDecksRef.current = {
+          ...stageDecksRef.current,
+          [targetStage]: reshuffled,
+        };
+        stageIndicesRef.current = {
+          ...stageIndicesRef.current,
+          [targetStage]: 1,
+        };
+        setCurrentCard(reshuffled[0]);
+      } else {
+        const nextCard = deck[idx];
+        stageIndicesRef.current = {
+          ...stageIndicesRef.current,
+          [targetStage]: idx + 1,
+        };
+        setCurrentCard(nextCard);
+      }
+    },
+    []
+  );
+
+  const startNewGame = useCallback(() => {
+    soundEngine.playCardTap();
+    const freshDecks = buildStageDecks();
+    stageDecksRef.current = freshDecks;
+    stageIndicesRef.current = { 1: 1, 2: 0, 3: 0, 4: 0 };
+    setCurrentCard(freshDecks[1][0]);
+
+    setStats(INITIAL_STATS);
+    setDay(1);
+    setPreviewImpact(null);
+    setLastImpact(null);
+    setFeedback(null);
+    setLossReason(null);
+    setStageModalRank(null);
+    setHistory([]);
+    setIsNewRecord(false);
+    setEndlessMode(false);
+    setDoubleProfitDay(null);
+    setCelebrating(false);
+    setStatus('PLAYING');
+
+    setRecord((prev) => {
+      const updated = { ...prev, gamesPlayed: prev.gamesPlayed + 1 };
+      saveRecord(updated);
+      return updated;
+    });
+  }, []);
+
+  const handleChoose = useCallback(
+    (direction: 'right' | 'left') => {
+      if (status !== 'PLAYING' || !currentCard) return;
+
+      const chosen =
+        direction === 'right' ? currentCard.rightChoice : currentCard.leftChoice;
+      const prevRank = getRankForMoney(stats.money);
+      const currentStage = getStageForMoney(stats.money);
+
+      let effectiveMoneyDelta = chosen.impact.money;
+      if (isDoubleProfitActiveToday) {
+        effectiveMoneyDelta =
+          chosen.impact.money > 0
+            ? chosen.impact.money * 2
+            : chosen.impact.money + getStageFallbackBonus(currentStage);
+      }
+
+      const appliedImpact: ChoiceImpact = {
+        ...chosen.impact,
+        money: effectiveMoneyDelta,
+      };
+
+      const nextStats: Stats = {
+        money: Math.max(0, stats.money + appliedImpact.money),
+        reputation: clamp(stats.reputation + appliedImpact.reputation, 0, 100),
+        energy: clamp(stats.energy + appliedImpact.energy, 0, 100),
+        experience: clamp(stats.experience + appliedImpact.experience, 0, 100),
+      };
+
+      const nextRank = getRankForMoney(nextStats.money);
+      const rankedUpTo =
+        nextRank.minMoney > prevRank.minMoney ? nextRank : null;
+      const stagePromoted = nextRank.stage > prevRank.stage;
+
+      setStats(nextStats);
+      setLastImpact(appliedImpact);
+      setPreviewImpact(null);
+
+      setHistory((prev) => [
+        {
+          day,
+          cardId: currentCard.id,
+          choiceDirection: direction,
+          moneyDelta: appliedImpact.money,
+          moneyAfter: nextStats.money,
+        },
+        ...prev,
+      ]);
+
+      setRecord((prev) => {
+        const beatMoney = nextStats.money > prev.highScoreMoney;
+        const beatDay = day > prev.bestDay;
+        if (beatMoney) {
+          setIsNewRecord(true);
+        }
+        if (beatMoney || beatDay) {
+          const updated: StoredRecord = {
+            ...prev,
+            highScoreMoney: Math.max(prev.highScoreMoney, nextStats.money),
+            bestDay: Math.max(prev.bestDay, day),
+          };
+          saveRecord(updated);
+          return updated;
+        }
+        return prev;
+      });
+
+      if (nextStats.money <= 0) {
+        soundEngine.playGameOver();
+        setLossReason('bankruptcy');
+        setStatus('GAME_OVER');
+        return;
+      }
+      if (nextStats.reputation <= 0) {
+        soundEngine.playGameOver();
+        setLossReason('reputation');
+        setStatus('GAME_OVER');
+        return;
+      }
+      if (nextStats.energy <= 0) {
+        soundEngine.playGameOver();
+        setLossReason('exhaustion');
+        setStatus('GAME_OVER');
+        return;
+      }
+
+      if (nextStats.money >= VICTORY_MONEY_THRESHOLD && !endlessMode) {
+        soundEngine.playVictory();
+        triggerCelebration();
+        setRecord((prev) => {
+          const updated = { ...prev, wins: prev.wins + 1 };
+          saveRecord(updated);
+          return updated;
+        });
+        setStatus('VICTORY');
+        return;
+      }
+
+      if (stagePromoted) {
+        soundEngine.playRankUp();
+        triggerCelebration();
+        setStageModalRank(nextRank);
+      } else if (rankedUpTo) {
+        soundEngine.playRankUp();
+        triggerCelebration();
+      } else {
+        soundEngine.playDecision(appliedImpact.money);
+      }
+
+      setFeedback({
+        cardId: currentCard.id,
+        choiceDirection: direction,
+        impact: appliedImpact,
+        rankedUpTo,
+      });
+      setStatus('RESULT_FEEDBACK');
+    },
+    [
+      currentCard,
+      day,
+      endlessMode,
+      isDoubleProfitActiveToday,
+      stats,
+      status,
+      triggerCelebration,
+    ]
+  );
+
+  const handleWatchSecondChanceAd = useCallback(async () => {
+    const result = await showRewardedAd('SECOND_CHANCE', () =>
+      runSimulatedAdModal('SECOND_CHANCE')
+    );
+    if (!result.rewarded) return;
+
+    soundEngine.playRewardSuccess();
+    triggerCelebration();
+
+    const revivedMoney = stats.money + 50;
+    setStats((prev) => {
+      const revived: Stats = {
+        ...prev,
+        money: prev.money + 50,
+        energy: 100,
+        reputation: Math.max(prev.reputation, 35),
+      };
+      setRecord((rec) => {
+        if (revived.money > rec.highScoreMoney) {
+          const updated = { ...rec, highScoreMoney: revived.money };
+          saveRecord(updated);
+          return updated;
+        }
+        return rec;
+      });
+      return revived;
+    });
+
+    setLossReason(null);
+    setFeedback(null);
+    dealNextCardForMoney(revivedMoney, currentCard?.id);
+    setDay((d) => d + 1);
+    setStatus('PLAYING');
+  }, [
+    currentCard?.id,
+    dealNextCardForMoney,
+    runSimulatedAdModal,
+    stats.money,
+    triggerCelebration,
+  ]);
+
+  const handleWatchDoubleProfitAd = useCallback(async () => {
+    if (isDoubleProfitActiveToday) return;
+
+    const result = await showRewardedAd('DOUBLE_DAILY_PROFIT', () =>
+      runSimulatedAdModal('DOUBLE_DAILY_PROFIT')
+    );
+    if (!result.rewarded) return;
+
+    soundEngine.playRewardSuccess();
+    setDoubleProfitDay(day);
+
+    if (status === 'RESULT_FEEDBACK' && feedback) {
+      const currentStage = getStageForMoney(stats.money);
+      const bonusMoney =
+        feedback.impact.money > 0
+          ? feedback.impact.money
+          : getStageFallbackBonus(currentStage);
+      const prevRank = getRankForMoney(stats.money);
+      const updatedMoney = stats.money + bonusMoney;
+      const nextRank = getRankForMoney(updatedMoney);
+      const rankedUpTo =
+        nextRank.minMoney > prevRank.minMoney ? nextRank : null;
+
+      setStats((prev) => ({ ...prev, money: prev.money + bonusMoney }));
+      setFeedback((prev) =>
+        prev
+          ? {
+              ...prev,
+              impact: {
+                ...prev.impact,
+                money: prev.impact.money + bonusMoney,
+              },
+              rankedUpTo: rankedUpTo ?? prev.rankedUpTo,
+            }
+          : prev
+      );
+      setHistory((prev) => {
+        if (prev.length === 0) return prev;
+        const [latest, ...rest] = prev;
+        return [
+          {
+            ...latest,
+            moneyDelta: latest.moneyDelta + bonusMoney,
+            moneyAfter: updatedMoney,
+          },
+          ...rest,
+        ];
+      });
+      setRecord((rec) => {
+        if (updatedMoney > rec.highScoreMoney) {
+          setIsNewRecord(true);
+          const updated = { ...rec, highScoreMoney: updatedMoney };
+          saveRecord(updated);
+          return updated;
+        }
+        return rec;
+      });
+
+      if (updatedMoney >= VICTORY_MONEY_THRESHOLD && !endlessMode) {
+        soundEngine.playVictory();
+        triggerCelebration();
+        setRecord((rec) => {
+          const updated = { ...rec, wins: rec.wins + 1 };
+          saveRecord(updated);
+          return updated;
+        });
+        setStatus('VICTORY');
+      } else if (nextRank.stage > prevRank.stage) {
+        soundEngine.playRankUp();
+        triggerCelebration();
+        setStageModalRank(nextRank);
+      }
+    }
+  }, [
+    day,
+    endlessMode,
+    feedback,
+    isDoubleProfitActiveToday,
+    runSimulatedAdModal,
+    stats.money,
+    status,
+    triggerCelebration,
+  ]);
+
+  const handleContinueNextDay = useCallback(() => {
+    if (status !== 'RESULT_FEEDBACK') return;
+    soundEngine.playCardTap();
+    dealNextCardForMoney(stats.money, currentCard?.id);
+    setDay((d) => d + 1);
+    setFeedback(null);
+    setStatus('PLAYING');
+  }, [currentCard?.id, dealNextCardForMoney, stats.money, status]);
+
+  const handleContinueEndless = useCallback(() => {
+    setEndlessMode(true);
+    soundEngine.playCardTap();
+    dealNextCardForMoney(stats.money, currentCard?.id);
+    setDay((d) => d + 1);
+    setFeedback(null);
+    setStatus('PLAYING');
+  }, [currentCard?.id, dealNextCardForMoney, stats.money]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (adModalOpen) return;
+      if (stageModalRank) {
+        if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          setStageModalRank(null);
+        }
+        return;
+      }
+      if (showRules) {
+        if (e.key === 'Escape') setShowRules(false);
+        return;
+      }
+      if (status === 'PLAYING') {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          handleChoose('right');
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          handleChoose('left');
+        }
+      } else if (status === 'RESULT_FEEDBACK') {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleContinueNextDay();
+        }
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [
+    adModalOpen,
+    handleChoose,
+    handleContinueNextDay,
+    showRules,
+    stageModalRank,
+    status,
+  ]);
+
+  const handleToggleMute = () => {
+    const next = soundEngine.toggleMute();
+    setMuted(next);
+  };
+
+  return (
+    <div className="h-[100dvh] lg:min-h-[100dvh] lg:h-auto flex flex-col overflow-hidden lg:overflow-visible bg-[#FBF6EC] text-[#241911]">
+      <ConfettiBurst active={celebrating} />
+
+      {/* Subtle Moroccan Oasis Zellige Header Accent Line */}
+      <div
+        aria-hidden="true"
+        className="h-1 shrink-0 w-full bg-gradient-to-l from-[#145C43] via-[#C68B2C] to-[#145C43]"
+      />
+
+      {/* Compact Top Bar with Language Switcher */}
+      <header className="shrink-0 sticky top-0 z-30 bg-[#FBF6EC]/92 backdrop-blur-md border-b border-[#E5D7BE] pt-safe">
+        <div className="max-w-5xl mx-auto px-2.5 sm:px-4 h-12 sm:h-14 flex items-center justify-between gap-2">
+          {/* Title + Compact Tri-lingual Switcher */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <button
+              type="button"
+              onClick={() => setStatus('TITLE_MENU')}
+              className="font-display text-xs sm:text-lg font-extrabold text-[#145C43] whitespace-nowrap truncate max-w-[116px] sm:max-w-none hover:opacity-85 transition-opacity"
+            >
+              <span className="sm:hidden">{t.brandCompact}</span>
+              <span className="hidden sm:inline">{t.brandTitle}</span>
+            </button>
+
+            <div
+              role="group"
+              aria-label="Language"
+              dir="ltr"
+              className="inline-flex items-center rounded-xl bg-[#EFE4CE] p-0.5 border border-[#DFCEB2] shrink-0"
+            >
+              {LANG_OPTIONS.map((opt) => {
+                const isActive = lang === opt.code;
+                return (
+                  <button
+                    key={opt.code}
+                    type="button"
+                    onClick={() => setLang(opt.code)}
+                    aria-label={opt.label}
+                    aria-pressed={isActive}
+                    title={opt.label}
+                    className={`min-h-[28px] px-2 py-0.5 rounded-lg text-[10px] sm:text-[11px] font-extrabold tracking-wide transition-colors whitespace-nowrap shrink-0 ${
+                      isActive
+                        ? 'bg-[#145C43] text-white shadow-xs'
+                        : 'text-[#5C4128] hover:text-[#1F150D]'
+                    }`}
+                  >
+                    {opt.short}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Utility Controls */}
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+            {status !== 'TITLE_MENU' && <PWAInstallButton lang={lang} compact />}
+
+            <button
+              type="button"
+              onClick={handleToggleMute}
+              aria-label={muted ? t.header.unmute : t.header.mute}
+              title={muted ? t.header.unmute : t.header.mute}
+              className="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-xl flex items-center justify-center text-[#5C4128] hover:bg-[#EFE4CE] transition-colors"
+            >
+              {muted ? (
+                <VolumeX className="w-4 h-4" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowRules(true)}
+              aria-label={t.header.rules}
+              title={t.header.rules}
+              className="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-xl flex items-center justify-center text-[#5C4128] hover:bg-[#EFE4CE] transition-colors"
+            >
+              <HelpCircle className="w-4 h-4" />
+            </button>
+
+            {status !== 'TITLE_MENU' && (
+              <button
+                type="button"
+                onClick={startNewGame}
+                aria-label={t.header.restart}
+                title={t.header.restart}
+                className="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-xl flex items-center justify-center text-[#5C4128] hover:bg-[#EFE4CE] transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Responsive Arena */}
+      <main className="flex-1 min-h-0 w-full max-w-5xl mx-auto px-3 sm:px-4 py-2 sm:py-5 pb-safe flex flex-col">
+        {status === 'TITLE_MENU' ? (
+          <div className="flex-1 min-h-0 overflow-y-auto flex flex-col">
+            <div className="my-auto w-full">
+              <TitleScreen record={record} lang={lang} onStart={startNewGame} />
+            </div>
+          </div>
+        ) : (
+          <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-stretch lg:items-start">
+            {/* Primary Gameplay Column */}
+            <div className="lg:col-span-7 h-full lg:h-auto min-h-0 flex flex-col gap-2 sm:gap-3.5 max-w-md w-full mx-auto lg:max-w-none">
+              {/* Quiet Single-Line Status Metadata */}
+              <div className="shrink-0 flex items-center justify-between text-[11px] sm:text-xs font-bold text-[#6E4F32] px-1 gap-2">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="tabular-nums text-[#1F150D] shrink-0">
+                    {t.dayCount(day)}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span className="text-[#8A6234] shrink-0">
+                    {t.stageLabel(currentRank.stage)}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span className="text-[#145C43] truncate">
+                    {currentRank.content[lang].title}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 tabular-nums shrink-0 text-amber-900">
+                  <Trophy className="w-3.5 h-3.5" />
+                  <span>
+                    {t.highScoreLabel}:{' '}
+                    {formatCompactMoney(record.highScoreMoney, lang)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Four Resource Meters */}
+              <ResourceHUD
+                stats={stats}
+                lang={lang}
+                previewImpact={previewImpact}
+                lastImpact={lastImpact}
+              />
+
+              {/* Optional Every-5-Days Rewarded Ad Button during active play */}
+              {status === 'PLAYING' && isFifthDayBonus && (
+                <div className="shrink-0">
+                  {!isDoubleProfitActiveToday ? (
+                    <button
+                      type="button"
+                      onClick={handleWatchDoubleProfitAd}
+                      className="w-full min-h-[40px] px-3 py-1.5 rounded-xl bg-gradient-to-l from-[#E09F1F] to-[#F5C042] hover:brightness-105 active:scale-[0.99] text-[#241606] border border-[#B97B0C] font-display font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
+                    >
+                      <Tv className="w-3.5 h-3.5 shrink-0" />
+                      <span>{t.ads.doubleProfitBtn}</span>
+                    </button>
+                  ) : (
+                    <div className="w-full rounded-xl bg-amber-50 border border-amber-300 px-3 py-1.5 flex items-center justify-center gap-1.5 text-xs font-extrabold text-amber-950">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+                      <span>{t.ads.doubleProfitActive}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Central Active Card / Feedback / End Screen */}
+              <div className="flex-1 min-h-0 flex flex-col">
+                {status === 'PLAYING' && currentCard && (
+                  <SwipeCard
+                    key={`${day}-${currentCard.id}`}
+                    card={currentCard}
+                    day={day}
+                    lang={lang}
+                    isDisabled={adModalOpen || !!stageModalRank}
+                    onChoose={handleChoose}
+                    onPreviewChange={setPreviewImpact}
+                  />
+                )}
+
+                {status === 'RESULT_FEEDBACK' && feedback && (
+                  <div className="flex-1 min-h-0 overflow-y-auto flex flex-col py-1">
+                    <div className="my-auto w-full">
+                      <ResultFeedbackCard
+                        feedback={feedback}
+                        nextDay={day + 1}
+                        lang={lang}
+                        showDoubleProfitOption={isFifthDayBonus}
+                        doubleProfitApplied={isDoubleProfitActiveToday}
+                        onWatchDoubleProfit={handleWatchDoubleProfitAd}
+                        onContinue={handleContinueNextDay}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {(status === 'GAME_OVER' || status === 'VICTORY') && (
+                  <div className="flex-1 min-h-0 overflow-y-auto flex flex-col py-1">
+                    <div className="my-auto w-full">
+                      <EndScreen
+                        mode={status}
+                        lossReason={lossReason}
+                        stats={stats}
+                        day={day}
+                        lang={lang}
+                        record={record}
+                        isNewRecord={isNewRecord}
+                        onRestart={startNewGame}
+                        onWatchSecondChance={
+                          status === 'GAME_OVER'
+                            ? handleWatchSecondChanceAd
+                            : undefined
+                        }
+                        onContinueEndless={
+                          status === 'VICTORY' ? handleContinueEndless : undefined
+                        }
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Desktop Ledger Sidebar */}
+            <div className="lg:col-span-5">
+              <DeskLedger
+                money={stats.money}
+                day={day}
+                lang={lang}
+                history={history}
+                record={record}
+              />
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* Non-intrusive Offline Indicator */}
+      {!isOnline && (
+        <div className="fixed bottom-3 right-3 z-40 rounded-xl bg-amber-800 text-amber-50 px-3 py-1.5 text-xs font-bold shadow-md flex items-center gap-1.5">
+          <WifiOff className="w-3.5 h-3.5" />
+          <span>{t.offlineBanner}</span>
+        </div>
+      )}
+
+      <RulesModal
+        open={showRules}
+        lang={lang}
+        onClose={() => setShowRules(false)}
+      />
+
+      <StageUpModal
+        rank={stageModalRank}
+        lang={lang}
+        onClose={() => setStageModalRank(null)}
+      />
+
+      <RewardedAdModal
+        open={adModalOpen}
+        lang={lang}
+        rewardType={pendingAdType}
+        onComplete={handleSimulatedAdComplete}
+        onCancel={handleSimulatedAdCancel}
+      />
+    </div>
+  );
+}

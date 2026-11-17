@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <script>
+      (function () {
+        function isExtensionError(msg, file, stack) {
+          var s = String(msg || '') + ' ' + String(file || '') + ' ' + String(stack || '');
+          return (
+            s.indexOf('chrome-extension://') !== -1 ||
+            s.indexOf('moz-extension://') !== -1 ||
+            s.indexOf('Failed to connect to MetaMask') !== -1
+          );
+        }
+        window.addEventListener(
+          'error',
+          function (e) {
+            var stack = e.error && e.error.stack ? e.error.stack : '';
+            if (isExtensionError(e.message, e.filename, stack)) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            }
+          },
+          true
+        );
+        window.addEventListener(
+          'unhandledrejection',
+          function (e) {
+            var r = e.reason;
+            var msg = r && r.message ? r.message : r;
+            var stack = r && r.stack ? r.stack : '';
+            if (isExtensionError(msg, '', stack)) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <title>تحدي الـ 20 درهماً | لعبة القرارات والتجارة المغربية</title>
+    <meta name="description" content="لعبة قرارات مالية واجتماعية بأسلوب البطاقات التفاعلية بطابع مغربي واقعي: ابدأ بـ 20 درهماً وحافظ على توازن المال والسمعة والطاقة والخبرة." />
+    <meta property="og:title" content="تحدي الـ 20 درهماً" />
+    <meta property="og:description" content="ابدأ برأس مال 20 درهماً فقط وخُض تحديات السوق والفرص المغربية لتصبح مستثمراً ناجحاً." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#124E3B" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="تحدي 20 درهم" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
