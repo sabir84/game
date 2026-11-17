@@ -1,8 +1,10 @@
 import React from 'react';
 import {
+  AlertTriangle,
   ArrowLeft,
   ArrowRight,
   Award,
+  CheckCircle2,
   Coins,
   Crown,
   HeartPulse,
@@ -10,7 +12,6 @@ import {
   Sparkles,
   Tv,
 } from 'lucide-react';
-import { SCENARIOS } from '../data/scenarios';
 import { TRANSLATIONS, formatCompactMoney } from '../i18n/translations';
 import { DecisionFeedback, Language } from '../types/game';
 
@@ -34,12 +35,12 @@ export const ResultFeedbackCard: React.FC<ResultFeedbackCardProps> = ({
   onContinue,
 }) => {
   const t = TRANSLATIONS[lang];
-  const { impact, rankedUpTo, cardId, choiceDirection } = feedback;
-  const card = SCENARIOS.find((c) => c.id === cardId);
-  const chosenContent = card
-    ? (choiceDirection === 'right' ? card.rightChoice : card.leftChoice)
-        .content[lang]
-    : { label: '', outcome: '' };
+  const { impact, rankedUpTo, card, choiceDirection, outcomeText, gambleOutcome } =
+    feedback;
+  const chosenLabel = (
+    choiceDirection === 'right' ? card.rightChoice : card.leftChoice
+  ).content[lang].label;
+  const resolvedOutcome = outcomeText[lang];
 
   const deltaItems = [
     {
@@ -112,12 +113,33 @@ export const ResultFeedbackCard: React.FC<ResultFeedbackCardProps> = ({
         </div>
       )}
 
+      {gambleOutcome && (
+        <div
+          className={`rounded-2xl px-3.5 py-2 border flex items-center gap-2 text-xs font-extrabold ${
+            gambleOutcome.succeeded
+              ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
+              : 'bg-amber-50 border-amber-300 text-amber-950'
+          }`}
+        >
+          {gambleOutcome.succeeded ? (
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+          ) : (
+            <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0" />
+          )}
+          <span>
+            {gambleOutcome.succeeded
+              ? t.feedback.gambleWon(gambleOutcome.successChance)
+              : t.feedback.gambleLost(100 - gambleOutcome.successChance)}
+          </span>
+        </div>
+      )}
+
       <div className="space-y-2">
         <p className="text-xs font-bold text-[#8A6234]">
-          {t.feedback.yourChoice} {chosenContent.label}
+          {t.feedback.yourChoice} {chosenLabel}
         </p>
         <p className="font-display text-lg sm:text-xl font-bold text-[#1F150D] leading-relaxed">
-          {chosenContent.outcome}
+          {resolvedOutcome}
         </p>
       </div>
 

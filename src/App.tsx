@@ -22,7 +22,10 @@ import { SwipeCard } from './components/SwipeCard';
 import { TitleScreen } from './components/TitleScreen';
 import {
   INITIAL_STATS,
+  SmartDeckMemory,
   VICTORY_MONEY_THRESHOLD,
+  createSmartDeckMemory,
+  drawNextScenarioCard,
   getRankForMoney,
   getStageCards,
   getStageForMoney,
@@ -99,27 +102,6 @@ function saveRecord(record: StoredRecord) {
   }
 }
 
-function shuffleSlice(items: ScenarioCard[]): ScenarioCard[] {
-  const arr = [...items];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-type StageDecks = Record<StageNumber, ScenarioCard[]>;
-type StageIndices = Record<StageNumber, number>;
-
-function buildStageDecks(): StageDecks {
-  return {
-    1: shuffleSlice(getStageCards(1)),
-    2: shuffleSlice(getStageCards(2)),
-    3: shuffleSlice(getStageCards(3)),
-    4: shuffleSlice(getStageCards(4)),
-  };
-}
-
 function getStageFallbackBonus(stage: StageNumber): number {
   switch (stage) {
     case 1:
@@ -137,16 +119,26 @@ function clamp(val: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, val));
 }
 
+function drawInitialCard(memory: SmartDeckMemory): ScenarioCard {
+  const stage = getStageForMoney(INITIAL_STATS.money);
+  return drawNextScenarioCard({
+    stage,
+    money: INITIAL_STATS.money,
+    day: 1,
+    curatedStageCards: getStageCards(stage),
+    memory,
+  });
+}
+
 export default function App() {
   const [lang, setLang] = useState<Language>(() => loadLanguage());
   const [status, setStatus] = useState<GameStatus>('TITLE_MENU');
   const [stats, setStats] = useState<Stats>(INITIAL_STATS);
   const [day, setDay] = useState<number>(1);
 
-  const stageDecksRef = useRef<StageDecks>(buildStageDecks());
-  const stageIndicesRef = useRef<StageIndices>({ 1: 1, 2: 0, 3: 0, 4: 0 });
-  const [currentCard, setCurrentCard] = useState<ScenarioCard>(
-    () => stageDecksRef.current[1][0]
+  const deckMemoryRef = useRef<SmartDeckMemory>(createSmartDeckMemory());
+  const [currentCard, setCurrentCard] = useState<ScenarioCard>(() =>
+    drawInitialCard(deckMemoryRef.current)
   );
 
   const [previewImpact, setPreviewImpact] = useState<ChoiceImpact | null>(null);
@@ -231,47 +223,25 @@ export default function App() {
   };
 
   const dealNextCardForMoney = useCallback(
-    (targetMoney: number, excludeCardId?: number) => {
+    (targetMoney: number, nextDayNum: number) => {
       const targetStage = getStageForMoney(targetMoney);
-      const deck = stageDecksRef.current[targetStage];
-      const idx = stageIndicesRef.current[targetStage];
-
-      if (idx >= deck.length) {
-        const reshuffled = shuffleSlice(getStageCards(targetStage));
-        if (
-          excludeCardId !== undefined &&
-          reshuffled[0]?.id === excludeCardId &&
-          reshuffled.length > 1
-        ) {
-          [reshuffled[0], reshuffled[1]] = [reshuffled[1], reshuffled[0]];
-        }
-        stageDecksRef.current = {
-          ...stageDecksRef.current,
-          [targetStage]: reshuffled,
-        };
-        stageIndicesRef.current = {
-          ...stageIndicesRef.current,
-          [targetStage]: 1,
-        };
-        setCurrentCard(reshuffled[0]);
-      } else {
-        const nextCard = deck[idx];
-        stageIndicesRef.current = {
-          ...stageIndicesRef.current,
-          [targetStage]: idx + 1,
-        };
-        setCurrentCard(nextCard);
-      }
+      const nextCard = drawNextScenarioCard({
+        stage: targetStage,
+        money: targetMoney,
+        day: nextDayNum,
+        curatedStageCards: getStageCards(targetStage),
+        memory: deckMemoryRef.current,
+      });
+      setCurrentCard(nextCard);
     },
     []
   );
 
   const startNewGame = useCallback(() => {
     soundEngine.playCardTap();
-    const freshDecks = buildStageDecks();
-    stageDecksRef.current = freshDecks;
-    stageIndicesRef.current = { 1: 1, 2: 0, 3: 0, 4: 0 };
-    setCurrentCard(freshDecks[1][0]);
+    const freshMemory = createSmartDeckMemory();
+    deckMemoryRef.current = freshMemory;
+    setCurrentCard(drawInitialCard(freshMemory));
 
     setStats(INITIAL_STATS);
     setDay(1);
@@ -303,16 +273,39 @@ export default function App() {
       const prevRank = getRankForMoney(stats.money);
       const currentStage = getStageForMoney(stats.money);
 
-      let effectiveMoneyDelta = chosen.impact.money;
+      let baseImpact = chosen.impact;
+      let outcomeText: Record<Language, string> = {
+        ar: chosen.content.ar.outcome,
+        fr: chosen.content.fr.outcome,
+        en: chosen.content.en.outcome,
+      };
+      let gambleOutcome: DecisionFeedback['gambleOutcome'] | undefined;
+
+      if (chosen.dynamicOutcome) {
+        const roll = Math.random() * 100;
+        const succeeded = roll < chosen.dynamicOutcome.successChance;
+        baseImpact = succeeded
+          ? chosen.dynamicOutcome.successImpact
+          : chosen.dynamicOutcome.failImpact;
+        outcomeText = succeeded
+          ? chosen.dynamicOutcome.successOutcome
+          : chosen.dynamicOutcome.failOutcome;
+        gambleOutcome = {
+          succeeded,
+          successChance: chosen.dynamicOutcome.successChance,
+        };
+      }
+
+      let effectiveMoneyDelta = baseImpact.money;
       if (isDoubleProfitActiveToday) {
         effectiveMoneyDelta =
-          chosen.impact.money > 0
-            ? chosen.impact.money * 2
-            : chosen.impact.money + getStageFallbackBonus(currentStage);
+          baseImpact.money > 0
+            ? baseImpact.money * 2
+            : baseImpact.money + getStageFallbackBonus(currentStage);
       }
 
       const appliedImpact: ChoiceImpact = {
-        ...chosen.impact,
+        ...baseImpact,
         money: effectiveMoneyDelta,
       };
 
@@ -336,6 +329,16 @@ export default function App() {
         {
           day,
           cardId: currentCard.id,
+          cardTitle: {
+            ar: currentCard.content.ar.title,
+            fr: currentCard.content.fr.title,
+            en: currentCard.content.en.title,
+          },
+          choiceLabel: {
+            ar: chosen.content.ar.label,
+            fr: chosen.content.fr.label,
+            en: chosen.content.en.label,
+          },
           choiceDirection: direction,
           moneyDelta: appliedImpact.money,
           moneyAfter: nextStats.money,
@@ -404,9 +407,11 @@ export default function App() {
       }
 
       setFeedback({
-        cardId: currentCard.id,
+        card: currentCard,
         choiceDirection: direction,
         impact: appliedImpact,
+        outcomeText,
+        gambleOutcome,
         rankedUpTo,
       });
       setStatus('RESULT_FEEDBACK');
@@ -452,11 +457,11 @@ export default function App() {
 
     setLossReason(null);
     setFeedback(null);
-    dealNextCardForMoney(revivedMoney, currentCard?.id);
+    dealNextCardForMoney(revivedMoney, day + 1);
     setDay((d) => d + 1);
     setStatus('PLAYING');
   }, [
-    currentCard?.id,
+    day,
     dealNextCardForMoney,
     runSimulatedAdModal,
     stats.money,
@@ -550,20 +555,20 @@ export default function App() {
   const handleContinueNextDay = useCallback(() => {
     if (status !== 'RESULT_FEEDBACK') return;
     soundEngine.playCardTap();
-    dealNextCardForMoney(stats.money, currentCard?.id);
+    dealNextCardForMoney(stats.money, day + 1);
     setDay((d) => d + 1);
     setFeedback(null);
     setStatus('PLAYING');
-  }, [currentCard?.id, dealNextCardForMoney, stats.money, status]);
+  }, [day, dealNextCardForMoney, stats.money, status]);
 
   const handleContinueEndless = useCallback(() => {
     setEndlessMode(true);
     soundEngine.playCardTap();
-    dealNextCardForMoney(stats.money, currentCard?.id);
+    dealNextCardForMoney(stats.money, day + 1);
     setDay((d) => d + 1);
     setFeedback(null);
     setStatus('PLAYING');
-  }, [currentCard?.id, dealNextCardForMoney, stats.money]);
+  }, [day, dealNextCardForMoney, stats.money]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {

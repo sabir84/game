@@ -23,9 +23,18 @@ export interface LocalizedChoiceContent {
   outcome: string;
 }
 
+export interface DynamicOutcomeConfig {
+  successChance: number; // 1..99
+  successImpact: ChoiceImpact;
+  successOutcome: Record<Language, string>;
+  failImpact: ChoiceImpact;
+  failOutcome: Record<Language, string>;
+}
+
 export interface CardChoice {
   content: Record<Language, LocalizedChoiceContent>;
   impact: ChoiceImpact;
+  dynamicOutcome?: DynamicOutcomeConfig;
 }
 
 export interface LocalizedCardContent {
@@ -36,9 +45,13 @@ export interface LocalizedCardContent {
 }
 
 export interface ScenarioCard {
-  id: number;
+  id: number | string;
   stage: StageNumber;
   category: CardCategory;
+  fingerprint?: string;
+  ideaKey?: string;
+  isRare?: boolean;
+  rareTag?: Record<Language, string>;
   content: Record<Language, LocalizedCardContent>;
   rightChoice: CardChoice;
   leftChoice: CardChoice;
@@ -77,15 +90,22 @@ export type GameStatus =
 export type LossReason = 'bankruptcy' | 'reputation' | 'exhaustion' | null;
 
 export interface DecisionFeedback {
-  cardId: number;
+  card: ScenarioCard;
   choiceDirection: 'right' | 'left';
   impact: ChoiceImpact;
+  outcomeText: Record<Language, string>;
+  gambleOutcome?: {
+    succeeded: boolean;
+    successChance: number;
+  };
   rankedUpTo: RankInfo | null;
 }
 
 export interface HistoryEntry {
   day: number;
-  cardId: number;
+  cardId: number | string;
+  cardTitle: Record<Language, string>;
+  choiceLabel: Record<Language, string>;
   choiceDirection: 'right' | 'left';
   moneyDelta: number;
   moneyAfter: number;

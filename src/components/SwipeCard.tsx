@@ -3,13 +3,14 @@ import {
   Check,
   Compass,
   HandCoins,
+  Sparkles,
   Store,
   Users,
   Wrench,
   X,
 } from 'lucide-react';
 import { CATEGORY_IMAGES } from '../data/scenarios';
-import { TRANSLATIONS, formatImpactLine } from '../i18n/translations';
+import { TRANSLATIONS, formatChoiceImpactLine } from '../i18n/translations';
 import {
   CardCategory,
   ChoiceImpact,
@@ -135,8 +136,8 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({
     opacityStyle = 0;
   }
 
-  const rightImpactText = formatImpactLine(card.rightChoice.impact, lang);
-  const leftImpactText = formatImpactLine(card.leftChoice.impact, lang);
+  const rightImpactText = formatChoiceImpactLine(card.rightChoice, lang);
+  const leftImpactText = formatChoiceImpactLine(card.leftChoice, lang);
 
   return (
     <div className="w-full flex-1 min-h-0 flex flex-col justify-between gap-2.5 sm:gap-3.5 select-none">
@@ -159,7 +160,11 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({
             opacity: opacityStyle,
             touchAction: 'pan-y',
           }}
-          className={`relative z-10 flex-1 min-h-0 flex flex-col animate-card-enter bg-[#FFFDF8] border border-[#DFCEB2] rounded-3xl shadow-[0_10px_28px_-12px_rgba(62,40,20,0.18)] overflow-hidden cursor-grab active:cursor-grabbing ${
+          className={`relative z-10 flex-1 min-h-0 flex flex-col animate-card-enter bg-[#FFFDF8] rounded-3xl shadow-[0_10px_28px_-12px_rgba(62,40,20,0.18)] overflow-hidden cursor-grab active:cursor-grabbing ${
+            card.isRare
+              ? 'border-2 border-amber-500 ring-2 ring-amber-300/40'
+              : 'border border-[#DFCEB2]'
+          } ${
             isDragging
               ? 'transition-none'
               : 'transition-[transform,opacity] duration-200 ease-out'
@@ -200,6 +205,12 @@ export const SwipeCard: React.FC<SwipeCardProps> = ({
                 <span className="text-xs font-bold text-[#5C4128]">
                   {cardText.categoryLabel}
                 </span>
+              </div>
+            )}
+            {card.isRare && (
+              <div className="absolute top-2.5 right-2.5 z-10 inline-flex items-center gap-1 rounded-xl bg-amber-400/95 text-[#231504] border border-amber-200 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-extrabold shadow-sm">
+                <Sparkles className="w-3 h-3 shrink-0" />
+                <span>{card.rareTag?.[lang] ?? t.card.rareDefault}</span>
               </div>
             )}
             <div

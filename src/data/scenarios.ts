@@ -179,3 +179,11 @@ export const SCENARIOS: ScenarioCard[] = [
 export function getStageCards(stage: StageNumber): ScenarioCard[] {
   return SCENARIOS.filter((c) => c.stage === stage);
 }
+
+export {
+  createSmartDeckMemory,
+  drawNextScenarioCard,
+  getTotalUniqueScenarioCount,
+} from './proceduralGenerator';
+export type { SmartDeckMemory } from './proceduralGenerator';
+

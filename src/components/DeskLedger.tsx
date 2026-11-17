@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle2, Circle, History, Trophy } from 'lucide-react';
-import { RANKS, SCENARIOS, getRankForMoney } from '../data/scenarios';
+import { RANKS, getRankForMoney } from '../data/scenarios';
 import { TRANSLATIONS, formatCompactMoney } from '../i18n/translations';
 import { HistoryEntry, Language, StoredRecord } from '../types/game';
 
@@ -102,14 +102,8 @@ export const DeskLedger: React.FC<DeskLedgerProps> = ({
         ) : (
           <ul className="space-y-2">
             {history.slice(0, 5).map((entry, idx) => {
-              const card = SCENARIOS.find((c) => c.id === entry.cardId);
-              const title = card ? card.content[lang].title : '';
-              const choiceLabel = card
-                ? (entry.choiceDirection === 'right'
-                    ? card.rightChoice
-                    : card.leftChoice
-                  ).content[lang].label
-                : '';
+              const title = entry.cardTitle[lang];
+              const choiceLabel = entry.choiceLabel[lang];
 
               return (
                 <li

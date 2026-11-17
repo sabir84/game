@@ -1,4 +1,10 @@
-import { ChoiceImpact, Language, LossReason, StageNumber } from '../types/game';
+import {
+  CardChoice,
+  ChoiceImpact,
+  Language,
+  LossReason,
+  StageNumber,
+} from '../types/game';
 
 export interface UIStrings {
   pageTitle: string;
@@ -52,12 +58,16 @@ export interface UIStrings {
   card: {
     cardPrefix: string;
     swipeHint: string;
+    rareDefault: string;
+    riskPill: (chance: number) => string;
   };
   feedback: {
     rankUpKicker: string;
     yourChoice: string;
     continueBtn: (nextDay: number) => string;
     doubleProfitApplied: string;
+    gambleWon: (chance: number) => string;
+    gambleLost: (risk: number) => string;
   };
   stageModal: {
     kicker: (stage: StageNumber) => string;
@@ -168,12 +178,16 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
     card: {
       cardPrefix: 'بطاقة #',
       swipeHint: 'اسحب يميناً أو يساراً أو اضغط أحد القرارين بالأسفل',
+      rareDefault: 'حدث نادر',
+      riskPill: (chance) => `نجاح ${chance}%`,
     },
     feedback: {
       rankUpKicker: 'تهانينا! ترقية جديدة',
       yourChoice: 'قرارك:',
       continueBtn: (nextDay) => `تابع إلى اليوم ${nextDay}`,
       doubleProfitApplied: 'تم تفعيل مضاعفة أرباح اليوم بنجاح!',
+      gambleWon: (chance) => `نجحت المغامرة! (احتمال النجاح كان ${chance}%)`,
+      gambleLost: (risk) => `تعثّرت المغامرة (نسبة المخاطرة كانت ${risk}%)`,
     },
     stageModal: {
       kicker: (stage) => `إنجاز جديد · المرحلة ${stage}`,
@@ -307,12 +321,16 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
     card: {
       cardPrefix: 'Carte #',
       swipeHint: 'Glissez la carte ou choisissez un bouton ci-dessous',
+      rareDefault: 'Événement rare',
+      riskPill: (chance) => `${chance}% succès`,
     },
     feedback: {
       rankUpKicker: 'Félicitations ! Nouveau statut',
       yourChoice: 'Votre choix :',
       continueBtn: (nextDay) => `Passer au Jour ${nextDay}`,
       doubleProfitApplied: 'Bonus gains doublés activé pour aujourd’hui !',
+      gambleWon: (chance) => `Pari réussi ! (${chance}% de chances)`,
+      gambleLost: (risk) => `Pari manqué (${risk}% de risque)`,
     },
     stageModal: {
       kicker: (stage) => `Cap franchi · Étape ${stage}`,
@@ -446,12 +464,16 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
     card: {
       cardPrefix: 'Card #',
       swipeHint: 'Swipe card left or right, or tap a choice below',
+      rareDefault: 'Rare Event',
+      riskPill: (chance) => `${chance}% win`,
     },
     feedback: {
       rankUpKicker: 'Congratulations! New Milestone',
       yourChoice: 'Your choice:',
       continueBtn: (nextDay) => `Continue to Day ${nextDay}`,
       doubleProfitApplied: "Today's 2x profit bonus applied!",
+      gambleWon: (chance) => `Risk Paid Off! (${chance}% chance)`,
+      gambleLost: (risk) => `Gamble Backfired (${risk}% risk)`,
     },
     stageModal: {
       kicker: (stage) => `Milestone Reached · Stage ${stage}`,
@@ -580,3 +602,31 @@ export function formatImpactLine(impact: ChoiceImpact, lang: Language): string {
   }
   return parts.join(' · ');
 }
+
+function fmtMoneySigned(amount: number, lang: Language): string {
+  if (amount > 0) return `+${formatCompactMoney(amount, lang)}`;
+  if (amount < 0) return formatCompactMoney(amount, lang);
+  return `0 ${TRANSLATIONS[lang].currencyShort}`;
+}
+
+export function formatChoiceImpactLine(
+  choice: CardChoice,
+  lang: Language
+): string {
+  if (!choice.dynamicOutcome) {
+    return formatImpactLine(choice.impact, lang);
+  }
+  const { successChance, successImpact, failImpact } = choice.dynamicOutcome;
+  const riskChance = 100 - successChance;
+  const winMoney = fmtMoneySigned(successImpact.money, lang);
+  const loseMoney = fmtMoneySigned(failImpact.money, lang);
+
+  if (lang === 'ar') {
+    return `${successChance}%: ${winMoney} · مخاطرة ${riskChance}%: ${loseMoney}`;
+  }
+  if (lang === 'fr') {
+    return `${successChance}%: ${winMoney} · Risque ${riskChance}%: ${loseMoney}`;
+  }
+  return `${successChance}%: ${winMoney} · ${riskChance}% risk: ${loseMoney}`;
+}
+
