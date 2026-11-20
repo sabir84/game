@@ -1,8 +1,9 @@
-const CACHE_NAME = 'dirham20-offline-v7';
+const CACHE_NAME = 'dirham20-offline-v8';
 
 const CORE_ASSETS = [
   './',
   './index.html',
+  './privacy.html',
   './manifest.json',
   './icon.svg',
   './icon-512.png',
