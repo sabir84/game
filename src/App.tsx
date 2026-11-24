@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Calendar,
   HelpCircle,
   RotateCcw,
   Sparkles,
@@ -33,7 +34,9 @@ import {
 import { TRANSLATIONS, formatCompactMoney } from './i18n/translations';
 import {
   ChoiceImpact,
+  DailyRecord,
   DecisionFeedback,
+  GameMode,
   GameStatus,
   HistoryEntry,
   Language,
@@ -43,11 +46,20 @@ import {
   StageNumber,
   Stats,
   StoredRecord,
+  TurnEmoji,
 } from './types/game';
 import { AdRewardType, showRewardedAd } from './utils/admob';
+import { createSeededRng, getTodayDateKey } from './utils/seededRandom';
+import {
+  ShareOutcome,
+  buildInviteShareText,
+  executeShare,
+  getShareGameUrl,
+} from './utils/share';
 import { soundEngine } from './utils/sound';
 
 const STORAGE_KEY = 'dirham20_record_v1';
+const DAILY_STORAGE_KEY = 'dirham20_daily_v1';
 const LANG_STORAGE_KEY = 'dirham20_lang_v1';
 
 const LANG_OPTIONS: { code: Language; short: string; label: string }[] = [
@@ -102,6 +114,33 @@ function saveRecord(record: StoredRecord) {
   }
 }
 
+function loadDailyRecord(todayKey: string): DailyRecord | null {
+  try {
+    const raw = localStorage.getItem(DAILY_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<DailyRecord>;
+    if (parsed.dateKey !== todayKey) return null;
+    return {
+      dateKey: todayKey,
+      bestMoney: Math.max(INITIAL_STATS.money, Number(parsed.bestMoney) || 0),
+      bestDay: Math.max(1, Number(parsed.bestDay) || 1),
+      rankId: parsed.rankId || 'struggler',
+      won: Boolean(parsed.won),
+      emojis: Array.isArray(parsed.emojis) ? parsed.emojis : [],
+    };
+  } catch {
+    return null;
+  }
+}
+
+function saveDailyRecord(daily: DailyRecord) {
+  try {
+    localStorage.setItem(DAILY_STORAGE_KEY, JSON.stringify(daily));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 function getStageFallbackBonus(stage: StageNumber): number {
   switch (stage) {
     case 1:
@@ -119,26 +158,53 @@ function clamp(val: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, val));
 }
 
-function drawInitialCard(memory: SmartDeckMemory): ScenarioCard {
-  const stage = getStageForMoney(INITIAL_STATS.money);
+function drawCardForMode(
+  targetMoney: number,
+  nextDayNum: number,
+  mode: GameMode,
+  dateKey: string,
+  memory: SmartDeckMemory
+): ScenarioCard {
+  const stage = getStageForMoney(targetMoney);
+  const rng =
+    mode === 'daily'
+      ? createSeededRng(`daily:${dateKey}:d${nextDayNum}:s${stage}`)
+      : Math.random;
+
   return drawNextScenarioCard({
     stage,
-    money: INITIAL_STATS.money,
-    day: 1,
+    money: targetMoney,
+    day: nextDayNum,
     curatedStageCards: getStageCards(stage),
     memory,
+    rng,
   });
 }
 
 export default function App() {
   const [lang, setLang] = useState<Language>(() => loadLanguage());
   const [status, setStatus] = useState<GameStatus>('TITLE_MENU');
+  const [gameMode, setGameMode] = useState<GameMode>('classic');
+  const [todayDateKey, setTodayDateKey] = useState<string>(() =>
+    getTodayDateKey()
+  );
+  const [dailyRecord, setDailyRecord] = useState<DailyRecord | null>(() =>
+    loadDailyRecord(getTodayDateKey())
+  );
+  const [dailyEmojis, setDailyEmojis] = useState<TurnEmoji[]>([]);
+
   const [stats, setStats] = useState<Stats>(INITIAL_STATS);
   const [day, setDay] = useState<number>(1);
 
   const deckMemoryRef = useRef<SmartDeckMemory>(createSmartDeckMemory());
   const [currentCard, setCurrentCard] = useState<ScenarioCard>(() =>
-    drawInitialCard(deckMemoryRef.current)
+    drawCardForMode(
+      INITIAL_STATS.money,
+      1,
+      'classic',
+      getTodayDateKey(),
+      deckMemoryRef.current
+    )
   );
 
   const [previewImpact, setPreviewImpact] = useState<ChoiceImpact | null>(null);
@@ -223,25 +289,79 @@ export default function App() {
   };
 
   const dealNextCardForMoney = useCallback(
-    (targetMoney: number, nextDayNum: number) => {
-      const targetStage = getStageForMoney(targetMoney);
-      const nextCard = drawNextScenarioCard({
-        stage: targetStage,
-        money: targetMoney,
-        day: nextDayNum,
-        curatedStageCards: getStageCards(targetStage),
-        memory: deckMemoryRef.current,
-      });
+    (
+      targetMoney: number,
+      nextDayNum: number,
+      modeOverride?: GameMode,
+      dateKeyOverride?: string
+    ) => {
+      const effectiveMode = modeOverride ?? gameMode;
+      const effectiveDate = dateKeyOverride ?? todayDateKey;
+      const nextCard = drawCardForMode(
+        targetMoney,
+        nextDayNum,
+        effectiveMode,
+        effectiveDate,
+        deckMemoryRef.current
+      );
       setCurrentCard(nextCard);
+    },
+    [gameMode, todayDateKey]
+  );
+
+  const persistDailyProgress = useCallback(
+    (
+      finalMoney: number,
+      finalDay: number,
+      won: boolean,
+      emojis: TurnEmoji[],
+      dateKey: string
+    ) => {
+      const rank = getRankForMoney(finalMoney);
+      setDailyRecord((prev) => {
+        const shouldReplaceBest =
+          !prev ||
+          prev.dateKey !== dateKey ||
+          (won && !prev.won) ||
+          finalMoney >= prev.bestMoney;
+        const nextDaily: DailyRecord = shouldReplaceBest
+          ? {
+              dateKey,
+              bestMoney: finalMoney,
+              bestDay: finalDay,
+              rankId: rank.id,
+              won: won || Boolean(prev?.dateKey === dateKey && prev.won),
+              emojis,
+            }
+          : prev;
+        saveDailyRecord(nextDaily);
+        return nextDaily;
+      });
     },
     []
   );
 
-  const startNewGame = useCallback(() => {
+  const startNewGame = useCallback((mode: GameMode = 'classic') => {
     soundEngine.playCardTap();
+    const freshDateKey = getTodayDateKey();
+    setTodayDateKey(freshDateKey);
+    if (dailyRecord && dailyRecord.dateKey !== freshDateKey) {
+      setDailyRecord(null);
+    }
+
     const freshMemory = createSmartDeckMemory();
     deckMemoryRef.current = freshMemory;
-    setCurrentCard(drawInitialCard(freshMemory));
+    setGameMode(mode);
+    setDailyEmojis([]);
+    setCurrentCard(
+      drawCardForMode(
+        INITIAL_STATS.money,
+        1,
+        mode,
+        freshDateKey,
+        freshMemory
+      )
+    );
 
     setStats(INITIAL_STATS);
     setDay(1);
@@ -262,7 +382,7 @@ export default function App() {
       saveRecord(updated);
       return updated;
     });
-  }, []);
+  }, [dailyRecord]);
 
   const handleChoose = useCallback(
     (direction: 'right' | 'left') => {
@@ -282,7 +402,11 @@ export default function App() {
       let gambleOutcome: DecisionFeedback['gambleOutcome'] | undefined;
 
       if (chosen.dynamicOutcome) {
-        const roll = Math.random() * 100;
+        const rollRng =
+          gameMode === 'daily'
+            ? createSeededRng(`daily:${todayDateKey}:roll:d${day}:${direction}`)
+            : Math.random;
+        const roll = rollRng() * 100;
         const succeeded = roll < chosen.dynamicOutcome.successChance;
         baseImpact = succeeded
           ? chosen.dynamicOutcome.successImpact
@@ -308,6 +432,20 @@ export default function App() {
         ...baseImpact,
         money: effectiveMoneyDelta,
       };
+
+      const turnEmoji: TurnEmoji = gambleOutcome
+        ? gambleOutcome.succeeded
+          ? 'green'
+          : 'red'
+        : appliedImpact.money > 0
+        ? 'green'
+        : appliedImpact.money === 0 ||
+          (appliedImpact.money < 0 && appliedImpact.reputation > 0)
+        ? 'yellow'
+        : 'red';
+
+      const nextEmojis = [...dailyEmojis, turnEmoji];
+      setDailyEmojis(nextEmojis);
 
       const nextStats: Stats = {
         money: Math.max(0, stats.money + appliedImpact.money),
@@ -342,6 +480,7 @@ export default function App() {
           choiceDirection: direction,
           moneyDelta: appliedImpact.money,
           moneyAfter: nextStats.money,
+          turnEmoji,
         },
         ...prev,
       ]);
@@ -366,18 +505,27 @@ export default function App() {
 
       if (nextStats.money <= 0) {
         soundEngine.playGameOver();
+        if (gameMode === 'daily') {
+          persistDailyProgress(nextStats.money, day, false, nextEmojis, todayDateKey);
+        }
         setLossReason('bankruptcy');
         setStatus('GAME_OVER');
         return;
       }
       if (nextStats.reputation <= 0) {
         soundEngine.playGameOver();
+        if (gameMode === 'daily') {
+          persistDailyProgress(nextStats.money, day, false, nextEmojis, todayDateKey);
+        }
         setLossReason('reputation');
         setStatus('GAME_OVER');
         return;
       }
       if (nextStats.energy <= 0) {
         soundEngine.playGameOver();
+        if (gameMode === 'daily') {
+          persistDailyProgress(nextStats.money, day, false, nextEmojis, todayDateKey);
+        }
         setLossReason('exhaustion');
         setStatus('GAME_OVER');
         return;
@@ -386,6 +534,9 @@ export default function App() {
       if (nextStats.money >= VICTORY_MONEY_THRESHOLD && !endlessMode) {
         soundEngine.playVictory();
         triggerCelebration();
+        if (gameMode === 'daily') {
+          persistDailyProgress(nextStats.money, day, true, nextEmojis, todayDateKey);
+        }
         setRecord((prev) => {
           const updated = { ...prev, wins: prev.wins + 1 };
           saveRecord(updated);
@@ -418,13 +569,50 @@ export default function App() {
     },
     [
       currentCard,
+      dailyEmojis,
       day,
       endlessMode,
+      gameMode,
       isDoubleProfitActiveToday,
+      persistDailyProgress,
       stats,
       status,
+      todayDateKey,
       triggerCelebration,
     ]
+  );
+
+  const applySecondChanceRevive = useCallback(
+    (bonusMoney: number, minReputation: number) => {
+      soundEngine.playRewardSuccess();
+      triggerCelebration();
+
+      const revivedMoney = stats.money + bonusMoney;
+      setStats((prev) => {
+        const revived: Stats = {
+          ...prev,
+          money: prev.money + bonusMoney,
+          energy: 100,
+          reputation: Math.max(prev.reputation, minReputation),
+        };
+        setRecord((rec) => {
+          if (revived.money > rec.highScoreMoney) {
+            const updated = { ...rec, highScoreMoney: revived.money };
+            saveRecord(updated);
+            return updated;
+          }
+          return rec;
+        });
+        return revived;
+      });
+
+      setLossReason(null);
+      setFeedback(null);
+      dealNextCardForMoney(revivedMoney, day + 1);
+      setDay((d) => d + 1);
+      setStatus('PLAYING');
+    },
+    [day, dealNextCardForMoney, stats.money, triggerCelebration]
   );
 
   const handleWatchSecondChanceAd = useCallback(async () => {
@@ -432,41 +620,21 @@ export default function App() {
       runSimulatedAdModal('SECOND_CHANCE')
     );
     if (!result.rewarded) return;
+    applySecondChanceRevive(50, 35);
+  }, [applySecondChanceRevive, runSimulatedAdModal]);
 
-    soundEngine.playRewardSuccess();
-    triggerCelebration();
-
-    const revivedMoney = stats.money + 50;
-    setStats((prev) => {
-      const revived: Stats = {
-        ...prev,
-        money: prev.money + 50,
-        energy: 100,
-        reputation: Math.max(prev.reputation, 35),
-      };
-      setRecord((rec) => {
-        if (revived.money > rec.highScoreMoney) {
-          const updated = { ...rec, highScoreMoney: revived.money };
-          saveRecord(updated);
-          return updated;
-        }
-        return rec;
-      });
-      return revived;
+  const handleShareSecondChance = useCallback(async (): Promise<ShareOutcome> => {
+    const { title, text } = buildInviteShareText(lang);
+    const outcome = await executeShare({
+      title,
+      text,
+      url: getShareGameUrl(),
     });
-
-    setLossReason(null);
-    setFeedback(null);
-    dealNextCardForMoney(revivedMoney, day + 1);
-    setDay((d) => d + 1);
-    setStatus('PLAYING');
-  }, [
-    day,
-    dealNextCardForMoney,
-    runSimulatedAdModal,
-    stats.money,
-    triggerCelebration,
-  ]);
+    if (outcome === 'shared' || outcome === 'copied') {
+      applySecondChanceRevive(100, 40);
+    }
+    return outcome;
+  }, [applySecondChanceRevive, lang]);
 
   const handleWatchDoubleProfitAd = useCallback(async () => {
     if (isDoubleProfitActiveToday) return;
@@ -699,7 +867,7 @@ export default function App() {
             {status !== 'TITLE_MENU' && (
               <button
                 type="button"
-                onClick={startNewGame}
+                onClick={() => startNewGame(gameMode)}
                 aria-label={t.header.restart}
                 title={t.header.restart}
                 className="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-xl flex items-center justify-center text-[#5C4128] hover:bg-[#EFE4CE] transition-colors"
@@ -716,7 +884,14 @@ export default function App() {
         {status === 'TITLE_MENU' ? (
           <div className="flex-1 min-h-0 overflow-y-auto flex flex-col">
             <div className="my-auto w-full">
-              <TitleScreen record={record} lang={lang} onStart={startNewGame} />
+              <TitleScreen
+                record={record}
+                dailyRecord={dailyRecord}
+                todayDateKey={todayDateKey}
+                lang={lang}
+                onStart={() => startNewGame('classic')}
+                onStartDaily={() => startNewGame('daily')}
+              />
             </div>
           </div>
         ) : (
@@ -726,6 +901,12 @@ export default function App() {
               {/* Quiet Single-Line Status Metadata */}
               <div className="shrink-0 flex items-center justify-between text-[11px] sm:text-xs font-bold text-[#6E4F32] px-1 gap-2">
                 <div className="flex items-center gap-1.5 min-w-0">
+                  {gameMode === 'daily' && (
+                    <span className="inline-flex items-center gap-1 rounded-md bg-amber-100 border border-amber-300 px-1.5 py-0.5 text-[10px] font-extrabold text-amber-950 shrink-0">
+                      <Calendar className="w-3 h-3" />
+                      <span>{t.daily.badge}</span>
+                    </span>
+                  )}
                   <span className="tabular-nums text-[#1F150D] shrink-0">
                     {t.dayCount(day)}
                   </span>
@@ -811,16 +992,24 @@ export default function App() {
                     <div className="my-auto w-full">
                       <EndScreen
                         mode={status}
+                        gameMode={gameMode}
+                        dateKey={todayDateKey}
+                        emojis={dailyEmojis}
                         lossReason={lossReason}
                         stats={stats}
                         day={day}
                         lang={lang}
                         record={record}
                         isNewRecord={isNewRecord}
-                        onRestart={startNewGame}
+                        onRestart={() => startNewGame(gameMode)}
                         onWatchSecondChance={
                           status === 'GAME_OVER'
                             ? handleWatchSecondChanceAd
+                            : undefined
+                        }
+                        onShareSecondChance={
+                          status === 'GAME_OVER'
+                            ? handleShareSecondChance
                             : undefined
                         }
                         onContinueEndless={
@@ -863,6 +1052,10 @@ export default function App() {
 
       <StageUpModal
         rank={stageModalRank}
+        money={stats.money}
+        day={day}
+        gameMode={gameMode}
+        dateKey={todayDateKey}
         lang={lang}
         onClose={() => setStageModalRank(null)}
       />

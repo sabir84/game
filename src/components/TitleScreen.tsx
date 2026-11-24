@@ -1,31 +1,86 @@
 import React, { useState } from 'react';
 import {
   Award,
+  Calendar,
+  Check,
   Coins,
   Crown,
   HeartPulse,
   Play,
+  Share2,
   ShieldCheck,
   Trophy,
 } from 'lucide-react';
-import { RANKS } from '../data/scenarios';
+import { RANKS, getRankForMoney } from '../data/scenarios';
 import { TRANSLATIONS, formatCompactMoney } from '../i18n/translations';
-import { Language, StoredRecord } from '../types/game';
+import { DailyRecord, Language, StoredRecord } from '../types/game';
+import {
+  buildAchievementShareText,
+  executeShare,
+  formatEmojiTrail,
+  generateAchievementCardFile,
+  getShareGameUrl,
+} from '../utils/share';
 import { PWAInstallButton } from './PWAInstallButton';
 
 interface TitleScreenProps {
   record: StoredRecord;
+  dailyRecord: DailyRecord | null;
+  todayDateKey: string;
   lang: Language;
   onStart: () => void;
+  onStartDaily: () => void;
 }
 
 export const TitleScreen: React.FC<TitleScreenProps> = ({
   record,
+  dailyRecord,
+  todayDateKey,
   lang,
   onStart,
+  onStartDaily,
 }) => {
   const [imgError, setImgError] = useState(false);
+  const [dailyShareState, setDailyShareState] = useState<
+    'idle' | 'shared' | 'copied'
+  >('idle');
   const t = TRANSLATIONS[lang];
+
+  const hasPlayedDailyToday =
+    dailyRecord !== null && dailyRecord.dateKey === todayDateKey;
+
+  const handleShareSavedDaily = async () => {
+    if (!hasPlayedDailyToday || !dailyRecord) return;
+    const rank = getRankForMoney(dailyRecord.bestMoney);
+    const { title, text } = buildAchievementShareText({
+      lang,
+      money: dailyRecord.bestMoney,
+      day: dailyRecord.bestDay,
+      rank,
+      isVictory: dailyRecord.won,
+      isDaily: true,
+      dateKey: todayDateKey,
+      emojis: dailyRecord.emojis,
+    });
+    const imageFile = await generateAchievementCardFile({
+      lang,
+      money: dailyRecord.bestMoney,
+      day: dailyRecord.bestDay,
+      rank,
+      isVictory: dailyRecord.won,
+      isDaily: true,
+      dateKey: todayDateKey,
+      emojis: dailyRecord.emojis,
+    });
+    const outcome = await executeShare({
+      title,
+      text,
+      url: getShareGameUrl(),
+      imageFile,
+    });
+    if (outcome === 'shared') setDailyShareState('shared');
+    else if (outcome === 'copied') setDailyShareState('copied');
+  };
 
   return (
     <div className="w-full max-w-xl mx-auto flex flex-col items-center text-center gap-4 sm:gap-5 py-2 sm:py-6">
@@ -90,6 +145,91 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
           <span className="text-[11px] text-[#7A624B]">
             {t.titleScreen.xpLabel}
           </span>
+        </div>
+      </div>
+
+      {/* Daily Seeded Challenge Card */}
+      <div
+        className={`w-full rounded-2xl bg-gradient-to-br from-[#F4EBD7] to-[#FFFDF8] border-2 border-[#D49B2A] p-3.5 sm:p-4 space-y-2.5 shadow-xs ${
+          lang === 'ar' ? 'text-right' : 'text-left'
+        }`}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-[#145C43] text-amber-300 flex items-center justify-center shrink-0">
+              <Calendar className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <h2 className="font-display text-sm sm:text-base font-extrabold text-[#1F150D] truncate">
+                {t.daily.title}
+              </h2>
+              <p className="text-[11px] font-bold text-[#8A6234] tabular-nums">
+                {todayDateKey}
+              </p>
+            </div>
+          </div>
+
+          {hasPlayedDailyToday && dailyRecord && (
+            <div className="text-end shrink-0">
+              <span className="block text-[10px] font-bold text-[#7A624B]">
+                {t.daily.bestToday}
+              </span>
+              <span className="font-display text-xs sm:text-sm font-extrabold text-[#145C43] tabular-nums">
+                {formatCompactMoney(dailyRecord.bestMoney, lang)}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <p className="text-xs text-[#4B392A] leading-relaxed">
+          {t.daily.subtitle}
+        </p>
+
+        {hasPlayedDailyToday && dailyRecord && dailyRecord.emojis.length > 0 && (
+          <div className="rounded-xl bg-[#FFFDF8] border border-[#E5D7BE] px-3 py-2 text-center">
+            <p dir="ltr" className="text-sm tracking-wider whitespace-pre-line">
+              {formatEmojiTrail(
+                dailyRecord.emojis,
+                dailyRecord.won,
+                !dailyRecord.won
+              )}
+            </p>
+          </div>
+        )}
+
+        {dailyShareState !== 'idle' && (
+          <p className="text-[11px] font-bold text-emerald-800 flex items-center gap-1">
+            <Check className="w-3.5 h-3.5 shrink-0" />
+            <span>
+              {dailyShareState === 'shared'
+                ? t.share.sharedToast
+                : t.share.copiedToast}
+            </span>
+          </p>
+        )}
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onStartDaily}
+            className="flex-1 min-h-[44px] px-3 rounded-xl bg-[#D99617] hover:bg-[#C38411] active:scale-[0.99] text-[#241606] font-display font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-xs transition-all"
+          >
+            <Calendar className="w-4 h-4 shrink-0" />
+            <span>
+              {hasPlayedDailyToday ? t.daily.replayBtn : t.daily.playBtn}
+            </span>
+          </button>
+
+          {hasPlayedDailyToday && (
+            <button
+              type="button"
+              onClick={handleShareSavedDaily}
+              className="min-h-[44px] px-3 rounded-xl bg-[#FFFDF8] hover:bg-[#EFE4CE] border border-[#D49B2A] text-[#5C4128] font-display font-extrabold text-xs flex items-center justify-center gap-1.5 transition-colors shrink-0"
+            >
+              <Share2 className="w-4 h-4 text-[#B46E09]" />
+              <span>{t.share.shareDailyResult}</span>
+            </button>
+          )}
         </div>
       </div>
 

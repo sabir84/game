@@ -121,6 +121,25 @@ export interface UIStrings {
     ranksTitle: string;
     backBtn: string;
   };
+  share: {
+    challengeFriends: string;
+    shareDailyResult: string;
+    shareSecondChanceBtn: string;
+    cardKicker: string;
+    challengeCta: string;
+    sharedToast: string;
+    copiedToast: string;
+    shareCancelled: string;
+  };
+  daily: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    playBtn: string;
+    replayBtn: string;
+    bestToday: string;
+    emojiTitle: string;
+  };
   offlineBanner: string;
 }
 
@@ -265,6 +284,26 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
       ranksTitle: 'المراحل والألقاب:',
       backBtn: 'العودة للعبة',
     },
+    share: {
+      challengeFriends: 'تحدَّ أصدقاءك',
+      shareDailyResult: 'مشاركة نتيجة تحدي اليوم',
+      shareSecondChanceBtn: 'شارك اللعبة مع صديق (+100 درهم فرصة ثانية)',
+      cardKicker: 'بطاقة إنجاز',
+      challengeCta: 'هل تستطيع تحطيم رقمي؟ العب الآن!',
+      sharedToast: 'تمت المشاركة بنجاح!',
+      copiedToast: 'تم نسخ التحدي والرابط! الصقه في واتساب أو فيسبوك',
+      shareCancelled: 'أكمل مشاركة الرابط مع صديق لتحصل على +100 درهم',
+    },
+    daily: {
+      badge: 'تحدي اليوم',
+      title: 'تحدي اليوم الموحّد',
+      subtitle:
+        'نفس تسلسل البطاقات لجميع اللاعبين اليوم. شارك مسارك بالرموز دون حرق الأحداث!',
+      playBtn: 'العب تحدي اليوم',
+      replayBtn: 'إعادة تحدي اليوم',
+      bestToday: 'أفضل نتيجة اليوم',
+      emojiTitle: 'مسار قرارات تحدي اليوم',
+    },
     offlineBanner: 'وضع عدم الاتصال — اللعبة تعمل محلياً',
   },
 
@@ -408,6 +447,26 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
       ranksTitle: 'Étapes et Titres :',
       backBtn: 'Retour au jeu',
     },
+    share: {
+      challengeFriends: 'Défier vos amis',
+      shareDailyResult: 'Partager le Défi du jour',
+      shareSecondChanceBtn: 'Partagez avec un ami (+100 MAD · 2e chance)',
+      cardKicker: 'Carte de Succès',
+      challengeCta: 'Capable de me battre ? Jouez !',
+      sharedToast: 'Partagé avec succès !',
+      copiedToast: 'Score et lien copiés ! Collez sur WhatsApp ou réseaux',
+      shareCancelled: 'Finalisez le partage avec un ami pour recevoir +100 MAD',
+    },
+    daily: {
+      badge: 'Défi du jour',
+      title: 'Défi du Jour Unifié',
+      subtitle:
+        'Même série de cartes pour tout le monde aujourd’hui. Partagez vos émojis sans spoiler !',
+      playBtn: 'Jouer au Défi du jour',
+      replayBtn: 'Rejouer le Défi',
+      bestToday: 'Meilleur score du jour',
+      emojiTitle: 'Parcours du Défi du jour',
+    },
     offlineBanner: 'Mode hors ligne — Le jeu fonctionne localement',
   },
 
@@ -549,6 +608,26 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
       ],
       ranksTitle: 'Stages & Titles:',
       backBtn: 'Back to Game',
+    },
+    share: {
+      challengeFriends: 'Challenge Friends',
+      shareDailyResult: 'Share Daily Result',
+      shareSecondChanceBtn: 'Share with a Friend (+100 MAD 2nd Chance)',
+      cardKicker: 'Achievement Card',
+      challengeCta: 'Can you beat my score? Play now!',
+      sharedToast: 'Shared successfully!',
+      copiedToast: 'Challenge & link copied! Paste in WhatsApp or socials',
+      shareCancelled: 'Complete sharing with a friend to claim +100 MAD',
+    },
+    daily: {
+      badge: 'Daily Challenge',
+      title: 'Daily Seeded Challenge',
+      subtitle:
+        'Same exact card sequence for all players today. Share your emoji trail spoiler-free!',
+      playBtn: 'Play Daily Challenge',
+      replayBtn: 'Replay Daily',
+      bestToday: "Today's Best",
+      emojiTitle: 'Daily Challenge Trail',
     },
     offlineBanner: 'Offline Mode — Playing locally',
   },

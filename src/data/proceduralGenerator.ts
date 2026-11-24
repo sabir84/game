@@ -1681,10 +1681,11 @@ interface DrawCardParams {
   day: number;
   curatedStageCards: ScenarioCard[];
   memory: SmartDeckMemory;
+  rng?: () => number;
 }
 
-function pickRandom<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+function pickRandom<T>(arr: T[], rng: () => number): T {
+  return arr[Math.floor(rng() * arr.length)];
 }
 
 export function drawNextScenarioCard({
@@ -1693,6 +1694,7 @@ export function drawNextScenarioCard({
   day,
   curatedStageCards,
   memory,
+  rng = Math.random,
 }: DrawCardParams): ScenarioCard {
   const pool = STAGE_POOLS[stage];
 
@@ -1700,12 +1702,12 @@ export function drawNextScenarioCard({
   const unseenRareTypes = RARE_TEMPLATES.filter(
     (rareId) => !memory.seenIdeaKeys.has(`rare:s${stage}:${rareId}`)
   );
-  if (day >= 3 && unseenRareTypes.length > 0 && Math.random() < 0.16) {
+  if (day >= 3 && unseenRareTypes.length > 0 && rng() < 0.16) {
     for (let attempt = 0; attempt < 25; attempt++) {
-      const rareId = pickRandom(unseenRareTypes);
-      const item = pickRandom(pool.items);
-      const place = pickRandom(pool.places);
-      const actor = pickRandom(pool.actors);
+      const rareId = pickRandom(unseenRareTypes, rng);
+      const item = pickRandom(pool.items, rng);
+      const place = pickRandom(pool.places, rng);
+      const actor = pickRandom(pool.actors, rng);
       const fp = `rare:s${stage}:${rareId}:${item.id}:${place.id}:${actor.id}`;
       if (!memory.seenFingerprints.has(fp)) {
         memory.proceduralCounter += 1;
@@ -1732,12 +1734,13 @@ export function drawNextScenarioCard({
     return !memory.seenFingerprints.has(fp);
   });
 
-  if (unseenCurated.length > 0 && (day === 1 || Math.random() < 0.3)) {
+  if (unseenCurated.length > 0 && (day === 1 || rng() < 0.3)) {
     const variedCurated = unseenCurated.filter(
       (c) => c.category !== memory.lastCategory
     );
     const chosenCurated = pickRandom(
-      variedCurated.length > 0 ? variedCurated : unseenCurated
+      variedCurated.length > 0 ? variedCurated : unseenCurated,
+      rng
     );
     const fp = `curated:${chosenCurated.id}`;
     memory.seenFingerprints.add(fp);
@@ -1752,10 +1755,10 @@ export function drawNextScenarioCard({
 
   // 3. Procedural Scenario Generation — Tier 1: Strictly unseen fingerprint AND strictly unseen core ideaKey (template + item)
   for (let attempt = 0; attempt < 90; attempt++) {
-    const templateId = pickRandom(REGULAR_TEMPLATES);
-    const item = pickRandom(pool.items);
-    const place = pickRandom(pool.places);
-    const actor = pickRandom(pool.actors);
+    const templateId = pickRandom(REGULAR_TEMPLATES, rng);
+    const item = pickRandom(pool.items, rng);
+    const place = pickRandom(pool.places, rng);
+    const actor = pickRandom(pool.actors, rng);
 
     if (attempt < 45 && item.category === memory.lastCategory) {
       continue;
@@ -1787,10 +1790,10 @@ export function drawNextScenarioCard({
 
   // 4. Tier 2: Core 32 (template + item) ideas for this stage exhausted — relax to unseen (template + item + place) while keeping fingerprint unique
   for (let attempt = 0; attempt < 160; attempt++) {
-    const templateId = pickRandom(REGULAR_TEMPLATES);
-    const item = pickRandom(pool.items);
-    const place = pickRandom(pool.places);
-    const actor = pickRandom(pool.actors);
+    const templateId = pickRandom(REGULAR_TEMPLATES, rng);
+    const item = pickRandom(pool.items, rng);
+    const place = pickRandom(pool.places, rng);
+    const actor = pickRandom(pool.actors, rng);
 
     const fp = `proc:s${stage}:${templateId}:${item.id}:${place.id}:${actor.id}`;
     const subIdeaKey = `proc:s${stage}:${templateId}:${item.id}:${place.id}`;
@@ -1849,10 +1852,10 @@ export function drawNextScenarioCard({
       memory.seenFingerprints.delete(existingFp);
     }
   }
-  const fallbackTemplate = pickRandom(REGULAR_TEMPLATES);
-  const fallbackItem = pickRandom(pool.items);
-  const fallbackPlace = pickRandom(pool.places);
-  const fallbackActor = pickRandom(pool.actors);
+  const fallbackTemplate = pickRandom(REGULAR_TEMPLATES, rng);
+  const fallbackItem = pickRandom(pool.items, rng);
+  const fallbackPlace = pickRandom(pool.places, rng);
+  const fallbackActor = pickRandom(pool.actors, rng);
   memory.proceduralCounter += 1;
   const fallbackCard = buildRegularProceduralCard(
     memory.proceduralCounter,

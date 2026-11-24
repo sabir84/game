@@ -87,6 +87,10 @@ export type GameStatus =
   | 'GAME_OVER'
   | 'VICTORY';
 
+export type GameMode = 'classic' | 'daily';
+
+export type TurnEmoji = 'green' | 'yellow' | 'red';
+
 export type LossReason = 'bankruptcy' | 'reputation' | 'exhaustion' | null;
 
 export interface DecisionFeedback {
@@ -109,6 +113,7 @@ export interface HistoryEntry {
   choiceDirection: 'right' | 'left';
   moneyDelta: number;
   moneyAfter: number;
+  turnEmoji: TurnEmoji;
 }
 
 export interface StoredRecord {
@@ -117,3 +122,13 @@ export interface StoredRecord {
   gamesPlayed: number;
   wins: number;
 }
+
+export interface DailyRecord {
+  dateKey: string;
+  bestMoney: number;
+  bestDay: number;
+  rankId: RankId;
+  won: boolean;
+  emojis: TurnEmoji[];
+}
+
