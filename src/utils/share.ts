@@ -145,6 +145,12 @@ export function buildAchievementShareText(params: {
         text: `🗓️ Défi du jour (${dateKey}) — ${t.brandTitle}\n🏆 Rang : ${rankTitle} | 💰 ${compactMoney} | 📅 Jour ${day}\n${trail}\nSaurez-vous faire mieux aujourd'hui ? Jouez ici :`,
       };
     }
+    if (lang === 'es') {
+      return {
+        title: `${t.brandTitle} — Desafío del día ${dateKey}`,
+        text: `🗓️ Desafío del día (${dateKey}) — ${t.brandTitle}\n🏆 Rango: ${rankTitle} | 💰 ${compactMoney} | 📅 Día ${day}\n${trail}\n¿Puedes superar mi marca hoy? Juega aquí:`,
+      };
+    }
     return {
       title: `${t.brandTitle} — Daily Challenge ${dateKey}`,
       text: `🗓️ Daily Challenge (${dateKey}) — ${t.brandTitle}\n🏆 Rank: ${rankTitle} | 💰 ${compactMoney} | 📅 Day ${day}\n${trail}\nCan you beat today's seed? Play now:`,
@@ -161,6 +167,12 @@ export function buildAchievementShareText(params: {
     return {
       title: t.brandTitle,
       text: `${isVictory ? '👑 Statut Milliardaire atteint !' : '🔥 Défi sur ' + t.brandTitle}\nParti de 20 MAD, j’ai atteint 💰 ${compactMoney} (${rankTitle}) en ${day} jours !\nCapable de battre mon record ? Jouez ici :`,
+    };
+  }
+  if (lang === 'es') {
+    return {
+      title: t.brandTitle,
+      text: `${isVictory ? '👑 ¡Alcancé el nivel Multimillonario!' : '🔥 Te reto en ' + t.brandTitle}\nEmpecé con solo 20 MAD y llegué a 💰 ${compactMoney} (${rankTitle}) en ${day} días.\n¿Crees que puedes superarme? Juega ahora:`,
     };
   }
   return {
@@ -184,6 +196,12 @@ export function buildInviteShareText(lang: Language): {
     return {
       title: t.brandTitle,
       text: '💰 Pouvez-vous transformer 20 MAD en 1 milliard ? Testez « Défi 20 Dirhams » maintenant !',
+    };
+  }
+  if (lang === 'es') {
+    return {
+      title: t.brandTitle,
+      text: '💰 ¿Puedes convertir 20 MAD en mil millones? ¡Prueba «Reto 20 Dirhams» ahora y compite conmigo!',
     };
   }
   return {

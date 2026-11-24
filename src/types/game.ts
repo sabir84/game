@@ -1,4 +1,4 @@
-export type Language = 'ar' | 'fr' | 'en';
+export type Language = 'ar' | 'fr' | 'en' | 'es';
 
 export type StageNumber = 1 | 2 | 3 | 4;
 

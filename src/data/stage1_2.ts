@@ -28,6 +28,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Maâlem Kacem sells a used bike for 15 MAD. A quick chain swap and rust cleanup will let you resell it today.',
       },
+      es: {
+        categoryLabel: 'Oficio y Reparación',
+        character: 'Maâlem Kacem · Chatarrero',
+        title: 'Reparar una bicicleta usada',
+        description:
+          'Maâlem Kacem vende una bici usada por 15 MAD. Cambiar la cadena y limpiar el óxido basta para revenderla hoy.',
+      },
     },
     rightChoice: {
       content: {
@@ -42,6 +49,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Buy & Repair',
           outcome: 'You restored it cleanly and sold it to a courier for a fast profit!',
+        },
+        es: {
+          label: 'Comprar y reparar',
+          outcome: '¡Dejaste la bici impecable y la vendiste a un repartidor con ganancia rápida!',
         },
       },
       impact: { money: 45, reputation: 6, energy: -12, experience: 8 },
@@ -59,6 +70,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Keep My Cash',
           outcome: 'You saved your energy, though someone else took the deal.',
+        },
+        es: {
+          label: 'Guardar mi dinero',
+          outcome: 'Ahorraste energía, aunque otro aprovechó el negocio.',
         },
       },
       impact: { money: 0, reputation: 0, energy: 6, experience: 2 },
@@ -90,6 +105,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Before noon, Uncle Larbi offers a full crate of fragrant mint at wholesale price to sell by the bunch.',
       },
+      es: {
+        categoryLabel: 'Comercio local',
+        character: 'Tío Larbi · Agricultor',
+        title: 'Caja de menta fresca al por mayor',
+        description:
+          'Antes del mediodía, el tío Larbi te ofrece una caja de menta aromática a precio de mayorista para vender por manojos.',
+      },
     },
     rightChoice: {
       content: {
@@ -104,6 +126,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sell by the Bunch',
           outcome: 'Neighbors loved the aroma and bought out the crate in an hour!',
+        },
+        es: {
+          label: 'Vender por manojos',
+          outcome: '¡El aroma atrajo a los vecinos y agotaste la caja en una hora!',
         },
       },
       impact: { money: 65, reputation: 8, energy: -12, experience: 8 },
@@ -121,6 +147,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Broker to a Café',
           outcome: 'You earned a quick, effortless commission.',
+        },
+        es: {
+          label: 'Intermediar con un café',
+          outcome: 'Ganaste una comisión rápida y sin esfuerzo.',
         },
       },
       impact: { money: 25, reputation: 4, energy: -3, experience: 4 },
@@ -152,6 +182,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Rachid is under the weather and asks you to serve mint tea outside the station for a solid cut of profits.',
       },
+      es: {
+        categoryLabel: 'Oficios y Servicios',
+        character: 'Rachid · Carrito de té',
+        title: 'Atender el carrito de té a la menta',
+        description:
+          'Rachid está resfriado y te pide servir té con menta frente a la estación a cambio de una buena parte de las ganancias.',
+      },
     },
     rightChoice: {
       content: {
@@ -166,6 +203,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Work the Evening Shift',
           outcome: 'Friendly service drew crowds of travelers and brisk sales!',
+        },
+        es: {
+          label: 'Cubrir todo el turno',
+          outcome: '¡Tu amabilidad atrajo a los viajeros y llenó la caja!',
         },
       },
       impact: { money: 95, reputation: 10, energy: -16, experience: 10 },
@@ -183,6 +224,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Take the Night Off',
           outcome: 'You rested up well, though Rachid had to shut early.',
+        },
+        es: {
+          label: 'Descansar esta tarde',
+          outcome: 'Recuperaste energía, aunque Rachid tuvo que cerrar el carrito.',
         },
       },
       impact: { money: 0, reputation: -4, energy: 14, experience: 0 },
@@ -214,6 +259,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Haj Omar shyly asks to borrow 15 MAD to cover his wife’s urgent prescription.',
       },
+      es: {
+        categoryLabel: 'Vecinos y Confianza',
+        character: 'Haj Omar · Vecino',
+        title: 'Préstamo urgente para medicina',
+        description:
+          'Haj Omar te pide con timidez 15 MAD prestados para completar la receta médica de su esposa.',
+      },
     },
     rightChoice: {
       content: {
@@ -228,6 +280,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Help Gladly',
           outcome: 'Word of your kindness spread quickly across the neighborhood!',
+        },
+        es: {
+          label: 'Ayudar con una sonrisa',
+          outcome: '¡Todo el barrio elogió tu generosidad y nobleza!',
         },
       },
       impact: { money: -15, reputation: 18, energy: -2, experience: 6 },
@@ -245,6 +301,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Politely Decline',
           outcome: 'He understood your situation and you kept your cash.',
+        },
+        es: {
+          label: 'Declinar con respeto',
+          outcome: 'Comprendió tu situación y conservaste tu poco efectivo.',
         },
       },
       impact: { money: 0, reputation: -6, energy: 2, experience: 1 },
@@ -276,6 +336,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Fresh oasis Medjool dates are going cheap—pack them into neat boxes to double their retail value.',
       },
+      es: {
+        categoryLabel: 'Comercio local',
+        character: 'Vendedor de Tafilalet · Zoco',
+        title: 'Empaquetar y vender dátiles Medjool',
+        description:
+          'Llegan dátiles del oasis a buen precio; en cajas limpias se venden al doble de su valor.',
+      },
     },
     rightChoice: {
       content: {
@@ -290,6 +357,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Pack & Retail Them',
           outcome: 'Clean packaging delighted families and sold out fast!',
+        },
+        es: {
+          label: 'Empaquetar y vender',
+          outcome: '¡La presentación impecable encantó a las familias y volaron todas!',
         },
       },
       impact: { money: 140, reputation: 10, energy: -14, experience: 10 },
@@ -307,6 +378,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Take One Small Box',
           outcome: 'Safe, modest profit with almost no fatigue.',
+        },
+        es: {
+          label: 'Llevar solo una caja',
+          outcome: 'Ganancia modesta y segura casi sin cansancio.',
         },
       },
       impact: { money: 40, reputation: 4, energy: -4, experience: 4 },
@@ -338,6 +413,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Nadia needs a dependable courier to deliver 8 local packages across nearby blocks before evening.',
       },
+      es: {
+        categoryLabel: 'Entrega rápida',
+        character: 'Nadia · Tienda local',
+        title: 'Ruta de paquetes en bicicleta',
+        description:
+          'Nadia busca un repartidor de confianza para entregar 8 pedidos en barrios cercanos antes de la noche.',
+      },
     },
     rightChoice: {
       content: {
@@ -352,6 +434,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Deliver All 8',
           outcome: 'Every parcel arrived early and you earned generous tips!',
+        },
+        es: {
+          label: 'Entregar los 8 paquetes',
+          outcome: '¡Entregaste todo a tiempo y recibiste buenas propinas!',
         },
       },
       impact: { money: 185, reputation: 12, energy: -20, experience: 10 },
@@ -369,6 +455,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Take 4 Nearby',
           outcome: 'Decent pay while saving your legs.',
+        },
+        es: {
+          label: 'Tomar 4 cercanos',
+          outcome: 'Buen ingreso cuidando tus fuerzas.',
         },
       },
       impact: { money: 85, reputation: 5, energy: -8, experience: 5 },
@@ -400,6 +490,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Family from the countryside sent jars of pure honey and fresh olive oil for you to sell in town.',
       },
+      es: {
+        categoryLabel: 'Productos locales',
+        character: 'Tía Fatima · Campo',
+        title: 'Miel pura y aceite de oliva',
+        description:
+          'Tu familia del campo envió frascos de miel pura y aceite de oliva fresco para vender en la ciudad.',
+      },
     },
     rightChoice: {
       content: {
@@ -414,6 +511,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sell Direct with Samples',
           outcome: 'Authentic flavor won buyers over and sparked repeat orders!',
+        },
+        es: {
+          label: 'Venta directa con cata',
+          outcome: '¡El sabor auténtico conquistó a los clientes y pidieron más!',
         },
       },
       impact: { money: 220, reputation: 14, energy: -12, experience: 10 },
@@ -431,6 +532,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sell Bulk to Grocer',
           outcome: 'Quick lump-sum sale with zero hassle.',
+        },
+        es: {
+          label: 'Vender todo al colmado',
+          outcome: 'Venta rápida en lote y sin complicaciones.',
         },
       },
       impact: { money: 110, reputation: 5, energy: -4, experience: 5 },
@@ -462,6 +567,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'You have been hustling nonstop. Younes invites you to pause, eat well, and recharge.',
       },
+      es: {
+        categoryLabel: 'Descanso y Salud',
+        character: 'Amigo Younes · Café Oasis',
+        title: 'Pausa para almuerzo y té con menta',
+        description:
+          'Llevas días trabajando sin parar. Younes te invita a comer algo caliente y recargar pilas.',
+      },
     },
     rightChoice: {
       content: {
@@ -476,6 +588,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Rest & Recharge',
           outcome: 'You feel refreshed and sharp for bigger deals ahead!',
+        },
+        es: {
+          label: 'Descansar y recargar',
+          outcome: '¡Recuperaste toda tu vitalidad y claridad mental!',
         },
       },
       impact: { money: -30, reputation: 6, energy: 32, experience: 2 },
@@ -493,6 +609,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Push Through Work',
           outcome: 'Extra cash earned, though exhaustion is catching up.',
+        },
+        es: {
+          label: 'Seguir trabajando',
+          outcome: 'Ganaste algo extra, pero el agotamiento empieza a pasarte factura.',
         },
       },
       impact: { money: 70, reputation: -4, energy: -18, experience: 6 },
@@ -524,6 +644,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Morning commuters by the station crave warm homemade msemen, harcha, and hot coffee.',
       },
+      es: {
+        categoryLabel: 'Cocina y Oficio',
+        character: 'Hermana Khadija · Cocina',
+        title: 'Msemen calientes para viajeros',
+        description:
+          'Frente a la estación, quienes van al trabajo buscan cada mañana msemen caseros y café caliente.',
+      },
     },
     rightChoice: {
       content: {
@@ -538,6 +665,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Prep 50 Portions',
           outcome: 'Sold out before 9 AM, giving your capital a huge boost!',
+        },
+        es: {
+          label: 'Preparar 50 raciones',
+          outcome: '¡Se agotó todo antes de las 9:00 y tu saldo dio un gran salto!',
         },
       },
       impact: { money: 250, reputation: 14, energy: -18, experience: 10 },
@@ -555,6 +686,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Coffee Cups Only',
           outcome: 'Steady pocket profit with minimal prep effort.',
+        },
+        es: {
+          label: 'Solo vasos de café',
+          outcome: 'Ingreso tranquilo sin agotamiento en la cocina.',
         },
       },
       impact: { money: 95, reputation: 6, energy: -6, experience: 5 },
@@ -586,6 +721,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'A wholesaler is clearing sturdy travel bags at steep discounts right before the weekend rush.',
       },
+      es: {
+        categoryLabel: 'Gran oportunidad',
+        character: 'Mayorista · Mercado Central',
+        title: 'Liquidación de mochilas y bolsas',
+        description:
+          'Un mayorista liquida un lote de bolsas de viaje resistentes con gran descuento antes del fin de semana.',
+      },
     },
     rightChoice: {
       content: {
@@ -600,6 +742,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Go All In on the Lot',
           outcome: 'Golden flip! You sold every bag and unlocked serious capital!',
+        },
+        es: {
+          label: 'Invertir todo en el lote',
+          outcome: '¡Jugada de oro! Vendiste todo y diste el salto al siguiente nivel.',
         },
       },
       impact: { money: 320, reputation: 12, energy: -16, experience: 12 },
@@ -617,6 +763,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Pre-Orders Only',
           outcome: 'Safe commission without tying up your cash.',
+        },
+        es: {
+          label: 'Solo bajo pedido',
+          outcome: 'Comisión segura sin inmovilizar tu capital.',
         },
       },
       impact: { money: 140, reputation: 8, energy: -6, experience: 7 },
@@ -650,6 +800,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'A prime corner shop is up for rent. Fitting it out costs upfront cash, yet multiplies daily foot traffic.',
       },
+      es: {
+        categoryLabel: 'Comercio intermedio',
+        character: 'Agente · Calle Comercial',
+        title: 'Abrir tu primera tienda',
+        description:
+          'Se alquila un local en esquina con mucho tránsito. Acondicionarlo requiere inversión, pero multiplicará las ventas.',
+      },
     },
     rightChoice: {
       content: {
@@ -664,6 +821,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Lease & Fit Out Shop',
           outcome: 'Grand opening hit! Foot traffic doubled your daily turnover!',
+        },
+        es: {
+          label: 'Alquilar y equipar tienda',
+          outcome: '¡Gran inauguración! El flujo de clientes duplicó tus ingresos diarios.',
         },
       },
       impact: { money: 4500, reputation: 14, energy: -18, experience: 12 },
@@ -681,6 +842,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Rent a Pop-Up Corner',
           outcome: 'Lower overhead and steady earnings without a long lease.',
+        },
+        es: {
+          label: 'Alquilar un pequeño puesto',
+          outcome: 'Menos gastos fijos e ingresos estables sin ataduras.',
         },
       },
       impact: { money: 1600, reputation: 6, energy: -8, experience: 6 },
@@ -712,6 +877,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'An importer offers a container lot of certified chargers and earbuds with strong retail margins.',
       },
+      es: {
+        categoryLabel: 'Importación y Mayor',
+        character: 'Proveedor · Puerto de Casablanca',
+        title: 'Importar accesorios de móvil',
+        description:
+          'Un importador ofrece un lote de cargadores y auriculares certificados con gran margen de reventa.',
+      },
     },
     rightChoice: {
       content: {
@@ -726,6 +898,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Import & Distribute',
           outcome: 'Supplied 15 local shops and booked massive wholesale profits!',
+        },
+        es: {
+          label: 'Importar y distribuir',
+          outcome: '¡Abasteciste a 15 tiendas locales con ganancias récord!',
         },
       },
       impact: { money: 7200, reputation: 12, energy: -16, experience: 12 },
@@ -743,6 +919,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Stock Only My Shop',
           outcome: 'Safe in-store sales without distribution headaches.',
+        },
+        es: {
+          label: 'Solo para mi tienda',
+          outcome: 'Ventas tranquilas en tienda sin líos logísticos.',
         },
       },
       impact: { money: 2400, reputation: 5, energy: -6, experience: 6 },
@@ -774,6 +954,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Orders are piling up and solo work is draining you. Hiring two sharp helpers could scale operations.',
       },
+      es: {
+        categoryLabel: 'Equipo y Gestión',
+        character: 'Recursos Humanos · Expansión',
+        title: 'Contratar dos asistentes',
+        description:
+          'Los pedidos se acumulan y trabajar solo te agota. Contratar dos vendedores fiables escalará el negocio.',
+      },
     },
     rightChoice: {
       content: {
@@ -788,6 +975,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Hire & Train Both',
           outcome: 'Service speed doubled while freeing up your time and energy!',
+        },
+        es: {
+          label: 'Contratar y formar',
+          outcome: '¡Se duplicó la rapidez del servicio, subieron ventas y tu energía!',
         },
       },
       impact: { money: 5500, reputation: 14, energy: 15, experience: 10 },
@@ -805,6 +996,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Handle It Solo',
           outcome: 'Saved payroll, but delays and fatigue cost you goodwill.',
+        },
+        es: {
+          label: 'Seguir solo por ahora',
+          outcome: 'Ahorraste sueldos, pero los retrasos y el cansancio afectaron a los clientes.',
         },
       },
       impact: { money: 1800, reputation: -8, energy: -22, experience: 5 },
@@ -836,6 +1031,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'A rival merchant across the street launches deep discounts and ads targeting your loyal buyers.',
       },
+      es: {
+        categoryLabel: 'Competencia',
+        character: 'Rival fuerte · Calle de enfrente',
+        title: 'Guerra de precios de un competidor',
+        description:
+          'Un competidor lanza descuentos agresivos y publicidad para atraer a tu clientela fiel.',
+      },
     },
     rightChoice: {
       content: {
@@ -850,6 +1052,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Launch Loyalty & Warranty',
           outcome: 'Customers chose trusted quality over cheap gimmicks!',
+        },
+        es: {
+          label: 'Lanzar club y garantía',
+          outcome: '¡Los clientes eligieron tu garantía y calidad frente al rival!',
         },
       },
       impact: { money: 6400, reputation: 16, energy: -12, experience: 12 },
@@ -867,6 +1073,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Undercut His Prices',
           outcome: 'Kept sales volume at the cost of a steep margin loss.',
+        },
+        es: {
+          label: 'Bajar precios por debajo',
+          outcome: 'Mantuviste ventas a costa de una fuerte pérdida de margen.',
         },
       },
       impact: { money: -1800, reputation: -4, energy: -14, experience: 8 },
@@ -898,6 +1108,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'A chain of 6 cafés and boutique hotels seeks a reliable monthly supplier for coffee and dates.',
       },
+      es: {
+        categoryLabel: 'Contratos B2B',
+        character: 'Red de cafés y hoteles',
+        title: 'Contrato anual de suministro',
+        description:
+          'Una cadena de 6 cafés y hoteles busca proveedor mensual fiable de café y dátiles selectos.',
+      },
     },
     rightChoice: {
       content: {
@@ -912,6 +1129,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sign & Deliver Quality',
           outcome: 'Locked in recurring B2B revenue and surged ahead!',
+        },
+        es: {
+          label: 'Firmar y cumplir calidad',
+          outcome: '¡Aseguraste ingresos mensuales fijos y diste un gran salto!',
         },
       },
       impact: { money: 9500, reputation: 15, energy: -16, experience: 12 },
@@ -929,6 +1150,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Supply Just 2 Cafés',
           outcome: 'Comfortable workload with modest steady profit.',
+        },
+        es: {
+          label: 'Abastecer solo 2 cafés',
+          outcome: 'Carga cómoda con beneficio estable y seguro.',
         },
       },
       impact: { money: 3200, reputation: 7, energy: -6, experience: 6 },
@@ -960,6 +1185,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Online orders are booming—owning a 3-scooter delivery team lets you serve the entire city.',
       },
+      es: {
+        categoryLabel: 'Logística',
+        character: 'Red de reparto urbano',
+        title: 'Comprar 3 motos de reparto',
+        description:
+          'Los pedidos online crecen rápido; con 3 motos propias podrás cubrir toda la ciudad.',
+      },
     },
     rightChoice: {
       content: {
@@ -974,6 +1206,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Launch Express Fleet',
           outcome: 'Same-day city delivery made your brand the fastest in town!',
+        },
+        es: {
+          label: 'Lanzar flota exprés',
+          outcome: '¡Entrega en el día en toda la ciudad: tu tienda ya es referente!',
         },
       },
       impact: { money: 8200, reputation: 12, energy: -14, experience: 12 },
@@ -991,6 +1227,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Outsource Couriers',
           outcome: 'Avoided vehicle upkeep while sharing some margin.',
+        },
+        es: {
+          label: 'Subcontratar mensajería',
+          outcome: 'Sin mantenimiento de vehículos, aunque compartiendo margen.',
         },
       },
       impact: { money: 2900, reputation: 5, energy: -4, experience: 5 },
@@ -1022,6 +1262,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'A domestic factory offers crisp seasonal apparel right before the holidays at distributor pricing.',
       },
+      es: {
+        categoryLabel: 'Comercio estacional',
+        character: 'Fábrica textil · Tánger',
+        title: 'Colección de ropa para fiestas',
+        description:
+          'Una fábrica nacional ofrece ropa de temporada justo antes de las fiestas a precio preferente de distribuidor.',
+      },
     },
     rightChoice: {
       content: {
@@ -1036,6 +1283,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Book & Distribute Early',
           outcome: 'Families flocked to the collection and profits soared!',
+        },
+        es: {
+          label: 'Reservar y distribuir ya',
+          outcome: '¡Éxito rotundo entre familias y tiendas con ganancias récord!',
         },
       },
       impact: { money: 11500, reputation: 14, energy: -18, experience: 12 },
@@ -1053,6 +1304,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Order Limited Stock',
           outcome: 'Clean sell-through with zero leftover inventory.',
+        },
+        es: {
+          label: 'Pedir stock limitado',
+          outcome: 'Buenas ventas sin riesgo de mercancía sobrante.',
         },
       },
       impact: { money: 4100, reputation: 6, energy: -6, experience: 6 },
@@ -1084,6 +1339,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Heavy rain is leaking near your stocked crates. Fast action can save most of the goods.',
       },
+      es: {
+        categoryLabel: 'Gestión de crisis',
+        character: 'Alerta lluvia · Almacén',
+        title: 'Filtración de agua en el almacén',
+        description:
+          'Las fuertes lluvias gotean cerca de tus cajas almacenadas. Actuar rápido salvará la mercancía.',
+      },
     },
     rightChoice: {
       content: {
@@ -1098,6 +1360,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Relocate to Dry Storage',
           outcome: 'Saved 95% of your stock and impressed suppliers with your speed!',
+        },
+        es: {
+          label: 'Trasladar a almacén seco',
+          outcome: '¡Salvaste el 95% del stock y tu rapidez impresionó a los proveedores!',
         },
       },
       impact: { money: -2800, reputation: 10, energy: -14, experience: 10 },
@@ -1115,6 +1381,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Wait Out the Storm',
           outcome: 'Water ruined key stock and delayed customer orders.',
+        },
+        es: {
+          label: 'Esperar a que escampe',
+          outcome: 'El agua dañó parte clave del stock y retrasó los pedidos.',
         },
       },
       impact: { money: -5500, reputation: -12, energy: -6, experience: 6 },
@@ -1146,6 +1416,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'Local organizers offer to feature your shop brand on jerseys if you sponsor kits and trophies.',
       },
+      es: {
+        categoryLabel: 'Imagen y Barrio',
+        character: 'Asociación juvenil · Torneo',
+        title: 'Patrocinar el torneo del barrio',
+        description:
+          'Los organizadores ofrecen poner tu marca en las camisetas si patrocinas equipaciones y trofeos.',
+      },
     },
     rightChoice: {
       content: {
@@ -1160,6 +1437,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sponsor & Attend Finals',
           outcome: 'The whole community cheered your brand and packed your shop!',
+        },
+        es: {
+          label: 'Patrocinar e ir a la final',
+          outcome: '¡Todo el barrio aplaudió tu marca y llenó tu tienda!',
         },
       },
       impact: { money: 4800, reputation: 22, energy: -8, experience: 8 },
@@ -1177,6 +1458,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Skip Sponsorship',
           outcome: 'Saved cash today, though missed strong community goodwill.',
+        },
+        es: {
+          label: 'Declinar el patrocinio',
+          outcome: 'Ahorraste presupuesto, pero perdiste una gran promoción local.',
         },
       },
       impact: { money: 0, reputation: -6, energy: 4, experience: 2 },
@@ -1208,6 +1493,13 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         description:
           'A regional wholesaler wants to upgrade your store into an official distribution center for the province.',
       },
+      es: {
+        categoryLabel: 'Expansión regional',
+        character: 'Socio · Distribución',
+        title: 'Convertirte en centro regional',
+        description:
+          'Un distribuidor regional propone convertir tu negocio en punto oficial de distribución para toda la región.',
+      },
     },
     rightChoice: {
       content: {
@@ -1222,6 +1514,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sign Regional Deal',
           outcome: 'Game-changing deal! You have graduated to full-scale entrepreneurship!',
+        },
+        es: {
+          label: 'Firmar acuerdo regional',
+          outcome: '¡Paso decisivo! Das el salto hacia la etapa empresarial.',
         },
       },
       impact: { money: 16500, reputation: 16, energy: -18, experience: 15 },
@@ -1239,6 +1535,10 @@ export const STAGE_1_2_CARDS: ScenarioCard[] = [
         en: {
           label: 'Open Second Branch',
           outcome: 'Controlled expansion adding solid recurring income.',
+        },
+        es: {
+          label: 'Abrir segunda sucursal',
+          outcome: 'Crecimiento equilibrado con sólidos ingresos propios.',
         },
       },
       impact: { money: 7500, reputation: 10, energy: -10, experience: 9 },

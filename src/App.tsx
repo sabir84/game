@@ -66,12 +66,13 @@ const LANG_OPTIONS: { code: Language; short: string; label: string }[] = [
   { code: 'ar', short: 'AR', label: 'العربية (AR)' },
   { code: 'fr', short: 'FR', label: 'Français (FR)' },
   { code: 'en', short: 'EN', label: 'English (EN)' },
+  { code: 'es', short: 'ES', label: 'Español (ES)' },
 ];
 
 function loadLanguage(): Language {
   try {
     const saved = localStorage.getItem(LANG_STORAGE_KEY);
-    if (saved === 'ar' || saved === 'fr' || saved === 'en') {
+    if (saved === 'ar' || saved === 'fr' || saved === 'en' || saved === 'es') {
       return saved;
     }
   } catch {
@@ -398,6 +399,7 @@ export default function App() {
         ar: chosen.content.ar.outcome,
         fr: chosen.content.fr.outcome,
         en: chosen.content.en.outcome,
+        es: chosen.content.es.outcome,
       };
       let gambleOutcome: DecisionFeedback['gambleOutcome'] | undefined;
 
@@ -471,11 +473,13 @@ export default function App() {
             ar: currentCard.content.ar.title,
             fr: currentCard.content.fr.title,
             en: currentCard.content.en.title,
+            es: currentCard.content.es.title,
           },
           choiceLabel: {
             ar: chosen.content.ar.label,
             fr: chosen.content.fr.label,
             en: chosen.content.en.label,
+            es: chosen.content.es.label,
           },
           choiceDirection: direction,
           moneyDelta: appliedImpact.money,
@@ -796,12 +800,12 @@ export default function App() {
       {/* Compact Top Bar with Language Switcher */}
       <header className="shrink-0 sticky top-0 z-30 bg-[#FBF6EC]/92 backdrop-blur-md border-b border-[#E5D7BE] pt-safe">
         <div className="max-w-5xl mx-auto px-2.5 sm:px-4 h-12 sm:h-14 flex items-center justify-between gap-2">
-          {/* Title + Compact Tri-lingual Switcher */}
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          {/* Title + Compact Four-Language Switcher */}
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
             <button
               type="button"
               onClick={() => setStatus('TITLE_MENU')}
-              className="font-display text-xs sm:text-lg font-extrabold text-[#145C43] whitespace-nowrap truncate max-w-[116px] sm:max-w-none hover:opacity-85 transition-opacity"
+              className="font-display text-xs sm:text-lg font-extrabold text-[#145C43] whitespace-nowrap truncate max-w-[92px] sm:max-w-none hover:opacity-85 transition-opacity"
             >
               <span className="sm:hidden">{t.brandCompact}</span>
               <span className="hidden sm:inline">{t.brandTitle}</span>
@@ -823,7 +827,7 @@ export default function App() {
                     aria-label={opt.label}
                     aria-pressed={isActive}
                     title={opt.label}
-                    className={`min-h-[28px] px-2 py-0.5 rounded-lg text-[10px] sm:text-[11px] font-extrabold tracking-wide transition-colors whitespace-nowrap shrink-0 ${
+                    className={`min-h-[28px] px-1.5 sm:px-2 py-0.5 rounded-lg text-[10px] sm:text-[11px] font-extrabold tracking-wide transition-colors whitespace-nowrap shrink-0 ${
                       isActive
                         ? 'bg-[#145C43] text-white shadow-xs'
                         : 'text-[#5C4128] hover:text-[#1F150D]'

@@ -19,6 +19,7 @@ interface ProceduralItem {
   ar: LocalizedItemText;
   fr: LocalizedItemText;
   en: LocalizedItemText;
+  es: LocalizedItemText;
 }
 
 interface LocalizedPlaceText {
@@ -31,6 +32,7 @@ interface ProceduralPlace {
   ar: LocalizedPlaceText;
   fr: LocalizedPlaceText;
   en: LocalizedPlaceText;
+  es: LocalizedPlaceText;
 }
 
 interface ProceduralActor {
@@ -38,6 +40,7 @@ interface ProceduralActor {
   ar: { full: string; short: string };
   fr: { full: string; short: string };
   en: { full: string; short: string };
+  es: { full: string; short: string };
 }
 
 interface StageDataPool {
@@ -71,6 +74,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'تمور مجهول الفاخرة', short: 'تمور مجهول' },
         fr: { noun: 'dattes Majhoul sélectionnées', short: 'dattes Majhoul' },
         en: { noun: 'premium Majhoul dates', short: 'Majhoul dates' },
+        es: { noun: 'dátiles Majhoul selectos', short: 'dátiles Majhoul' },
       },
       {
         id: 'mint',
@@ -79,6 +83,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'حزم النعناع الفاسي الطازج', short: 'النعناع الطازج' },
         fr: { noun: 'bottes de menthe fraîche de Fès', short: 'menthe fraîche' },
         en: { noun: 'fresh Fez mint bundles', short: 'fresh mint' },
+        es: { noun: 'manojos de menta fresca de Fez', short: 'menta fresca' },
       },
       {
         id: 'bikes',
@@ -87,6 +92,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'إصلاح الدراجات الهوائية', short: 'صيانة الدراجات' },
         fr: { noun: 'réparation de vélos de quartier', short: 'réparation vélos' },
         en: { noun: 'neighborhood bicycle repairs', short: 'bike repairs' },
+        es: { noun: 'reparación de bicicletas del barrio', short: 'taller de bicis' },
       },
       {
         id: 'cables',
@@ -95,6 +101,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'كابلات وشواحن الهواتف', short: 'ملحقات الهواتف' },
         fr: { noun: 'câbles et chargeurs mobiles', short: 'accessoires GSM' },
         en: { noun: 'phone cables and chargers', short: 'phone accessories' },
+        es: { noun: 'cables y cargadores de móvil', short: 'accesorios móvil' },
       },
       {
         id: 'delivery',
@@ -103,6 +110,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'توصيل الطرود السريع', short: 'خدمة التوصيل' },
         fr: { noun: 'livraison express de colis', short: 'livraison express' },
         en: { noun: 'express local parcel runs', short: 'parcel delivery' },
+        es: { noun: 'reparto exprés de paquetes locales', short: 'reparto exprés' },
       },
       {
         id: 'leather',
@@ -111,6 +119,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'تجديد وتلميع البوفات الجلدية', short: 'حرفة الجلد' },
         fr: { noun: 'restauration de poufs en cuir', short: 'cuir artisanal' },
         en: { noun: 'restoring handcrafted leather poufs', short: 'leather craft' },
+        es: { noun: 'restauración de pufs de cuero artesanal', short: 'cuero artesanal' },
       },
       {
         id: 'argan',
@@ -119,6 +128,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'قوارير زيت الأركان الأصيل', short: 'زيت الأركان' },
         fr: { noun: 'flacons d’huile d’argan pur', short: 'huile d’argan' },
         en: { noun: 'pure argan oil bottles', short: 'argan oil' },
+        es: { noun: 'frascos de aceite de argán puro', short: 'aceite de argán' },
       },
       {
         id: 'juice',
@@ -127,6 +137,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'أكواب عصير البرتقال الطازج', short: 'عصير البرتقال' },
         fr: { noun: 'jus d’orange pressé à la main', short: 'jus frais' },
         en: { noun: 'fresh-pressed orange juice', short: 'fresh juice' },
+        es: { noun: 'zumo de naranja recién exprimido', short: 'zumo natural' },
       },
     ],
     places: [
@@ -135,36 +146,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { name: 'درب عمر', inPlace: 'في سوق درب عمر بالبيضاء' },
         fr: { name: 'Derb Omar', inPlace: 'au marché de Derb Omar à Casablanca' },
         en: { name: 'Derb Omar', inPlace: 'at Derb Omar market in Casablanca' },
+        es: { name: 'Derb Omar', inPlace: 'en el mercado de Derb Omar en Casablanca' },
       },
       {
         id: 'bab_el_had',
         ar: { name: 'باب الأحد', inPlace: 'قرب سوق باب الأحد بالرباط' },
         fr: { name: 'Bab El Had', inPlace: 'près de Bab El Had à Rabat' },
         en: { name: 'Bab El Had', inPlace: 'near Bab El Had in Rabat' },
+        es: { name: 'Bab El Had', inPlace: 'cerca de Bab El Had en Rabat' },
       },
       {
         id: 'souk_el_had',
         ar: { name: 'سوق الأحد', inPlace: 'في سوق الأحد بأكادير' },
         fr: { name: 'Souk El Had', inPlace: 'au Souk El Had d’Agadir' },
         en: { name: 'Souk El Had', inPlace: 'at Agadir’s Souk El Had' },
+        es: { name: 'Zoco El Had', inPlace: 'en el Zoco El Had de Agadir' },
       },
       {
         id: 'jemaa',
         ar: { name: 'جامع الفنا', inPlace: 'بمحاذاة ساحة جامع الفنا بمراكش' },
         fr: { name: 'Jemaa El Fna', inPlace: 'aux abords de Jemaa El Fna à Marrakech' },
         en: { name: 'Jemaa El Fna', inPlace: 'around Jemaa El Fna in Marrakech' },
+        es: { name: 'Yemaa el Fna', inPlace: 'junto a Yemaa el Fna en Marrakech' },
       },
       {
         id: 'boujloud',
         ar: { name: 'باب بوجلود', inPlace: 'في أزقة باب بوجلود بفاس' },
         fr: { name: 'Bab Boujloud', inPlace: 'dans les ruelles de Bab Boujloud à Fès' },
         en: { name: 'Bab Boujloud', inPlace: 'in the lanes of Bab Boujloud in Fez' },
+        es: { name: 'Bab Boujloud', inPlace: 'en las callejuelas de Bab Boujloud en Fez' },
       },
       {
         id: 'tangier_medina',
         ar: { name: 'سوق طنجة', inPlace: 'في السوق المركزي بطنجة' },
         fr: { name: 'Marché de Tanger', inPlace: 'au Grand Socco de Tanger' },
         en: { name: 'Tangier Market', inPlace: 'at Tangier’s Grand Socco' },
+        es: { name: 'Gran Zoco de Tánger', inPlace: 'en el Gran Zoco de Tánger' },
       },
     ],
     actors: [
@@ -173,36 +190,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { full: 'المعلّم قاسم · حرفي مخضرم', short: 'المعلّم قاسم' },
         fr: { full: 'Maâlem Kacem · Artisan', short: 'Maâlem Kacem' },
         en: { full: 'Maâlem Kacem · Craftsman', short: 'Maâlem Kacem' },
+        es: { full: 'Maâlem Kacem · Artesano', short: 'Maâlem Kacem' },
       },
       {
         id: 'meriem',
         ar: { full: 'مريم · منسقة فعاليات', short: 'مريم' },
         fr: { full: 'Meryem · Organisatrice', short: 'Meryem' },
         en: { full: 'Meryem · Event Coordinator', short: 'Meryem' },
+        es: { full: 'Meryem · Organizadora', short: 'Meryem' },
       },
       {
         id: 'arbi',
         ar: { full: 'العم العربي · منتج محلي', short: 'العم العربي' },
         fr: { full: 'Oncle Larbi · Producteur', short: 'Oncle Larbi' },
         en: { full: 'Uncle Larbi · Local Grower', short: 'Uncle Larbi' },
+        es: { full: 'Tío Larbi · Productor local', short: 'Tío Larbi' },
       },
       {
         id: 'nadia',
         ar: { full: 'نادية · صاحبة مقهى شعبي', short: 'نادية' },
         fr: { full: 'Nadia · Gérante de café', short: 'Nadia' },
         en: { full: 'Nadia · Café Owner', short: 'Nadia' },
+        es: { full: 'Nadia · Dueña de café', short: 'Nadia' },
       },
       {
         id: 'omar',
         ar: { full: 'عمر · موزع سريع', short: 'عمر' },
         fr: { full: 'Omar · Coursier local', short: 'Omar' },
         en: { full: 'Omar · Local Courier', short: 'Omar' },
+        es: { full: 'Omar · Mensajero local', short: 'Omar' },
       },
       {
         id: 'fatima',
         ar: { full: 'خالتي فاطمة · رئيسة تعاونية', short: 'خالتي فاطمة' },
         fr: { full: 'Khalti Fatima · Coopérative', short: 'Khalti Fatima' },
         en: { full: 'Aunt Fatima · Cooperative Lead', short: 'Aunt Fatima' },
+        es: { full: 'Tía Fatima · Cooperativa', short: 'Tía Fatima' },
       },
     ],
   },
@@ -215,6 +238,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'تشكيلة التوابل والعطور المغربية', short: 'التوابل والعطور' },
         fr: { noun: 'lots d’épices et senteurs marocaines', short: 'épices et senteurs' },
         en: { noun: 'Moroccan spice and scent blends', short: 'spices & scents' },
+        es: { noun: 'surtidos de especias y esencias marroquíes', short: 'especias y esencias' },
       },
       {
         id: 'shopfront',
@@ -223,6 +247,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'تحديث واجهة المحل والرفوف', short: 'واجهة المحل' },
         fr: { noun: 'rénovation de vitrine et rayons', short: 'vitrine boutique' },
         en: { noun: 'retail storefront and shelving upgrade', short: 'shopfront upgrade' },
+        es: { noun: 'reforma de escaparate y estanterías', short: 'escaparate comercial' },
       },
       {
         id: 'textiles',
@@ -231,6 +256,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'أقمشة وقفاطين موسمية', short: 'الأقمشة والقفاطين' },
         fr: { noun: 'tissus et caftans de saison', short: 'tissus saisonniers' },
         en: { noun: 'seasonal fabrics and caftan lines', short: 'seasonal textiles' },
+        es: { noun: 'telas y caftanes de temporada', short: 'textiles de temporada' },
       },
       {
         id: 'scooters',
@@ -239,6 +265,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'خدمة التوصيل بالدراجات النارية', short: 'أسطول التوصيل' },
         fr: { noun: 'service de livraison à scooters', short: 'flotte scooters' },
         en: { noun: 'scooter delivery dispatch service', short: 'delivery fleet' },
+        es: { noun: 'servicio de reparto en moto', short: 'flota de motos' },
       },
       {
         id: 'olive_oil',
@@ -247,6 +274,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'براميل زيت الزيتون البكر الممتاز', short: 'زيت الزيتون' },
         fr: { noun: 'fûts d’huile d’olive extra vierge', short: 'huile d’olive' },
         en: { noun: 'extra-virgin olive oil drums', short: 'olive oil drums' },
+        es: { noun: 'bidones de aceite de oliva virgen extra', short: 'aceite de oliva' },
       },
       {
         id: 'staff',
@@ -255,6 +283,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'توظيف وتكوين مساعدي البيع', short: 'طاقم البيع' },
         fr: { noun: 'recrutement et formation des vendeurs', short: 'équipe de vente' },
         en: { noun: 'hiring and training retail assistants', short: 'sales team' },
+        es: { noun: 'contratación y formación de vendedores', short: 'equipo de ventas' },
       },
       {
         id: 'estore',
@@ -263,6 +292,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'منصة البيع الإلكتروني مع الدفع عند الاستلام', short: 'المتجر الإلكتروني' },
         fr: { noun: 'boutique en ligne avec paiement à la livraison', short: 'e-boutique' },
         en: { noun: 'cash-on-delivery e-commerce storefront', short: 'e-commerce store' },
+        es: { noun: 'tienda online con pago contra reembolso', short: 'tienda online' },
       },
       {
         id: 'ceramics',
@@ -271,6 +301,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'أطقم الخزف الفاسي المذهب', short: 'الخزف الفاسي' },
         fr: { noun: 'collections de poterie de Fès', short: 'poterie de Fès' },
         en: { noun: 'hand-painted Fez ceramic sets', short: 'Fez ceramics' },
+        es: { noun: 'juegos de cerámica pintada de Fez', short: 'cerámica de Fez' },
       },
     ],
     places: [
@@ -279,36 +310,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { name: 'المعاريف', inPlace: 'في حي المعاريف بالدار البيضاء' },
         fr: { name: 'Maârif', inPlace: 'dans le quartier Maârif à Casablanca' },
         en: { name: 'Maârif', inPlace: 'in Casablanca’s Maârif district' },
+        es: { name: 'Maârif', inPlace: 'en el barrio de Maârif en Casablanca' },
       },
       {
         id: 'hay_riad',
         ar: { name: 'حي الرياض', inPlace: 'في المركز التجاري بحي الرياض بالرباط' },
         fr: { name: 'Hay Riad', inPlace: 'à Hay Riad à Rabat' },
         en: { name: 'Hay Riad', inPlace: 'in Rabat’s Hay Riad district' },
+        es: { name: 'Hay Riad', inPlace: 'en Hay Riad, Rabat' },
       },
       {
         id: 'gueliz',
         ar: { name: 'كيليز', inPlace: 'في شارع محمد الخامس بكيليز مراكش' },
         fr: { name: 'Guéliz', inPlace: 'sur l’avenue de Guéliz à Marrakech' },
         en: { name: 'Guéliz', inPlace: 'on Guéliz Avenue in Marrakech' },
+        es: { name: 'Guéliz', inPlace: 'en la avenida de Guéliz en Marrakech' },
       },
       {
         id: 'tangier_zone',
         ar: { name: 'المنطقة التجارية بطنجة', inPlace: 'في المنطقة الحرة بطنجة' },
         fr: { name: 'Zone de Tanger', inPlace: 'dans la zone commerciale de Tanger' },
         en: { name: 'Tangier Hub', inPlace: 'at Tangier’s commercial hub' },
+        es: { name: 'Polo de Tánger', inPlace: 'en el polo comercial de Tánger' },
       },
       {
         id: 'meknes',
         ar: { name: 'مكناس', inPlace: 'في سوق الجملة بمكناس' },
         fr: { name: 'Meknès', inPlace: 'au pôle commercial de Meknès' },
         en: { name: 'Meknes', inPlace: 'at the Meknes wholesale hub' },
+        es: { name: 'Meknés', inPlace: 'en el centro mayorista de Meknés' },
       },
       {
         id: 'agadir_bay',
         ar: { name: 'أكادير', inPlace: 'في الممر السياحي بأكادير' },
         fr: { name: 'Agadir', inPlace: 'sur la corniche commerçante d’Agadir' },
         en: { name: 'Agadir', inPlace: 'along Agadir’s retail promenade' },
+        es: { name: 'Agadir', inPlace: 'en el paseo comercial de Agadir' },
       },
     ],
     actors: [
@@ -317,36 +354,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { full: 'الحاج المكي · مستورد سلع', short: 'الحاج المكي' },
         fr: { full: 'Haj Mekki · Importateur', short: 'Haj Mekki' },
         en: { full: 'Haj Mekki · Importer', short: 'Haj Mekki' },
+        es: { full: 'Haj Mekki · Importador', short: 'Haj Mekki' },
       },
       {
         id: 'salma',
         ar: { full: 'سلمى · مديرة تسويق رقمي', short: 'سلمى' },
         fr: { full: 'Salma · Responsable digitale', short: 'Salma' },
         en: { full: 'Salma · Digital Marketer', short: 'Salma' },
+        es: { full: 'Salma · Marketing digital', short: 'Salma' },
       },
       {
         id: 'karim',
         ar: { full: 'كريم · موزع جهوي', short: 'كريم' },
         fr: { full: 'Karim · Distributeur régional', short: 'Karim' },
         en: { full: 'Karim · Regional Distributor', short: 'Karim' },
+        es: { full: 'Karim · Distribuidor regional', short: 'Karim' },
       },
       {
         id: 'leila',
         ar: { full: 'ليلى · مصممة علامات تجارية', short: 'ليلى' },
         fr: { full: 'Leila · Designer retail', short: 'Leila' },
         en: { full: 'Leila · Brand Designer', short: 'Leila' },
+        es: { full: 'Leila · Diseñadora de marca', short: 'Leila' },
       },
       {
         id: 'rachid',
         ar: { full: 'رشيد · محاسب ومستشار ضريبي', short: 'رشيد' },
         fr: { full: 'Rachid · Expert-comptable', short: 'Rachid' },
         en: { full: 'Rachid · Tax Accountant', short: 'Rachid' },
+        es: { full: 'Rachid · Asesor fiscal', short: 'Rachid' },
       },
       {
         id: 'ghallef',
         ar: { full: 'سي بنسعيد · تاجر جملة', short: 'سي بنسعيد' },
         fr: { full: 'Si Bensaïd · Grossiste', short: 'Si Bensaïd' },
         en: { full: 'Si Bensaïd · Wholesaler', short: 'Si Bensaïd' },
+        es: { full: 'Si Bensaïd · Mayorista', short: 'Si Bensaïd' },
       },
     ],
   },
@@ -359,6 +402,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'خط تعبئة وتغليف أوتوماتيكي', short: 'خط التعبئة' },
         fr: { noun: 'ligne automatisée de conditionnement', short: 'ligne d’emballage' },
         en: { noun: 'automated packaging and bottling line', short: 'packaging line' },
+        es: { noun: 'línea automatizada de envasado y empaquetado', short: 'línea de envasado' },
       },
       {
         id: 'agro_farm',
@@ -367,6 +411,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'مزرعة فلاحية عصرية بالسقي الذكي', short: 'الفلاحة العصرية' },
         fr: { noun: 'ferme agricole en irrigation intelligente', short: 'ferme moderne' },
         en: { noun: 'smart-irrigated commercial farm', short: 'modern agro-farm' },
+        es: { noun: 'finca agrícola con riego inteligente', short: 'agro-finca moderna' },
       },
       {
         id: 'urban_realty',
@@ -375,6 +420,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'شقق ومحلات تجارية قيد الإنجاز', short: 'العقار التجاري' },
         fr: { noun: 'résidence mixte logements et commerces', short: 'immobilier mixte' },
         en: { noun: 'mixed-use urban retail & housing block', short: 'urban real estate' },
+        es: { noun: 'edificio mixto de viviendas y locales', short: 'inmobiliaria urbana' },
       },
       {
         id: 'cold_hub',
@@ -383,6 +429,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'مستودع التبريد والخدمات اللوجستية', short: 'سلسلة التبريد' },
         fr: { noun: 'entrepôt frigorifique logistique', short: 'chaîne du froid' },
         en: { noun: 'cold-chain storage & logistics hub', short: 'cold-chain hub' },
+        es: { noun: 'almacén frigorífico y centro logístico', short: 'cadena de frío' },
       },
       {
         id: 'cosmetics_export',
@@ -391,6 +438,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'صادرات مستحضرات التجميل الطبيعية', short: 'تصدير التجميل' },
         fr: { noun: 'export de cosmétiques naturels certifiés', short: 'export cosmétique' },
         en: { noun: 'certified natural cosmetics exports', short: 'cosmetics export' },
+        es: { noun: 'exportaciones de cosmética natural certificada', short: 'exportación cosmética' },
       },
       {
         id: 'cafe_chain',
@@ -399,6 +447,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'سلسلة مقاهي ومخبزات حديثة', short: 'سلسلة المقاهي' },
         fr: { noun: 'chaîne de cafés et boulangeries modernes', short: 'franchise cafés' },
         en: { noun: 'modern artisan café franchise', short: 'café franchise' },
+        es: { noun: 'franquicia moderna de cafés y panaderías', short: 'cadena de cafés' },
       },
       {
         id: 'textile_plant',
@@ -407,6 +456,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'وحدة صناعية للنسيج والملابس الجاهزة', short: 'مصنع النسيج' },
         fr: { noun: 'atelier industriel de confection textile', short: 'usine textile' },
         en: { noun: 'industrial garment manufacturing plant', short: 'textile plant' },
+        es: { noun: 'planta industrial de confección textil', short: 'fábrica textil' },
       },
       {
         id: 'freight_fleet',
@@ -415,6 +465,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'أسطول شاحنات النقل بين المدن', short: 'نقل البضائع' },
         fr: { noun: 'flotte de camions de fret interurbain', short: 'flotte fret' },
         en: { noun: 'intercity cargo trucking fleet', short: 'freight fleet' },
+        es: { noun: 'flota de camiones de carga interurbana', short: 'flota de carga' },
       },
     ],
     places: [
@@ -423,36 +474,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { name: 'تيكنوبارك الدار البيضاء', inPlace: 'في قطب تيكنوبارك بالدار البيضاء' },
         fr: { name: 'Technopark Casablanca', inPlace: 'au Technopark de Casablanca' },
         en: { name: 'Casablanca Technopark', inPlace: 'at Casablanca Technopark' },
+        es: { name: 'Technopark Casablanca', inPlace: 'en el Technopark de Casablanca' },
       },
       {
         id: 'tanger_med',
         ar: { name: 'ميناء طنجة المتوسط', inPlace: 'في المنطقة اللوجستية لميناء طنجة المتوسط' },
         fr: { name: 'Tanger Med', inPlace: 'au pôle logistique de Tanger Med' },
         en: { name: 'Tanger Med', inPlace: 'at the Tanger Med logistics hub' },
+        es: { name: 'Tánger Med', inPlace: 'en el polo logístico de Tánger Med' },
       },
       {
         id: 'ain_sebaa',
         ar: { name: 'عين السبع', inPlace: 'في المنطقة الصناعية بعين السبع' },
         fr: { name: 'Aïn Sebaâ', inPlace: 'dans la zone industrielle d’Aïn Sebaâ' },
         en: { name: 'Ain Sebaa', inPlace: 'in the Ain Sebaa industrial park' },
+        es: { name: 'Aïn Sebaâ', inPlace: 'en el polígono industrial de Aïn Sebaâ' },
       },
       {
         id: 'berkane',
         ar: { name: 'أكروبول بركان', inPlace: 'في القطب الفلاحي بأكروبول بركان' },
         fr: { name: 'Agropole Berkane', inPlace: 'à l’Agropole de Berkane' },
         en: { name: 'Berkane Agropole', inPlace: 'at the Berkane Agropole' },
+        es: { name: 'Agropole Berkane', inPlace: 'en el Agropole de Berkane' },
       },
       {
         id: 'kenitra',
         ar: { name: 'القنيطرة الصناعية', inPlace: 'في القطب الصناعي بالقنيطرة' },
         fr: { name: 'Pôle de Kénitra', inPlace: 'dans la zone franche de Kénitra' },
         en: { name: 'Kenitra Park', inPlace: 'in Kenitra’s Atlantic Free Zone' },
+        es: { name: 'Parque de Kenitra', inPlace: 'en la Zona Franca Atlántica de Kenitra' },
       },
       {
         id: 'zenata',
         ar: { name: 'زناتة', inPlace: 'في المحطة اللوجستية بزناتة' },
         fr: { name: 'Zenata', inPlace: 'sur la plateforme logistique de Zenata' },
         en: { name: 'Zenata Hub', inPlace: 'at the Zenata logistics platform' },
+        es: { name: 'Polo de Zenata', inPlace: 'en la plataforma logística de Zenata' },
       },
     ],
     actors: [
@@ -461,36 +518,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { full: 'طارق · مطور عقاري', short: 'طارق' },
         fr: { full: 'Tariq · Promoteur immobilier', short: 'Tariq' },
         en: { full: 'Tariq · Property Developer', short: 'Tariq' },
+        es: { full: 'Tariq · Promotor inmobiliario', short: 'Tariq' },
       },
       {
         id: 'claire',
         ar: { full: 'مدام كلير · مستوردة أوروبية', short: 'مدام كلير' },
         fr: { full: 'Mme Claire · Importatrice UE', short: 'Mme Claire' },
         en: { full: 'Ms. Claire · European Buyer', short: 'Ms. Claire' },
+        es: { full: 'Sra. Claire · Compradora UE', short: 'Sra. Claire' },
       },
       {
         id: 'youssef',
         ar: { full: 'المهندس يوسف · مدير عمليات صناعية', short: 'المهندس يوسف' },
         fr: { full: 'Ing. Youssef · Directeur industriel', short: 'Youssef' },
         en: { full: 'Eng. Youssef · Plant Director', short: 'Youssef' },
+        es: { full: 'Ing. Youssef · Director industrial', short: 'Youssef' },
       },
       {
         id: 'houda',
         ar: { full: 'هدى · مديرة التمويل المؤسسي', short: 'هدى' },
         fr: { full: 'Houda · Financement corporate', short: 'Houda' },
         en: { full: 'Houda · Corporate Finance', short: 'Houda' },
+        es: { full: 'Houda · Finanzas corporativas', short: 'Houda' },
       },
       {
         id: 'atlas_retail',
         ar: { full: 'سلسلة متاجر كبرى', short: 'سلسلة المتاجر' },
         fr: { full: 'Grande enseigne nationale', short: 'L’enseigne' },
         en: { full: 'National Retail Group', short: 'the retail chain' },
+        es: { full: 'Cadena comercial nacional', short: 'la cadena comercial' },
       },
       {
         id: 'agri_coop',
         ar: { full: 'اتحاد التعاونيات الجهوية', short: 'اتحاد التعاونيات' },
         fr: { full: 'Union des coopératives', short: 'L’union agricole' },
         en: { full: 'Regional Growers Union', short: 'the growers union' },
+        es: { full: 'Unión Regional de Cooperativas', short: 'la unión agrícola' },
       },
     ],
   },
@@ -503,6 +566,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'محطة الطاقة الشمسية الصحراوية', short: 'الطاقة الشمسية' },
         fr: { noun: 'centrale solaire saharienne haute capacité', short: 'centrale solaire' },
         en: { noun: 'high-capacity desert solar power plant', short: 'solar power plant' },
+        es: { noun: 'central solar sahariana de alta capacidad', short: 'central solar' },
       },
       {
         id: 'port_terminal',
@@ -511,6 +575,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'محطة الشحن والتصدير البحري الدولية', short: 'الميناء الدولي' },
         fr: { noun: 'terminal portuaire de fret international', short: 'terminal export' },
         en: { noun: 'international maritime export terminal', short: 'export terminal' },
+        es: { noun: 'terminal marítima de exportación internacional', short: 'terminal portuaria' },
       },
       {
         id: 'fintech',
@@ -519,6 +584,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'منصة المدفوعات العابرة للقارات', short: 'التقنية المالية' },
         fr: { noun: 'plateforme fintech transcontinentale', short: 'fintech globale' },
         en: { noun: 'cross-border fintech payment network', short: 'global fintech' },
+        es: { noun: 'red fintech de pagos transcontinentales', short: 'fintech global' },
       },
       {
         id: 'ev_hub',
@@ -527,6 +593,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'مصنع بطاريات والمركبات الكهربائية', short: 'المركبات الكهربائية' },
         fr: { noun: 'usine de batteries et véhicules électriques', short: 'mobilité électrique' },
         en: { noun: 'electric vehicle & battery assembly complex', short: 'EV manufacturing' },
+        es: { noun: 'complejo de baterías y vehículos eléctricos', short: 'movilidad eléctrica' },
       },
       {
         id: 'green_h2',
@@ -535,6 +602,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'مجمع إنتاج وتصدير الهيدروجين الأخضر', short: 'الهيدروجين الأخضر' },
         fr: { noun: 'complexe d’hydrogène vert pour l’export', short: 'hydrogène vert' },
         en: { noun: 'green hydrogen production & export hub', short: 'green hydrogen' },
+        es: { noun: 'complejo de producción y exportación de hidrógeno verde', short: 'hidrógeno verde' },
       },
       {
         id: 'global_brand',
@@ -543,6 +611,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'شبكة التوزيع والمتاجر في أربع قارات', short: 'التجارة العالمية' },
         fr: { noun: 'réseau commercial sur quatre continents', short: 'réseau mondial' },
         en: { noun: 'four-continent flagship retail network', short: 'global retail' },
+        es: { noun: 'red comercial insignia en cuatro continentes', short: 'comercio global' },
       },
       {
         id: 'pharma_labs',
@@ -551,6 +620,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'مختبرات الصناعة الدوائية والتصدير الإفريقي', short: 'الصناعة الدوائية' },
         fr: { noun: 'laboratoires pharmaceutiques pan-africains', short: 'pôle pharma' },
         en: { noun: 'pan-African pharmaceutical research labs', short: 'pharma labs' },
+        es: { noun: 'laboratorios farmacéuticos panafricanos', short: 'polo farmacéutico' },
       },
       {
         id: 'charity_endowment',
@@ -559,6 +629,7 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { noun: 'مؤسسة كبرى للمنح الدراسية والابتكار', short: 'المؤسسة التنموية' },
         fr: { noun: 'fondation pour les bourses et l’innovation', short: 'fondation mécénat' },
         en: { noun: 'global scholarship & innovation endowment', short: 'impact endowment' },
+        es: { noun: 'fundación global de becas e innovación', short: 'fundación de impacto' },
       },
     ],
     places: [
@@ -567,36 +638,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { name: 'نور ورزازات', inPlace: 'في مجمع الطاقة الشمسية بورزازات' },
         fr: { name: 'Noor Ouarzazate', inPlace: 'au complexe solaire Noor de Ouarzazate' },
         en: { name: 'Noor Ouarzazate', inPlace: 'at the Noor Solar Complex in Ouarzazate' },
+        es: { name: 'Noor Ouarzazate', inPlace: 'en el complejo solar Noor de Ouarzazate' },
       },
       {
         id: 'cfc',
         ar: { name: 'القطب المالي للدار البيضاء', inPlace: 'في القطب المالي للدار البيضاء (CFC)' },
         fr: { name: 'Casablanca Finance City', inPlace: 'à Casablanca Finance City' },
         en: { name: 'Casablanca Finance City', inPlace: 'at Casablanca Finance City' },
+        es: { name: 'Casablanca Finance City', inPlace: 'en Casablanca Finance City' },
       },
       {
         id: 'rotterdam',
         ar: { name: 'ميناء روتردام', inPlace: 'عبر ميناء روتردام الأوروبي' },
         fr: { name: 'Port de Rotterdam', inPlace: 'via le port de Rotterdam' },
         en: { name: 'Port of Rotterdam', inPlace: 'through the Port of Rotterdam' },
+        es: { name: 'Puerto de Róterdam', inPlace: 'a través del puerto de Róterdam' },
       },
       {
         id: 'dubai',
         ar: { name: 'مركز دبي المالي', inPlace: 'في مركز دبي المالي العالمي' },
         fr: { name: 'Dubaï DIFC', inPlace: 'au centre financier de Dubaï' },
         en: { name: 'Dubai DIFC', inPlace: 'at Dubai International Financial Centre' },
+        es: { name: 'Dubái DIFC', inPlace: 'en el centro financiero de Dubái' },
       },
       {
         id: 'london',
         ar: { name: 'بورصة لندن', inPlace: 'في حي المال والأعمال بلندن' },
         fr: { name: 'Londres', inPlace: 'à la City de Londres' },
         en: { name: 'London City', inPlace: 'in London’s financial district' },
+        es: { name: 'City de Londres', inPlace: 'en el distrito financiero de Londres' },
       },
       {
         id: 'marseille',
         ar: { name: 'مرسيليا المتوسطية', inPlace: 'في ممر التجارة المتوسطي بمرسيليا' },
         fr: { name: 'Marseille', inPlace: 'au hub méditerranéen de Marseille' },
         en: { name: 'Marseille Hub', inPlace: 'at Marseille’s Mediterranean gateway' },
+        es: { name: 'Polo de Marsella', inPlace: 'en la puerta mediterránea de Marsella' },
       },
     ],
     actors: [
@@ -605,36 +682,42 @@ const STAGE_POOLS: Record<StageNumber, StageDataPool> = {
         ar: { full: 'السير إدوارد · صندوق سيادي أوروبي', short: 'السير إدوارد' },
         fr: { full: 'Sir Edward · Fonds souverain', short: 'Sir Edward' },
         en: { full: 'Sir Edward · Sovereign Fund', short: 'Sir Edward' },
+        es: { full: 'Sir Edward · Fondo soberano', short: 'Sir Edward' },
       },
       {
         id: 'noura',
         ar: { full: 'الشيخة نورة · تحالف طاقة خليجي', short: 'الشيخة نورة' },
         fr: { full: 'Cheikha Noura · Groupe énergie', short: 'Cheikha Noura' },
         en: { full: 'Sheikha Noura · Energy Alliance', short: 'Sheikha Noura' },
+        es: { full: 'Jequesa Noura · Alianza energética', short: 'Jequesa Noura' },
       },
       {
         id: 'carlos',
         ar: { full: 'د. كارلوس · شريك تكنولوجي دولي', short: 'د. كارلوس' },
         fr: { full: 'Dr Carlos · Partenaire tech', short: 'Dr Carlos' },
         en: { full: 'Dr. Carlos · Global Tech Partner', short: 'Dr. Carlos' },
+        es: { full: 'Dr. Carlos · Socio tecnológico global', short: 'Dr. Carlos' },
       },
       {
         id: 'export_board',
         ar: { full: 'مجلس التصدير المتوسطي', short: 'مجلس التصدير' },
         fr: { full: 'Conseil Export Méditerranée', short: 'le Conseil Export' },
         en: { full: 'Mediterranean Export Council', short: 'the Export Council' },
+        es: { full: 'Consejo de Exportación del Mediterráneo', short: 'el Consejo de Exportación' },
       },
       {
         id: 'bank_syndicate',
         ar: { full: 'تحالف بنكي دولي', short: 'التحالف البنكي' },
         fr: { full: 'Consortium bancaire mondial', short: 'le Consortium' },
         en: { full: 'Global Banking Syndicate', short: 'the Syndicate' },
+        es: { full: 'Consorcio Bancario Mundial', short: 'el Consorcio' },
       },
       {
         id: 'asian_delegation',
         ar: { full: 'مجموعة استثمار آسيوية', short: 'المجموعة الآسيوية' },
         fr: { full: 'Délégation industrielle d’Asie', short: 'le Groupe Asie' },
         en: { full: 'Asian Industrial Consortium', short: 'the Asian Group' },
+        es: { full: 'Consorcio Industrial de Asia', short: 'el Grupo Asiático' },
       },
     ],
   },
@@ -757,6 +840,12 @@ function buildRegularProceduralCard(
             title: `${item.en.short} Deal in ${place.en.name}`,
             description: `${actor.en.short} needs an urgent batch of ${item.en.noun} ${place.en.inPlace} with attractive same-day margins.`,
           },
+          es: {
+            categoryLabel: `Pedido urgente · ${item.es.short}`,
+            character: actor.es.full,
+            title: `Operación de ${item.es.short} · ${place.es.name}`,
+            description: `${actor.es.short} solicita un lote urgente de ${item.es.noun} ${place.es.inPlace} con atractivos márgenes en el día.`,
+          },
         },
         rightChoice: {
           content: {
@@ -771,6 +860,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Fulfill Full Order',
               outcome: `You delivered the ${item.en.short} order on time and earned strong loyalty!`,
+            },
+            es: {
+              label: 'Cumplir todo el pedido',
+              outcome: `¡Entregaste el lote de ${item.es.short} a tiempo y te ganaste su plena confianza!`,
             },
           },
           impact: {
@@ -793,6 +886,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Broker for a Fee',
               outcome: `Steady broker fee with minimal effort or stress.`,
+            },
+            es: {
+              label: 'Cobrar comisión segura',
+              outcome: `Comisión estable y rápida sin desgaste ni riesgo operativo.`,
             },
           },
           impact: {
@@ -823,6 +920,7 @@ function buildRegularProceduralCard(
           ar: `ضربة معلم! تفوقت توقعاتك ${place.ar.inPlace} وتضاعفت أرباح ${item.ar.short}!`,
           fr: `Pari gagnant ! La demande ${place.fr.inPlace} a explosé et doublé vos gains !`,
           en: `Jackpot! Demand surged ${place.en.inPlace} and doubled your ${item.en.short} payoff!`,
+          es: `¡Jugada maestra! La demanda se disparó ${place.es.inPlace} y duplicó tus ganancias en ${item.es.short}!`,
         },
         failImpact: {
           money: minorLoss,
@@ -834,6 +932,7 @@ function buildRegularProceduralCard(
           ar: `تباطأ الإقبال مؤقتاً ${place.ar.inPlace} فتكبّدت خسارة بسيطة، لكنك خرجت بخبرة ثمينة.`,
           fr: `Le marché a ralenti ${place.fr.inPlace} : petite perte maîtrisée, mais belle leçon apprise.`,
           en: `Demand cooled briefly ${place.en.inPlace}; you took a small manageable loss and gained insight.`,
+          es: `La demanda se frenó brevemente ${place.es.inPlace}; asumiste una pérdida menor y ganaste experiencia.`,
         },
       };
 
@@ -862,6 +961,12 @@ function buildRegularProceduralCard(
             title: `Double Down on ${item.en.short}`,
             description: `${actor.en.short} proposes scaling ${item.en.noun} ${place.en.inPlace}. 70% chance for double profit against a mild downside.`,
           },
+          es: {
+            categoryLabel: `Riesgo calculado · ${item.es.short}`,
+            character: actor.es.full,
+            title: `Doblar la apuesta en ${item.es.short}`,
+            description: `${actor.es.short} propone ampliar ${item.es.noun} ${place.es.inPlace}. 70% de probabilidad de duplicar beneficios frente a un riesgo leve.`,
+          },
         },
         rightChoice: {
           content: {
@@ -876,6 +981,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Take the Bet (70%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Aceptar la apuesta (70%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -894,6 +1003,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Play It Safe',
               outcome: `You locked in a modest, guaranteed gain and kept cash reserves safe.`,
+            },
+            es: {
+              label: 'Ir a lo seguro',
+              outcome: `Aseguraste un beneficio moderado manteniendo intacta tu liquidez.`,
             },
           },
           impact: {
@@ -923,6 +1036,7 @@ function buildRegularProceduralCard(
           ar: `نجحت حيلتك الميدانية! تداركت الموقف ${place.ar.inPlace} ووفّرت السيولة بربح إضافي.`,
           fr: `Système D efficace ! Vous avez résolu l’imprévu ${place.fr.inPlace} sans surcoût.`,
           en: `Quick thinking worked! You fixed the bottleneck ${place.en.inPlace} and saved cash.`,
+          es: `¡Ingenio eficaz! Resolviste el imprevisto ${place.es.inPlace} y ahorraste efectivo.`,
         },
         failImpact: {
           money: fineLoss,
@@ -934,6 +1048,7 @@ function buildRegularProceduralCard(
           ar: `تعقدت الأزمة ${place.ar.inPlace} فاضطررت لتعويض المتضررين وخسرت جزءاً من الثقة.`,
           fr: `Le contretemps s’est aggravé ${place.fr.inPlace}, entraînant des pénalités et un recul de confiance.`,
           en: `The workaround failed ${place.en.inPlace}, costing penalties and market trust.`,
+          es: `El arreglo improvisado falló ${place.es.inPlace}, generando penalizaciones y pérdida de confianza.`,
         },
       };
 
@@ -962,6 +1077,12 @@ function buildRegularProceduralCard(
             title: `Disruption Hits ${item.en.short}`,
             description: `A sudden snag ${place.en.inPlace} threatens your ${item.en.noun}. Pay for a reliable fix or gamble on a fast workaround?`,
           },
+          es: {
+            categoryLabel: `Imprevisto · ${place.es.name}`,
+            character: actor.es.full,
+            title: `Bloqueo en ${item.es.short}`,
+            description: `Un fallo logístico repentino ${place.es.inPlace} amenaza ${item.es.noun}. ¿Pagar por una solución segura o improvisar?`,
+          },
         },
         rightChoice: {
           content: {
@@ -976,6 +1097,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Pay for Reliable Fix',
               outcome: `Crisis handled smoothly ${place.en.inPlace}. Partners praised your reliability.`,
+            },
+            es: {
+              label: 'Pagar solución fiable',
+              outcome: `Incidente resuelto con seriedad ${place.es.inPlace}. Tu fiabilidad impresiona.`,
             },
           },
           impact: {
@@ -998,6 +1123,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Improvise Fix (60%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Improvisar arreglo (60%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1023,6 +1152,7 @@ function buildRegularProceduralCard(
           ar: `مرّ تقليص التكلفة دون ضجة كبيرة، وحققت سيولة أسرع هذه المرة.`,
           fr: `La réduction de coûts est passée inaperçue et dégage plus de cash à court terme.`,
           en: `The cost-cut went largely unnoticed, boosting short-term cash.`,
+          es: `El recorte de costes pasó inadvertido y te dio mayor liquidez inmediata.`,
         },
         failImpact: {
           money: backlashLoss,
@@ -1034,6 +1164,7 @@ function buildRegularProceduralCard(
           ar: `انتبه ${actor.ar.short} لتراجع الجودة ${place.ar.inPlace} فأعاد البضاعة مع غرامة!`,
           fr: `${actor.fr.short} a repéré la baisse de qualité ${place.fr.inPlace} et exigé un remboursement !`,
           en: `${actor.en.short} spotted the quality cut ${place.en.inPlace} and demanded refunds!`,
+          es: `¡${actor.es.short} detectó la rebaja de calidad ${place.es.inPlace} y exigió reembolso!`,
         },
       };
 
@@ -1062,6 +1193,12 @@ function buildRegularProceduralCard(
             title: `Quality Standard on ${item.en.short}`,
             description: `A supplier ${place.en.inPlace} offers cheaper corners on ${item.en.noun} for fast cash, while ${actor.en.short} values lasting trust.`,
           },
+          es: {
+            categoryLabel: `Ética y Calidad · ${place.es.name}`,
+            character: actor.es.full,
+            title: `Estándar de calidad en ${item.es.short}`,
+            description: `Un proveedor ${place.es.inPlace} sugiere recortar calidad en ${item.es.noun} para ganar más rápido, pero ${actor.es.short} valora la excelencia.`,
+          },
         },
         rightChoice: {
           content: {
@@ -1076,6 +1213,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Uphold High Quality',
               outcome: `Your commitment to ${item.en.short} quality won lasting word-of-mouth trust!`,
+            },
+            es: {
+              label: 'Mantener alta calidad',
+              outcome: `¡Tu exigencia en ${item.es.short} construyó una reputación de oro!`,
             },
           },
           impact: {
@@ -1098,6 +1239,10 @@ function buildRegularProceduralCard(
             en: {
               label: 'Cut Corners (55%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Recortar costes (55%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1154,6 +1299,7 @@ function buildRareProceduralCard(
           ar: `فرصة عمر حقيقية! حسمت صفقة ${item.ar.short} ${place.ar.inPlace} وحققت قفزة ثروة استثنائية!`,
           fr: `Opportunité du siècle ! Votre contrat ${place.fr.inPlace} vous propulse vers de nouveaux sommets !`,
           en: `Once-in-a-lifetime hit! Closing the deal ${place.en.inPlace} delivered an extraordinary surge!`,
+          es: `¡Oportunidad única! Cerrar el acuerdo ${place.es.inPlace} disparó tu patrimonio a otro nivel.`,
         },
         failImpact: {
           money: mildCost,
@@ -1165,6 +1311,7 @@ function buildRareProceduralCard(
           ar: `انسحب أحد الممولين في اللحظة الأخيرة، فخرجت بخسارة بسيطة وتجربة تفاوض قوية.`,
           fr: `Un bailleur s’est retiré au dernier instant : petite perte, mais expérience précieuse.`,
           en: `A backer pulled out last minute—leaving a mild cost and sharp negotiation experience.`,
+          es: `Un inversor se retiró a última hora: pérdida leve, pero gran experiencia negociadora.`,
         },
       };
 
@@ -1179,6 +1326,7 @@ function buildRareProceduralCard(
           ar: 'حدث نادر · فرصة عمر',
           fr: 'Événement rare · Chance en or',
           en: 'Rare Event · Lifetime Chance',
+          es: 'Evento raro · Oportunidad única',
         },
         content: {
           ar: {
@@ -1199,6 +1347,12 @@ function buildRareProceduralCard(
             title: `Surprise Lifetime Deal: ${item.en.short}`,
             description: `An unexpected golden opening appears ${place.en.inPlace} with ${actor.en.short}. Seizing it could catapult your wealth!`,
           },
+          es: {
+            categoryLabel: 'Evento raro · Oportunidad de oro',
+            character: actor.es.full,
+            title: `Oportunidad dorada: ${item.es.short}`,
+            description: `Se abre una ocasión excepcional ${place.es.inPlace} con ${actor.es.short}. ¡Aprovecharla ahora puede disparar tu capital!`,
+          },
         },
         rightChoice: {
           content: {
@@ -1213,6 +1367,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Seize Lifetime Deal (72%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Aprovechar oportunidad (72%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1231,6 +1389,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Take Guaranteed Share',
               outcome: `You secured a safe slice of the deal without exposing your capital.`,
+            },
+            es: {
+              label: 'Tomar parte segura',
+              outcome: `Aseguraste una cuota garantizada sin arriesgar tu liquidez.`,
             },
           },
           impact: {
@@ -1260,6 +1422,7 @@ function buildRareProceduralCard(
           ar: `مرت المراقبة بصعوبة دون غرامة تذكر، لكن التوتر استنزف طاقتك.`,
           fr: `Le contrôle est passé de justesse sans amende, mais la pression a pesé.`,
           en: `The audit cleared narrowly without a fine, though the stress drained your energy.`,
+          es: `La inspección pasó por los pelos sin multa, aunque la tensión agotó tu energía.`,
         },
         failImpact: {
           money: evadeFine,
@@ -1271,6 +1434,7 @@ function buildRareProceduralCard(
           ar: `رصد المفتشون ثغرات في أوراق ${item.ar.short}، ففُرضت غرامة مالية وتراجعت السمعة!`,
           fr: `Les inspecteurs ont relevé des irrégularités ${place.fr.inPlace} : lourde amende !`,
           en: `Inspectors flagged compliance gaps ${place.en.inPlace}, issuing a steep fine and trust drop!`,
+          es: `¡Los inspectores hallaron irregularidades ${place.es.inPlace}: fuerte multa y pérdida de prestigio!`,
         },
       };
 
@@ -1285,6 +1449,7 @@ function buildRareProceduralCard(
           ar: 'حدث نادر · تفتيش مفاجئ',
           fr: 'Événement rare · Contrôle surprise',
           en: 'Rare Event · Surprise Audit',
+          es: 'Evento raro · Inspección sorpresa',
         },
         content: {
           ar: {
@@ -1305,6 +1470,12 @@ function buildRareProceduralCard(
             title: `Surprise Audit on ${item.en.short}`,
             description: `Regulators arrive unannounced ${place.en.inPlace} to inspect permits and records for ${item.en.noun}.`,
           },
+          es: {
+            categoryLabel: 'Evento raro · Inspección',
+            character: `Equipo de inspección · ${place.es.name}`,
+            title: `Inspección sorpresa en ${item.es.short}`,
+            description: `Una inspección inesperada llega ${place.es.inPlace} para revisar facturas y permisos de ${item.es.noun}.`,
+          },
         },
         rightChoice: {
           content: {
@@ -1319,6 +1490,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Full Transparency & Fees',
               outcome: `You passed the inspection cleanly and earned official trust credentials!`,
+            },
+            es: {
+              label: 'Regularizar todo al día',
+              outcome: `¡Superaste la inspección con nota y reforzaste tu credibilidad oficial!`,
             },
           },
           impact: {
@@ -1341,6 +1516,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Bluff & Stall (52%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Intentar esquivar (52%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1366,6 +1545,7 @@ function buildRareProceduralCard(
           ar: `رفضت الاستسلام وكسبت معركة السوق! استقطبت زبائن المنافس ${place.ar.inPlace}!`,
           fr: `Vous avez tenu tête et remporté la bataille commerciale ${place.fr.inPlace} !`,
           en: `You stood firm and won the market battle ${place.en.inPlace}, capturing rival clients!`,
+          es: `¡Resististe y ganaste la batalla comercial ${place.es.inPlace}, captando clientes del rival!`,
         },
         failImpact: {
           money: priceWarLoss,
@@ -1377,6 +1557,7 @@ function buildRareProceduralCard(
           ar: `اندلعت حرب أسعار شرسة خفضت هوامش الربح مؤقتاً، لكن مشروعك بقي ملكك.`,
           fr: `Une guerre des prix a réduit vos marges, mais votre entreprise reste libre.`,
           en: `A fierce price war squeezed margins briefly, yet your business stayed independent.`,
+          es: `Una feroz guerra de precios redujo márgenes, pero tu empresa siguió siendo tuya.`,
         },
       };
 
@@ -1391,6 +1572,7 @@ function buildRareProceduralCard(
           ar: 'حدث نادر · عرض استحواذ',
           fr: 'Événement rare · Offre de rachat',
           en: 'Rare Event · Buyout Offer',
+          es: 'Evento raro · Oferta de compra',
         },
         content: {
           ar: {
@@ -1411,6 +1593,12 @@ function buildRareProceduralCard(
             title: `Rival Offers to Buy Out ${item.en.short}`,
             description: `A rival ${place.en.inPlace} offers quick cash to acquire your ${item.en.noun} venture. Cash out a stake or fight for dominance?`,
           },
+          es: {
+            categoryLabel: 'Evento raro · Compra rival',
+            character: actor.es.full,
+            title: `Un rival quiere comprar ${item.es.short}`,
+            description: `Un competidor ${place.es.inPlace} ofrece efectivo inmediato por tu negocio de ${item.es.noun}. ¿Vender una parte o competir?`,
+          },
         },
         rightChoice: {
           content: {
@@ -1425,6 +1613,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Reject & Outcompete (68%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Rechazar y competir (68%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1443,6 +1635,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Sell Minority Stake',
               outcome: `You pocketed instant cash while keeping operational control.`,
+            },
+            es: {
+              label: 'Vender participación menor',
+              outcome: `Cobras efectivo al instante conservando el control del negocio.`,
             },
           },
           impact: {
@@ -1472,6 +1668,7 @@ function buildRareProceduralCard(
           ar: `نجح التحالف الدولي! تدفق التمويل الأجنبي ووصلت ${item.ar.short} لأسواق عالمية!`,
           fr: `Alliance internationale scellée ! Capitaux étrangers et expansion mondiale assurés !`,
           en: `International deal signed! Foreign capital scaled ${item.en.short} into global markets!`,
+          es: `¡Alianza internacional sellada! El capital extranjero llevó ${item.es.short} a mercados globales.`,
         },
         failImpact: {
           money: legalCost,
@@ -1483,6 +1680,7 @@ function buildRareProceduralCard(
           ar: `تعثرت بنود التمويل في اللحظة الأخيرة فدفعت أتعاب الاستشارة دون خسارة سمعتك.`,
           fr: `Les clauses n’ont pas abouti : frais de dossier perdus, mais réseau intact.`,
           en: `Term sheets stalled at closing, costing legal fees while keeping your reputation intact.`,
+          es: `Las cláusulas se atascaron al cierre: gastos legales asumidos, pero tu prestigio sigue intacto.`,
         },
       };
 
@@ -1497,6 +1695,7 @@ function buildRareProceduralCard(
           ar: 'حدث نادر · مستثمر أجنبي',
           fr: 'Événement rare · Investisseur étranger',
           en: 'Rare Event · Foreign Investor',
+          es: 'Evento raro · Inversor extranjero',
         },
         content: {
           ar: {
@@ -1517,6 +1716,12 @@ function buildRareProceduralCard(
             title: `Foreign Investor Eyes ${item.en.short}`,
             description: `An international investor visiting ${place.en.name} wants to co-fund ${item.en.noun}, offering a 75% chance at massive expansion.`,
           },
+          es: {
+            categoryLabel: 'Evento raro · Alianza global',
+            character: actor.es.full,
+            title: `Inversor extranjero busca ${item.es.short}`,
+            description: `Un inversor internacional de visita en ${place.es.name} quiere cofinanciar ${item.es.noun} con un 75% de éxito.`,
+          },
         },
         rightChoice: {
           content: {
@@ -1531,6 +1736,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Sign Foreign Deal (75%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Firmar alianza global (75%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1549,6 +1758,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Stay 100% Independent',
               outcome: `Steady self-funded growth without giving away equity.`,
+            },
+            es: {
+              label: 'Seguir 100% independiente',
+              outcome: `Crecimiento propio equilibrado sin ceder participación.`,
             },
           },
           impact: {
@@ -1578,6 +1791,7 @@ function buildRareProceduralCard(
           ar: `اقتنصت ارتداد السوق بذكاء! بينما توقف الجميع، كنت الوحيد الجاهز لتوريد ${item.ar.short}!`,
           fr: `Rebond capturé avec brio ! Seul fournisseur prêt ${place.fr.inPlace}, vos ventes explosent !`,
           en: `Genius contrarian timing! As competitors paused, you owned the rebound ${place.en.inPlace}!`,
+          es: `¡Oportunismo brillante! Mientras todos pararon, dominaste el rebote ${place.es.inPlace}.`,
         },
         failImpact: {
           money: stormLoss,
@@ -1589,6 +1803,7 @@ function buildRareProceduralCard(
           ar: `طال أمد التقلبات الجوية والاقتصادية فتباطأت حركة ${item.ar.short} وتكبدت خسارة.`,
           fr: `La perturbation s’est prolongée ${place.fr.inPlace}, ralentissant vos livraisons.`,
           en: `The economic and weather disruption dragged on ${place.en.inPlace}, causing a setback.`,
+          es: `La tormenta climática y de precios se alargó ${place.es.inPlace}, causando pérdidas.`,
         },
       };
 
@@ -1603,6 +1818,7 @@ function buildRareProceduralCard(
           ar: 'حدث نادر · أزمة مفاجئة',
           fr: 'Événement rare · Crise météo / marché',
           en: 'Rare Event · Market Shock',
+          es: 'Evento raro · Crisis repentina',
         },
         content: {
           ar: {
@@ -1623,6 +1839,12 @@ function buildRareProceduralCard(
             title: `Storm & Price Shock Hits ${place.en.name}`,
             description: `Sudden weather and price swings disrupt ${item.en.noun} ${place.en.inPlace}. Hedge defensively or bet on a rapid rebound?`,
           },
+          es: {
+            categoryLabel: 'Evento raro · Choque climático y de precios',
+            character: actor.es.full,
+            title: `Tormenta económica en ${place.es.name}`,
+            description: `El mal tiempo y los precios volátiles sacuden ${item.es.noun} ${place.es.inPlace}. ¿Protegerte o apostar al rebote?`,
+          },
         },
         rightChoice: {
           content: {
@@ -1637,6 +1859,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Bet on Rebound (58%)',
               outcome: dynamicOutcome.successOutcome.en,
+            },
+            es: {
+              label: 'Apostar al rebote (58%)',
+              outcome: dynamicOutcome.successOutcome.es,
             },
           },
           impact: dynamicOutcome.successImpact,
@@ -1655,6 +1881,10 @@ function buildRareProceduralCard(
             en: {
               label: 'Activate Defensive Hedge',
               outcome: `You shielded your business from heavy losses and earned crisis-management respect.`,
+            },
+            es: {
+              label: 'Activar escudo defensivo',
+              outcome: `Limitaste las pérdidas al mínimo y ganaste respeto por tu gestión de crisis.`,
             },
           },
           impact: {

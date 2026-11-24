@@ -631,6 +631,168 @@ export const TRANSLATIONS: Record<Language, UIStrings> = {
     },
     offlineBanner: 'Offline Mode — Playing locally',
   },
+
+  es: {
+    pageTitle: 'Reto 20 Dirhams | De 20 MAD a Multimillonario',
+    brandTitle: 'Reto 20 MAD',
+    brandCompact: '20 MAD',
+    currencyShort: 'MAD',
+    currencyFull: 'MAD',
+    dayLabel: 'Día',
+    dayCount: (day) => `Día ${day}`,
+    stageLabel: (stage) => `Etapa ${stage}`,
+    highScoreLabel: 'Récord',
+    highScoreTitleLabel: 'Mejor puntuación',
+    meters: {
+      ariaLabel: 'Indicadores vitales',
+      money: 'Dinero',
+      reputation: 'Confianza',
+      energy: 'Energía',
+      experience: 'Exp.',
+      critical: 'Bajo',
+      previewAria: 'Impacto previsto',
+    },
+    impactShort: {
+      rep: 'Conf.',
+      energy: 'Energía',
+      xp: 'Exp.',
+    },
+    header: {
+      mute: 'Silenciar sonido',
+      unmute: 'Activar sonido',
+      rules: 'Cómo jugar',
+      restart: 'Reiniciar',
+      install: 'Instalar App',
+      installShort: 'Instalar',
+      iosInstallTitle: 'Instalar en iPhone / iPad',
+      iosStep1: 'Toca el botón Compartir en la barra de Safari.',
+      iosStep2: 'Desliza y selecciona «Añadir a pantalla de inicio».',
+      iosDone: 'Entendido',
+      close: 'Cerrar',
+    },
+    titleScreen: {
+      kicker: 'Un ascenso épico de 20 MAD a 1.000 Millones',
+      headline: 'El Reto de los 20 Dirhams',
+      premise:
+        'Empieza con solo 20 MAD en el Día 1 y supera 4 etapas reales —de oficios callejeros a un imperio global— hasta alcanzar el título de Multimillonario (1.000.000.000 MAD).',
+      capitalLabel: 'Capital',
+      repLabel: 'Confianza',
+      energyLabel: 'Energía',
+      xpLabel: 'Experiencia',
+      ranksTitle: 'Las 4 etapas hacia los mil millones',
+      startBtn: 'Comenzar el ascenso',
+    },
+    card: {
+      cardPrefix: 'Carta #',
+      swipeHint: 'Desliza la carta o elige una opción abajo',
+      rareDefault: 'Evento raro',
+      riskPill: (chance) => `${chance}% éxito`,
+    },
+    feedback: {
+      rankUpKicker: '¡Felicidades! Nuevo rango',
+      yourChoice: 'Tu decisión:',
+      continueBtn: (nextDay) => `Seguir al Día ${nextDay}`,
+      doubleProfitApplied: '¡Bono de ganancias x2 activado para hoy!',
+      gambleWon: (chance) => `¡Apuesta ganada! (${chance}% de éxito)`,
+      gambleLost: (risk) => `Salió mal (${risk}% de riesgo)`,
+    },
+    stageModal: {
+      kicker: (stage) => `Meta alcanzada · Etapa ${stage}`,
+      headline: '¡Ascendiste a la siguiente etapa!',
+      badgeLabel: 'Nueva insignia de etapa',
+      continueBtn: 'Seguir escalando',
+    },
+    ads: {
+      secondChanceBtn: 'Ver anuncio para 2.ª oportunidad (+50 MAD y Energía 100%)',
+      doubleProfitBtn: 'Duplicar ganancias de hoy (Ver anuncio)',
+      doubleProfitActive: '¡Bono x2 de ganancias activo hoy!',
+      modalKicker: 'Vista previa de anuncio con recompensa (AdMob)',
+      modalSecondChanceTitle: 'Segunda oportunidad para continuar',
+      modalDoubleTitle: 'Duplicar ganancias de hoy',
+      modalSecondChanceDesc:
+        'Recibirás al instante +50 MAD y 100% de Energía al finalizar el anuncio.',
+      modalDoubleDesc:
+        'Tus ganancias de hoy se duplicarán al terminar el anuncio.',
+      preparing: (sec) => `Preparando recompensa... (${sec})`,
+      claimReward: 'Reclamar recompensa',
+      cancel: 'Cancelar',
+    },
+    endScreen: {
+      victoryKicker: 'Victoria Legendaria · Multimillonario',
+      victoryTitle: '¡Legendario! Llegaste a 1.000M MAD',
+      victoryDesc:
+        '¡Convertiste 20 MAD en un imperio financiero de 1.000.000.000 MAD con visión, confianza y estrategia!',
+      gameOverKicker: (day) => `Partida terminada en el Día ${day}`,
+      newRecord: '¡Nuevo récord personal guardado en tu dispositivo!',
+      finalBalance: 'Fortuna final',
+      rankAchieved: 'Rango obtenido',
+      daysAndXp: (day, xp) => `${day} días · ${xp}% exp.`,
+      highScore: 'Mejor récord',
+      continueEndless: 'Seguir jugando para batir récords',
+      playAgain: 'Jugar de nuevo',
+      losses: {
+        bankruptcy: {
+          title: '¡Bancarrota total!',
+          message:
+            'Tu capital cayó a 0 MAD. Reserva siempre algo de liquidez para imprevistos.',
+        },
+        reputation: {
+          title: '¡Perdiste la confianza!',
+          message:
+            'Tu reputación llegó a cero y los socios se retiraron. La confianza sostiene cada imperio.',
+        },
+        exhaustion: {
+          title: '¡Agotamiento total!',
+          message:
+            'Trabajaste sin descanso hasta quedarte sin energía. Tu salud es tu mayor activo.',
+        },
+      },
+    },
+    ledger: {
+      ariaLabel: 'Registro y etapas',
+      currentRank: 'Etapa y rango actual',
+      highScore: 'Mejor récord',
+      rankLadder: 'Escalera de 4 etapas',
+      recentDeals: 'Historial de decisiones',
+      emptyHistory:
+        'Aún no hay operaciones. ¡Desliza tu primera carta para empezar!',
+    },
+    rulesModal: {
+      title: 'Cómo jugar y las 4 etapas',
+      intro:
+        'Comienza el Día 1 con 20 MAD. Desliza las cartas para crecer a través de 4 etapas reales hasta convertirte en Multimillonario (1.000.000.000 MAD).',
+      metersTitle: 'Mantén los 4 indicadores en equilibrio:',
+      metersList: [
+        'Dinero (20 MAD): si llega a 0 MAD, quiebras.',
+        'Confianza (50%): si llega a 0%, pierdes el respaldo del mercado.',
+        'Energía (80%): si llega a 0%, el agotamiento termina la partida.',
+        'Experiencia (10%): crece con cada operación.',
+      ],
+      ranksTitle: 'Etapas y títulos:',
+      backBtn: 'Volver al juego',
+    },
+    share: {
+      challengeFriends: 'Retar a tus amigos',
+      shareDailyResult: 'Compartir resultado del día',
+      shareSecondChanceBtn: 'Comparte con un amigo (+100 MAD 2.ª oportunidad)',
+      cardKicker: 'Tarjeta de Logro',
+      challengeCta: '¿Puedes superar mi marca? ¡Juega ya!',
+      sharedToast: '¡Compartido con éxito!',
+      copiedToast: '¡Resultado y enlace copiados! Pégalo en WhatsApp o redes',
+      shareCancelled: 'Completa el envío con un amigo para recibir +100 MAD',
+    },
+    daily: {
+      badge: 'Desafío diario',
+      title: 'Desafío Diario Unificado',
+      subtitle:
+        'La misma secuencia exacta de cartas para todos hoy. ¡Comparte tus emojis sin spoilers!',
+      playBtn: 'Jugar Desafío Diario',
+      replayBtn: 'Reintentar hoy',
+      bestToday: 'Mejor de hoy',
+      emojiTitle: 'Ruta del Desafío Diario',
+    },
+    offlineBanner: 'Modo sin conexión — Jugando localmente',
+  },
 };
 
 export function formatCompactMoney(amount: number, lang: Language): string {
@@ -642,6 +804,7 @@ export function formatCompactMoney(amount: number, lang: Language): string {
     const val = fmt(abs / 1_000_000_000);
     if (lang === 'ar') return `${sign}${val} مليار د.م`;
     if (lang === 'fr') return `${sign}${val}Md MAD`;
+    if (lang === 'es') return `${sign}${val}MM MAD`;
     return `${sign}${val}B MAD`;
   }
   if (abs >= 1_000_000) {
@@ -705,6 +868,9 @@ export function formatChoiceImpactLine(
   }
   if (lang === 'fr') {
     return `${successChance}%: ${winMoney} · Risque ${riskChance}%: ${loseMoney}`;
+  }
+  if (lang === 'es') {
+    return `${successChance}%: ${winMoney} · Riesgo ${riskChance}%: ${loseMoney}`;
   }
   return `${successChance}%: ${winMoney} · ${riskChance}% risk: ${loseMoney}`;
 }

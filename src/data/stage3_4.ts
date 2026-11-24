@@ -28,6 +28,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Instead of buying from factories, launch your own automated packaging line under your brand.',
       },
+      es: {
+        categoryLabel: 'Emprendimiento · Industria',
+        character: 'Polígono Industrial · Fábrica',
+        title: 'Montar planta de envasado propia',
+        description:
+          'En lugar de comprar a terceros, instala tu propia línea automatizada de producción con tu marca.',
+      },
     },
     rightChoice: {
       content: {
@@ -42,6 +49,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Build Modern Line',
           outcome: 'Unit costs plummeted and nationwide orders surged!',
+        },
+        es: {
+          label: 'Construir línea moderna',
+          outcome: '¡Bajaron los costes a la mitad y llegaron pedidos de todo el país!',
         },
       },
       impact: { money: 110000, reputation: 14, energy: -18, experience: 14 },
@@ -59,6 +70,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Lease Existing Line',
           outcome: 'Solid returns without heavy construction overhead.',
+        },
+        es: {
+          label: 'Alquilar línea existente',
+          outcome: 'Buena rentabilidad sin fuertes gastos de obra.',
         },
       },
       impact: { money: 45000, reputation: 6, energy: -8, experience: 7 },
@@ -90,6 +105,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Prime land in a booming district is available for apartments and ground-floor retail units.',
       },
+      es: {
+        categoryLabel: 'Inmobiliaria',
+        character: 'Notaría · Proyecto urbano',
+        title: 'Promover edificio mixto',
+        description:
+          'Hay un solar estratégico en un barrio en auge para construir viviendas y locales comerciales.',
+      },
     },
     rightChoice: {
       content: {
@@ -104,6 +126,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Develop & Presell Units',
           outcome: 'Units sold out off-plan, delivering massive real-estate gains!',
+        },
+        es: {
+          label: 'Promover y vender sobre plano',
+          outcome: '¡Todo vendido sobre plano con enormes plusvalías inmobiliarias!',
         },
       },
       impact: { money: 185000, reputation: 15, energy: -20, experience: 15 },
@@ -121,6 +147,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Join as Silent Partner',
           outcome: 'Comfortable returns without managing construction daily.',
+        },
+        es: {
+          label: 'Entrar como socio inversor',
+          outcome: 'Beneficio cómodo sin gestionar la obra día a día.',
         },
       },
       impact: { money: 75000, reputation: 8, energy: -6, experience: 8 },
@@ -152,6 +182,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Invest in a modern citrus and avocado estate using smart drip irrigation and solar pumps for export.',
       },
+      es: {
+        categoryLabel: 'Agricultura moderna',
+        character: 'Ingeniero agrónomo · Valle del Sus',
+        title: 'Finca moderna con riego solar',
+        description:
+          'Invierte en una finca de cítricos y aguacates con riego por goteo inteligente y energía solar para exportar.',
+      },
     },
     rightChoice: {
       content: {
@@ -166,6 +203,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Fund Modern Estate',
           outcome: 'Record harvest yields unlocked direct European export buyers!',
+        },
+        es: {
+          label: 'Financiar finca high-tech',
+          outcome: '¡Cosecha récord y contratos de exportación directa a Europa!',
         },
       },
       impact: { money: 160000, reputation: 16, energy: -16, experience: 14 },
@@ -183,6 +224,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Buy Local Harvest Only',
           outcome: 'Solid domestic margins with zero farm capex.',
+        },
+        es: {
+          label: 'Comprar cosecha local',
+          outcome: 'Buenos márgenes en el mercado nacional sin riesgo agrícola.',
         },
       },
       impact: { money: 65000, reputation: 8, energy: -6, experience: 7 },
@@ -214,6 +259,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'A major supermarket group wants your product line stocked across 40 flagship stores nationwide.',
       },
+      es: {
+        categoryLabel: 'Grandes alianzas',
+        character: 'Cadena nacional de supermercados',
+        title: 'Entrar en grandes superficies',
+        description:
+          'Una gran cadena nacional quiere incluir tus productos en las estanterías de 40 hipermercados.',
+      },
     },
     rightChoice: {
       content: {
@@ -228,6 +280,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Scale & Sign Chain Deal',
           outcome: 'Your brand became a household name with massive cash flow!',
+        },
+        es: {
+          label: 'Ampliar y firmar alianza',
+          outcome: '¡Tu marca se volvió referente nacional y se dispararon los ingresos!',
         },
       },
       impact: { money: 210000, reputation: 18, energy: -18, experience: 15 },
@@ -245,6 +301,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Pilot in 10 Stores',
           outcome: 'Steady, stress-free rollout protecting supply quality.',
+        },
+        es: {
+          label: 'Probar en 10 tiendas',
+          outcome: 'Despliegue seguro que protege la calidad del suministro.',
         },
       },
       impact: { money: 85000, reputation: 10, energy: -8, experience: 8 },
@@ -276,6 +336,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Exporters face cold-storage bottlenecks—building a refrigerated hub brings high recurring fees.',
       },
+      es: {
+        categoryLabel: 'Logística en frío',
+        character: 'Plataforma exportación · Agadir',
+        title: 'Almacén frigorífico logístico',
+        description:
+          'Falta almacenamiento en frío para exportar frutas y verduras; construir un polo frigorífico asegura altos alquileres.',
+      },
     },
     rightChoice: {
       content: {
@@ -290,6 +357,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Build Cold-Chain Hub',
           outcome: 'Booked to 100% capacity before opening day!',
+        },
+        es: {
+          label: 'Construir polo de frío',
+          outcome: '¡Capacidad reservada al 100% antes de la inauguración!',
         },
       },
       impact: { money: 145000, reputation: 14, energy: -15, experience: 12 },
@@ -307,6 +378,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Buy 2 Reefer Trucks',
           outcome: 'Flexible transport income without heavy facility capex.',
+        },
+        es: {
+          label: 'Comprar 2 camiones frigo',
+          outcome: 'Ingresos flexibles de transporte sin gran obra.',
         },
       },
       impact: { money: 62000, reputation: 7, energy: -8, experience: 7 },
@@ -338,6 +413,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Transform an authentic historic riad into a flagship luxury boutique stay for global travelers.',
       },
+      es: {
+        categoryLabel: 'Turismo de lujo',
+        character: 'Medina · Marrakech',
+        title: 'Restaurar un Riad histórico de lujo',
+        description:
+          'Transforma un riad tradicional en un hotel boutique de prestigio para viajeros internacionales.',
+      },
     },
     rightChoice: {
       content: {
@@ -352,6 +434,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Restore with Master Artisans',
           outcome: 'Booked year-round and featured in global travel magazines!',
+        },
+        es: {
+          label: 'Restaurar con maestros artesanos',
+          outcome: '¡Lleno todo el año y elogiado en revistas internacionales!',
         },
       },
       impact: { money: 175000, reputation: 20, energy: -16, experience: 14 },
@@ -369,6 +455,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Flip After Renovation',
           outcome: 'Quick property flip profit without ongoing hotel management.',
+        },
+        es: {
+          label: 'Vender tras la reforma',
+          outcome: 'Plusvalía rápida sin gestionar la operación hotelera.',
         },
       },
       impact: { money: 88000, reputation: 8, energy: -8, experience: 8 },
@@ -400,6 +490,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Partner with cooperatives to launch a certified organic argan skincare line for overseas boutiques.',
       },
+      es: {
+        categoryLabel: 'Cosmética natural',
+        character: 'Cooperativa femenina · Argán',
+        title: 'Línea bio de argán y rosa para exportar',
+        description:
+          'Asóciate con cooperativas para lanzar cosmética orgánica certificada destinada a tiendas extranjeras.',
+      },
     },
     rightChoice: {
       content: {
@@ -414,6 +511,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Certify Organic & Export',
           outcome: 'Soared across luxury boutiques abroad while uplifting co-ops!',
+        },
+        es: {
+          label: 'Certificar bio y exportar',
+          outcome: '¡Éxito internacional con gran impacto social en las cooperativas!',
         },
       },
       impact: { money: 195000, reputation: 22, energy: -16, experience: 14 },
@@ -431,6 +532,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sell Locally First',
           outcome: 'Healthy domestic sales with zero export paperwork.',
+        },
+        es: {
+          label: 'Vender primero en el país',
+          outcome: 'Ventas locales sanas sin trámites de exportación.',
         },
       },
       impact: { money: 72000, reputation: 10, energy: -6, experience: 7 },
@@ -462,6 +567,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Factory workers request better wages and full medical coverage in return for higher output targets.',
       },
+      es: {
+        categoryLabel: 'Liderazgo empresarial',
+        character: 'Comité de fábrica',
+        title: 'Subida salarial y seguro médico',
+        description:
+          'Los trabajadores de la fábrica piden mejores salarios y cobertura médica completa a cambio de mayor productividad.',
+      },
     },
     rightChoice: {
       content: {
@@ -476,6 +588,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Approve with Output Bonus',
           outcome: 'Morale surged and factory efficiency hit all-time highs!',
+        },
+        es: {
+          label: 'Aprobar con primas de logro',
+          outcome: '¡Equipos motivados y productividad récord en todas las plantas!',
         },
       },
       impact: { money: 90000, reputation: 24, energy: 12, experience: 12 },
@@ -493,6 +609,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Reject to Cut Costs',
           outcome: 'Slowdowns and strikes hurt output and damaged your image.',
+        },
+        es: {
+          label: 'Rechazar para ahorrar gastos',
+          outcome: 'Las huelgas frenaron la producción y dañaron tu reputación.',
         },
       },
       impact: { money: -55000, reputation: -20, energy: -14, experience: 6 },
@@ -524,6 +644,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Young engineers offer a 35% equity stake in a platform automating supply chains across Morocco.',
       },
+      es: {
+        categoryLabel: 'Inversión tecnológica',
+        character: 'Startup marroquí · Casablanca',
+        title: 'Financiar plataforma B2B inteligente',
+        description:
+          'Jóvenes ingenieros ofrecen un 35% de participación en una plataforma que conecta fábricas y comercios.',
+      },
     },
     rightChoice: {
       content: {
@@ -538,6 +665,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Invest & Mentor Team',
           outcome: 'The platform scaled rapidly, multiplying your equity value!',
+        },
+        es: {
+          label: 'Invertir y mentorizar',
+          outcome: '¡La plataforma despegó y multiplicó el valor de tu participación!',
         },
       },
       impact: { money: 220000, reputation: 16, energy: -12, experience: 16 },
@@ -555,6 +686,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Just Use as a Client',
           outcome: 'Improved your logistics without taking startup risk.',
+        },
+        es: {
+          label: 'Usarla solo como cliente',
+          outcome: 'Mejoraste tu logística sin asumir riesgo de startup.',
         },
       },
       impact: { money: 70000, reputation: 6, energy: -4, experience: 7 },
@@ -586,6 +721,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Rare chance to acquire a struggling rival and merge its factories into your growing business group.',
       },
+      es: {
+        categoryLabel: 'Camino al Millón',
+        character: 'Banca de inversión · Fusión',
+        title: 'Adquirir a un gran competidor',
+        description:
+          'Oportunidad única de comprar un rival en apuros e integrar sus fábricas en tu grupo empresarial.',
+      },
     },
     rightChoice: {
       content: {
@@ -600,6 +742,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Close the Acquisition',
           outcome: 'Turnaround triumph! Your empire just crossed 1,000,000 MAD!',
+        },
+        es: {
+          label: 'Cerrar la adquisición',
+          outcome: '¡Éxito rotundo! Tu grupo acaba de superar 1.000.000 MAD.',
         },
       },
       impact: { money: 280000, reputation: 18, energy: -18, experience: 18 },
@@ -617,6 +763,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Grow Organically Instead',
           outcome: 'Disciplined growth keeping debt low and margins strong.',
+        },
+        es: {
+          label: 'Seguir creciendo orgánicamente',
+          outcome: 'Expansión disciplinada rumbo firme hacia el millón.',
         },
       },
       impact: { money: 130000, reputation: 10, energy: -8, experience: 10 },
@@ -650,6 +800,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Unify your companies under a global holding opening regional headquarters across Africa, Europe, and the Gulf.',
       },
+      es: {
+        categoryLabel: 'Imperio Financiero · Global',
+        character: 'Holding internacional · Londres y Casa',
+        title: 'Fundar una multinacional',
+        description:
+          'Unifica tus filiales bajo un holding global con sedes en África, Europa y el Golfo.',
+      },
     },
     rightChoice: {
       content: {
@@ -664,6 +821,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Launch Global Holding',
           outcome: 'International offices surged with multi-million contracts!',
+        },
+        es: {
+          label: 'Lanzar el holding global',
+          outcome: '¡Las sedes internacionales despegaron con contratos millonarios!',
         },
       },
       impact: { money: 45000000, reputation: 16, energy: -16, experience: 15 },
@@ -681,6 +842,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Start with Africa Hub',
           outcome: 'Focused regional foothold across fast-growing African markets.',
+        },
+        es: {
+          label: 'Empezar con sede en África',
+          outcome: 'Fuerte presencia en mercados africanos de rápido crecimiento.',
         },
       },
       impact: { money: 18000000, reputation: 10, energy: -8, experience: 8 },
@@ -712,6 +877,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'An energy consortium invites you to lead a massive Sahara solar plant powering green industry and exports.',
       },
+      es: {
+        categoryLabel: 'Energía limpia',
+        character: 'Consorcio Solar · Sahara',
+        title: 'Megacentral solar en el desierto',
+        description:
+          'Un consorcio energético te invita a liderar una gran central solar en el Sahara para generar y exportar electricidad limpia.',
+      },
     },
     rightChoice: {
       content: {
@@ -726,6 +898,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Lead the Solar Mega-Plant',
           outcome: 'Historic triumph! Massive returns and global green-energy prestige!',
+        },
+        es: {
+          label: 'Liderar el proyecto solar',
+          outcome: '¡Hito histórico! Enormes beneficios y prestigio mundial en energía verde.',
         },
       },
       impact: { money: 115000000, reputation: 22, energy: -18, experience: 16 },
@@ -743,6 +919,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Take Minority Stake',
           outcome: 'Strong passive clean-energy yields with low risk.',
+        },
+        es: {
+          label: 'Participar con cuota menor',
+          outcome: 'Rendimientos sólidos en energía limpia con bajo riesgo.',
         },
       },
       impact: { money: 48000000, reputation: 12, energy: -6, experience: 8 },
@@ -774,6 +954,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Owning container ships lets you export directly from Tanger-Med to Europe, the Americas, and Asia.',
       },
+      es: {
+        categoryLabel: 'Exportación global',
+        character: 'Puerto Tánger-Med · Flota',
+        title: 'Adquirir flota marítima internacional',
+        description:
+          'Tener buques propios conecta tus fábricas desde Tánger-Med con Europa, América y Asia sin intermediarios.',
+      },
     },
     rightChoice: {
       content: {
@@ -788,6 +975,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Launch Global Shipping Line',
           outcome: 'Controlled entire trade corridors and unlocked massive cash flows!',
+        },
+        es: {
+          label: 'Lanzar naviera global',
+          outcome: '¡Dominaste rutas comerciales clave y desbloqueaste cientos de millones!',
         },
       },
       impact: { money: 140000000, reputation: 16, energy: -16, experience: 15 },
@@ -805,6 +996,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Charter Dedicated Routes',
           outcome: 'Strong export growth without ship maintenance liabilities.',
+        },
+        es: {
+          label: 'Fletar rutas dedicadas',
+          outcome: 'Exportación ágil sin costes de mantenimiento naval.',
         },
       },
       impact: { money: 55000000, reputation: 8, energy: -6, experience: 8 },
@@ -836,6 +1031,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Advisors propose listing 20% of your holding on the stock exchange to raise monumental expansion capital.',
       },
+      es: {
+        categoryLabel: 'Mercados financieros',
+        character: 'Bolsa de Casablanca y Global',
+        title: 'Sacar el grupo a Bolsa (OPV)',
+        description:
+          'Tus asesores proponen sacar un 20% del holding a bolsa para captar un capital colosal de expansión.',
+      },
     },
     rightChoice: {
       content: {
@@ -850,6 +1052,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Ring the IPO Bell',
           outcome: '10x oversubscribed! Your valuation skyrocketed overnight!',
+        },
+        es: {
+          label: 'Tocar la campana bursátil',
+          outcome: '¡Demanda 10 veces superior: tu valoración alcanzó cifras históricas!',
         },
       },
       impact: { money: 190000000, reputation: 18, energy: -14, experience: 16 },
@@ -867,6 +1073,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Stay Privately Held',
           outcome: 'Kept 100% control while growing steadily on retained earnings.',
+        },
+        es: {
+          label: 'Seguir como empresa privada',
+          outcome: 'Mantuviste el 100% del control con crecimiento interno sólido.',
         },
       },
       impact: { money: 65000000, reputation: 10, energy: 4, experience: 8 },
@@ -898,6 +1108,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Use your fortune to endow a cutting-edge public hospital and scholarship university for bright youth.',
       },
+      es: {
+        categoryLabel: 'Filantropía e Impacto',
+        character: 'Tu Fundación · Salud y Educación',
+        title: 'Construir hospital y universidad gratis',
+        description:
+          'Financia un hospital moderno y una universidad tecnológica con becas para jóvenes con talento.',
+      },
     },
     rightChoice: {
       content: {
@@ -912,6 +1129,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Fund the Endowment',
           outcome: 'Millions cheered your legacy, attracting elite global goodwill!',
+        },
+        es: {
+          label: 'Financiar la obra benéfica',
+          outcome: '¡Admiración unánime y confianza global multiplicada!',
         },
       },
       impact: { money: -35000000, reputation: 28, energy: 18, experience: 15 },
@@ -929,6 +1150,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Launch Scholarship Fund',
           outcome: 'Meaningful social impact while preserving capital.',
+        },
+        es: {
+          label: 'Crear fondo de becas',
+          outcome: 'Gran aporte social manteniendo tus reservas.',
         },
       },
       impact: { money: -8000000, reputation: 12, energy: 6, experience: 7 },
@@ -960,6 +1185,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Win a strategic contract to build a clean-energy desalination plant supplying cities and farmlands.',
       },
+      es: {
+        categoryLabel: 'Infraestructura verde',
+        character: 'Consorcio · Costa Atlántica',
+        title: 'Megaplanta desalinizadora solar',
+        description:
+          'Licitación estratégica para construir una planta desalinizadora con energía limpia para ciudades y campos.',
+      },
     },
     rightChoice: {
       content: {
@@ -974,6 +1206,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Win & Build Facility',
           outcome: 'Strategic infrastructure yielded massive multi-year returns!',
+        },
+        es: {
+          label: 'Ganar y construir planta',
+          outcome: '¡Proyecto estratégico muy rentable que marca la historia!',
         },
       },
       impact: { money: 165000000, reputation: 20, energy: -16, experience: 16 },
@@ -991,6 +1227,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Supply Turbines Only',
           outcome: 'Healthy equipment contract with low operational burden.',
+        },
+        es: {
+          label: 'Suministrar solo turbinas',
+          outcome: 'Buen margen industrial sin gestión de obra.',
         },
       },
       impact: { money: 68000000, reputation: 10, energy: -6, experience: 8 },
@@ -1022,6 +1262,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Open flagship luxury boutiques in world capitals showcasing Moroccan carpets, leather, and fine crafts.',
       },
+      es: {
+        categoryLabel: 'Lujo y Artesanía',
+        character: 'París, Dubái, Tokio · Prestigio',
+        title: 'Boutiques globales de lujo marroquí',
+        description:
+          'Abre tiendas insignia en capitales mundiales exhibiendo alfombras, zellige y alta artesanía marroquí.',
+      },
     },
     rightChoice: {
       content: {
@@ -1036,6 +1283,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Open All 3 Flagships',
           outcome: 'Global fashion press raved and luxury revenue exploded!',
+        },
+        es: {
+          label: 'Abrir en las 3 capitales',
+          outcome: '¡Triunfo mundial de la maestría marroquí e ingresos millonarios!',
         },
       },
       impact: { money: 155000000, reputation: 22, energy: -14, experience: 14 },
@@ -1053,6 +1304,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Global Luxury E-Commerce',
           outcome: 'Strong worldwide sales with lean overhead.',
+        },
+        es: {
+          label: 'Boutique online de lujo',
+          outcome: 'Ventas globales rentables con mínimos costes fijos.',
         },
       },
       impact: { money: 72000000, reputation: 12, energy: -5, experience: 8 },
@@ -1084,6 +1339,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'A sharp economic shock rattles global exchanges. Your move determines whether you sink or buy the bottom.',
       },
+      es: {
+        categoryLabel: 'Volatilidad global',
+        character: 'Mercados · Caída bursátil',
+        title: 'Desplome repentino en las bolsas',
+        description:
+          'Una sacudida financiera golpea los mercados mundiales. Tu temple decidirá si pierdes o compras barato.',
+      },
     },
     rightChoice: {
       content: {
@@ -1098,6 +1360,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Buy Quality Assets at Dip',
           outcome: 'Markets rebounded and your contrarian bet paid massively!',
+        },
+        es: {
+          label: 'Comprar activos sólidos en caída',
+          outcome: '¡El rebote multiplicó el valor de toda tu cartera!',
         },
       },
       impact: { money: 175000000, reputation: 14, energy: -14, experience: 18 },
@@ -1115,6 +1381,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Panic-Sell Holdings',
           outcome: 'Selling at the bottom locked in heavy unnecessary losses.',
+        },
+        es: {
+          label: 'Vender por pánico',
+          outcome: 'Vender en mínimos consolidó fuertes pérdidas innecesarias.',
         },
       },
       impact: { money: -85000000, reputation: -12, energy: -10, experience: 10 },
@@ -1146,6 +1416,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'Build solar-powered cloud data centers serving multinational banks and tech giants across the region.',
       },
+      es: {
+        categoryLabel: 'Infraestructura digital',
+        character: 'Alianza Tech · Centros de datos',
+        title: 'Centros de datos solares en África',
+        description:
+          'Construye centros de datos en la nube con energía renovable para bancos y gigantes tecnológicos.',
+      },
     },
     rightChoice: {
       content: {
@@ -1160,6 +1437,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Build Green Cloud Network',
           outcome: 'Enterprise cloud contracts pushed you to the brink of 1 Billion!',
+        },
+        es: {
+          label: 'Desplegar red cloud verde',
+          outcome: '¡Contratos cloud masivos que te acercan al mil millones!',
         },
       },
       impact: { money: 220000000, reputation: 18, energy: -16, experience: 16 },
@@ -1177,6 +1458,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Build One Flagship Center',
           outcome: 'Steady high-tech cash flow with lighter capital commitment.',
+        },
+        es: {
+          label: 'Construir un centro piloto',
+          outcome: 'Ingreso tecnológico seguro y bien controlado.',
         },
       },
       impact: { money: 95000000, reputation: 10, energy: -6, experience: 8 },
@@ -1208,6 +1493,13 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         description:
           'The crowning deal: unite your factories, shipping fleet, and solar grids in a historic intercontinental pact!',
       },
+      es: {
+        categoryLabel: 'Cima del Imperio',
+        character: 'Foro Mundial · Acuerdo histórico',
+        title: 'Pacto intercontinental verde y comercial',
+        description:
+          '¡El acuerdo culminante: une tus fábricas, naviera y redes solares en la mayor alianza intercontinental!',
+      },
     },
     rightChoice: {
       content: {
@@ -1222,6 +1514,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sign Historic Pact',
           outcome: 'Monumental victory! Hundreds of millions surged into your empire!',
+        },
+        es: {
+          label: 'Firmar la alianza histórica',
+          outcome: '¡Triunfo planetario! Cientos de millones impulsan tu imperio hacia la cima.',
         },
       },
       impact: { money: 310000000, reputation: 24, energy: -18, experience: 20 },
@@ -1239,6 +1535,10 @@ export const STAGE_3_4_CARDS: ScenarioCard[] = [
         en: {
           label: 'Sign Bilateral Pact',
           outcome: 'Huge, stable gains while protecting work-life balance.',
+        },
+        es: {
+          label: 'Firmar pacto bilateral',
+          outcome: 'Enormes beneficios manteniendo calma y estabilidad.',
         },
       },
       impact: { money: 145000000, reputation: 14, energy: -6, experience: 10 },

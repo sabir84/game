@@ -37,6 +37,12 @@ export const RANKS: RankInfo[] = [
         rangeLabel: '20 – 1,000 MAD',
         subtitle: 'Local crafts, bike repair, dates & deliveries',
       },
+      es: {
+        stageName: 'Etapa 1 · Comienzos humildes',
+        title: 'Luchador Ambicioso',
+        rangeLabel: '20 – 1.000 MAD',
+        subtitle: 'Oficios locales, bicis, dátiles y repartos',
+      },
     },
   },
   {
@@ -63,6 +69,12 @@ export const RANKS: RankInfo[] = [
         title: 'Smart Trader',
         rangeLabel: '1,000 – 50,000 MAD',
         subtitle: 'Opening a shop, importing goods & hiring staff',
+      },
+      es: {
+        stageName: 'Etapa 2 · Comercio en auge',
+        title: 'Comerciante Astuto',
+        rangeLabel: '1.000 – 50.000 MAD',
+        subtitle: 'Abrir tienda, importar mercancía y contratar',
       },
     },
   },
@@ -91,6 +103,12 @@ export const RANKS: RankInfo[] = [
         rangeLabel: '50,000 – 1,000,000 MAD',
         subtitle: 'Factories, real estate, modern farming & big deals',
       },
+      es: {
+        stageName: 'Etapa 3 · Emprendimiento',
+        title: 'Empresario',
+        rangeLabel: '50.000 – 1.000.000 MAD',
+        subtitle: 'Fábricas, inmuebles, agro moderno y alianzas',
+      },
     },
   },
   {
@@ -118,6 +136,12 @@ export const RANKS: RankInfo[] = [
         rangeLabel: '1M – 1B MAD',
         subtitle: 'Global firms, solar plants, exports & philanthropy',
       },
+      es: {
+        stageName: 'Etapa 4 · Imperio financiero',
+        title: 'Millonario',
+        rangeLabel: '1M – 1MM MAD',
+        subtitle: 'Multinacionales, energía solar y exportación',
+      },
     },
   },
   {
@@ -144,6 +168,12 @@ export const RANKS: RankInfo[] = [
         title: 'Billionaire',
         rangeLabel: '1,000,000,000+ MAD',
         subtitle: 'Historic achievement! You built a billion-dirham empire',
+      },
+      es: {
+        stageName: 'Cima Legendaria · Mil Millones',
+        title: 'Multimillonario',
+        rangeLabel: '1.000.000.000+ MAD',
+        subtitle: '¡Hazaña histórica! Construiste un imperio global',
       },
     },
   },
