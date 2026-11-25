@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.netlify.harmonious_marshmallow_e444e1.twa",
+        "sha256_cert_fingerprints": ["1B:E6:F1:F7:62:4F:21:40:3D:24:EA:39:47:4B:26:66:96:DF:1B:D4:B5:65:1D:66:82:9A:5B:BE:F3:A9:DC:F5"]
+      }
+    }]
